@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Prototipo: BlinkID escanear desde la camara</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div id="screen-initial">
+            <h1 id="msg">Cargando...</h1>
+            <progress id="load-progress" value="0" max="100"></progress>
+        </div>
+
+        <div id="screen-start" class="hidden">
+            <a class="button" id="start-scan">Iniciar Escaneo</a>
+        </div>
+
+        <div id="screen-scanning" class="hidden">
+            <video id="camera-feed" playsinline></video>
+            <canvas id="camera-feedback"></canvas>
+            <p id="camera-guides">Apunte la cámara hacia la parte frontal del documento.</p>
+        </div>
+    </body>
+</html>
