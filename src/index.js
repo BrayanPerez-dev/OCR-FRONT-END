@@ -80,13 +80,13 @@ const  startScan = async (sdk) => {
                 if (result.state === BlinkIDSDK.RecognizerResultState.Empty) return
                 let url = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                 console.log("BlinkIDCombined results", result);
-                console.log("facaImage",result.faceImage)
+                console.log("faceImage",result.faceImage)
                 Swal.fire({
                     title: 'DUI',
                     showDenyButton:true, 
                     showCancelButton:true,
                     showConfirmButton: true,
-                    confirmButttonText:'Guardar' ,
+                    confirmButtonText:'Guardar',
                     denyButtonText:'No Guardar',
                     cancelButtonText:'Cancelar',
                     html: `<br> Nombre: ${result.firstName} 
