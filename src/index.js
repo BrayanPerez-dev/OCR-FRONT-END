@@ -82,7 +82,7 @@ const  startScan = async (sdk) => {
                 console.log("faceImage",result.faceImage)
                 let address = result.address.split(' ')
                 let endElement = address.length
-                let cutAddress = address.slice(0,endElement)
+                let cutAddress = address.slice(0,endElement - 1)
                 let newAddress = cutAddress.join(' ')
                
                 Swal.fire({
