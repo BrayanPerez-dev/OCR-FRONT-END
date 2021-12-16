@@ -16,7 +16,7 @@ const main = () => {
     let licenseKey = "sRwAAAYJbG9jYWxob3N0r/lOPgo/w35CpJmmLl0/ZtejnQ3iqJwwEiE2MsSVGiXRGL3R2hMDNZ72MwPzXh8CE3afYoct+rLb1FmhDLcT9BigmSWUfLs5LoYjcSntAAzXdcJMcyMZtIPs8BTcN4JymLbm9OJ6dHcBMSEcmjV64y5+oAWfbpXGRY9Df90JJWYjs7Tzw0kFlfa3YpJ8hpIGH+RbBmRlUKVrwpgoF4/zQgU2NQu8ueCOlws="
 
     console.log(window.location.hostname)
-    if (window.location.hostname === 'blooming-coast-00735.herokuapp.com') licenseKey = "sRwAAAYiYmxvb21pbmctY29hc3QtMDA3MzUuaGVyb2t1YXBwLmNvbfZx4uCjZJLb7ImJx+a8bJ6AUfSezW+zS160BJw8bNgbJTdcguGHBhldrUQEb11RuiVWoxZDvuprDQQrS8WB0K/5xYDcAO3/I4VPtsznrYmW+mhoiGO3md+U33Q8a1RJ5E0OwfpAqeBpFUgfCzAAwvViJzYSPRk+YNy951XANRRq+XVdCn4n+jOHA5p05SYFp7oorCtnyyWwHxnga6W3UUDDxrA2AKp7CkUz"
+    if (window.location.hostname === 'technosal-prototipo.herokuapp.com') licenseKey = "sRwAAAYhdGVjaG5vc2FsLXByb3RvdGlwby5oZXJva3VhcHAuY29t0NzeS8194PqCX21GrqYFvcg2p9O9RdJEA71jthEXJsAHwQrA0VmowzwKlQTixeBnorEu2xEIppEmNcDQU6vscZ4M8QGJYaDghTxXiKSIhBHr9dmI2OhCcMRMY1lvBaXRVOlJWjf0Z28M9Z1o5C67sLiCe/1Ynvh6NbYALLaRPH6+v/TWSWDkClwhZdFspRhQ77+MJwyfrU9Eovvj8fqpnmO1TjomsAvk5wk="
 
 
     const loadSettings = new BlinkIDSDK.WasmSDKLoadSettings(licenseKey);
