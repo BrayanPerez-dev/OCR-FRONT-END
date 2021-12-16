@@ -81,8 +81,8 @@ const  startScan = async (sdk) => {
                 console.log("BlinkIDCombined results", result);
                 console.log("faceImage",result.faceImage)
                 let address = result.address.split(' ')
-                let length = address.length
-                let cutAddress = address.slice(0,length-1)
+                let endElement = address.length
+                let cutAddress = address.slice(0,endElement)
                 let newAddress = cutAddress.join(' ')
                
                 Swal.fire({
@@ -95,7 +95,7 @@ const  startScan = async (sdk) => {
                     cancelButtonText:'Cancelar',
                     html: `<br> Nombre: ${result.firstName} 
                            <br> Apellido: ${result.lastName}
-                           <br> Fecha de Nacimiento${result.dateOfBirth.year}-${result.dateOfBirth.month}-${result.dateOfBirth.day} 
+                           <br> Fecha de Nacimiento: ${result.dateOfBirth.year}-${result.dateOfBirth.month}-${result.dateOfBirth.day} 
                            <br> Lugar de Nacimiento: ${result.placeOfBirth} 
                            <br> Fecha de Emisión: ${result.dateOfIssue.day}-${result.dateOfIssue.month}-${result.dateOfIssue.year}
                            <br> Fecha de Expiracion: ${result.dateOfExpiry.day}-${result.dateOfExpiry.month}-${result.dateOfExpiry.year}
