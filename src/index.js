@@ -84,9 +84,7 @@ const  startScan = async (sdk) => {
                 let length = address.length
                 let cutAddress = address.slice(0,length-1)
                 let newAddress = cutAddress.join(' ')
-                result.dateOfBirth.originalString
-                result.dateOfIssue.originalString
-                result.dateOfExpiry.originalString    
+               
                 Swal.fire({
                     title: 'DUI',
                     showDenyButton:true, 
@@ -97,10 +95,10 @@ const  startScan = async (sdk) => {
                     cancelButtonText:'Cancelar',
                     html: `<br> Nombre: ${result.firstName} 
                            <br> Apellido: ${result.lastName}
-                           <br> Fecha de Nacimiento${result.dateOfBirth.year}-${result.dateOfBirth.month}-${result.dateOfBirth.day} 
+                           <br> Fecha de Nacimiento${result.dateOfBirth.originalString} 
                            <br> Lugar de Nacimiento: ${result.placeOfBirth} 
-                           <br> Fecha de Emisión: ${result.dateOfIssue.day}-${result.dateOfIssue.month}-${result.dateOfIssue.year}
-                           <br> Fecha de Expiracion: ${result.dateOfExpiry.day}-${result.dateOfExpiry.month}-${result.dateOfExpiry.year}
+                           <br> Fecha de Emisión: ${result.dateOfIssue.originalString}
+                           <br> Fecha de Expiracion: ${result.dateOfExpiry.originalString}
                            <br> Numero de Documento: ${result.documentNumber} 
                            <br> Direccion: ${newAddress} 
                            <br> Nacionalidad: ${result.nationality && 'SALVADOREÑA'} 
