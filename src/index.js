@@ -78,9 +78,15 @@ const  startScan = async (sdk) => {
                 if (recognitionState === BlinkIDSDK.RecognizerResultState.Empty) return;
                 const result = await combinedGenericIDRecognizer.getResult();
                 if (result.state === BlinkIDSDK.RecognizerResultState.Empty) return
-                let url = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                 console.log("BlinkIDCombined results", result);
                 console.log("faceImage",result.faceImage)
+                let address = result.address.split(' ')
+                let length = address.length
+                let cutAddress = address.slice(0,length-1)
+                let newAddress = cutAddress.join(' ')
+                result.dateOfBirth.originalString
+                result.dateOfIssue.originalString
+                result.dateOfExpiry.originalString    
                 Swal.fire({
                     title: 'DUI',
                     showDenyButton:true, 
@@ -96,7 +102,7 @@ const  startScan = async (sdk) => {
                            <br> Fecha de Emisión: ${result.dateOfIssue.day}-${result.dateOfIssue.month}-${result.dateOfIssue.year}
                            <br> Fecha de Expiracion: ${result.dateOfExpiry.day}-${result.dateOfExpiry.month}-${result.dateOfExpiry.year}
                            <br> Numero de Documento: ${result.documentNumber} 
-                           <br> Direccion: ${result.address} 
+                           <br> Direccion: ${newAddress} 
                            <br> Nacionalidad: ${result.nationality && 'SALVADOREÑA'} 
                            <br> Genero: ${result.sex} 
                            <br> Estado Marital: ${result.maritalStatus}
