@@ -95,7 +95,7 @@ const  startScan = async (sdk) => {
                     cancelButtonText:'Cancelar',
                     html: `<br> Nombre: ${result.firstName} 
                            <br> Apellido: ${result.lastName}
-                           <br> Fecha de Nacimiento${result.dateOfBirth.originalString} 
+                           <br> Fecha de Nacimiento: ${result.dateOfBirth.originalString} 
                            <br> Lugar de Nacimiento: ${result.placeOfBirth} 
                            <br> Fecha de Emisión: ${result.dateOfIssue.originalString}
                            <br> Fecha de Expiracion: ${result.dateOfExpiry.originalString}
