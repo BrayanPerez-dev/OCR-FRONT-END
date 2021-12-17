@@ -44,7 +44,7 @@ const main = () => {
     );
 }
 
-const  startScan = async (sdk) => {
+const startScan = async (sdk) => {
     document.getElementById("screen-start")?.classList.add("hidden");
     document.getElementById("screen-scanning")?.classList.remove("hidden");
     const combinedGenericIDRecognizer = await BlinkIDSDK.createBlinkIdCombinedRecognizer(
@@ -61,15 +61,13 @@ const  startScan = async (sdk) => {
         false,
         callbacks
     );
-    
+
     const videoRecognizer = await BlinkIDSDK.VideoRecognizer.createVideoRecognizerFromCameraStream(
         cameraFeed,
         recognizerRunner
     );
 
     const scanTimeoutSeconds = 15;
-   
-
     try {
         videoRecognizer.startRecognition(
             async (recognitionState) => {
@@ -79,20 +77,17 @@ const  startScan = async (sdk) => {
                 const result = await combinedGenericIDRecognizer.getResult();
                 if (result.state === BlinkIDSDK.RecognizerResultState.Empty) return
                 console.log("BlinkIDCombined results", result);
-                console.log("faceImage",result.faceImage)
-                let address = result.address.split(' ')
-                let endElement = address.length
-                let cutAddress = address.slice(0,endElement - 1)
-                let newAddress = cutAddress.join(' ')
-               
+                console.log("faceImage", result.faceImage)
+                
+                
                 Swal.fire({
                     title: 'DUI',
-                    showDenyButton:true, 
-                    showCancelButton:true,
+                    showDenyButton: true,
+                    showCancelButton: true,
                     showConfirmButton: true,
-                    confirmButtonText:'Guardar',
-                    denyButtonText:'No Guardar',
-                    cancelButtonText:'Cancelar',
+                    confirmButtonText: 'Guardar',
+                    denyButtonText: 'No Guardar',
+                    cancelButtonText: 'Cancelar',
                     html: `<br> Nombre: ${result.firstName} 
                            <br> Apellido: ${result.lastName}
                            <br> Fecha de Nacimiento: ${result.dateOfBirth.year}-${result.dateOfBirth.month}-${result.dateOfBirth.day} 
@@ -107,9 +102,9 @@ const  startScan = async (sdk) => {
                            <br> Ocupacion: ${result.profession}
                            <br>
                            `
-                }).then((result)=>{
-                    if(result.isConfirmed) Swal.fire('Guardado!','','success')
-                    else if(result.isDenied) Swal.fire('La informacion no fue guardada','','info')
+                }).then((result) => {
+                    if (result.isConfirmed) Swal.fire('Guardado!', '', 'success')
+                    else if (result.isDenied) Swal.fire('La informacion no fue guardada', '', 'info')
                 })
                 videoRecognizer?.releaseVideoFeed();
                 recognizerRunner?.delete();
@@ -128,7 +123,7 @@ const  startScan = async (sdk) => {
         return;
     }
 }
-const drawQuad = (quad) =>{
+const drawQuad = (quad) => {
     clearDrawCanvas();
     setupColor(quad);
     setupMessage(quad);
@@ -187,7 +182,7 @@ const setupColor = (displayable) => {
     drawContext.strokeStyle = color;
     drawContext.lineWidth = 5;
 }
-const setupMessage =(displayable) => {
+const setupMessage = (displayable) => {
     switch (displayable.detectionStatus) {
         case BlinkIDSDK.DetectionStatus.Fail:
             updateScanFeedback("Escaneando...");
@@ -216,7 +211,7 @@ const setupMessage =(displayable) => {
 }
 let scanFeedbackLock = false;
 
-const  updateScanFeedback = (message, force) => {
+const updateScanFeedback = (message, force) => {
     if (scanFeedbackLock && !force) {
         return;
     }
