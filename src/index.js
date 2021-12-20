@@ -120,7 +120,7 @@ const startScan = async (sdk) => {
                            <br> Fecha de Emisión: ${result.dateOfIssue.day}-${result.dateOfIssue.month}-${result.dateOfIssue.year}
                            <br> Fecha de Expiracion: ${result.dateOfExpiry.day}-${result.dateOfExpiry.month}-${result.dateOfExpiry.year}
                            <br> Numero de Documento: ${result.documentNumber} 
-                           <br> Direccion: ${newAddress} 
+                           <br> Direccion: ${result.address} 
                            <br> Nacionalidad: ${result.nationality && 'SALVADOREÑA'} 
                            <br> Genero: ${result.sex} 
                            <br> Estado Marital: ${result.maritalStatus}
