@@ -71,15 +71,39 @@ const startScan = async (sdk) => {
     try {
         videoRecognizer.startRecognition(
             async (recognitionState) => {
-                if (!videoRecognizer) return;
+                if (!videoRecognizer){ 
+                Swal.fire({ icon: 'error', title: '', text: 'Error de video de reconocimiento!'});
+                return;
+                }
                 videoRecognizer.pauseRecognition();
-                if (recognitionState === BlinkIDSDK.RecognizerResultState.Empty) return;
+                if (recognitionState === BlinkIDSDK.RecognizerResultState.Empty){ 
+                Swal.fire({ icon: 'error', title: '', text: 'El estado de reconicimiento esta vacio' });
+                return;
+                }
                 const result = await combinedGenericIDRecognizer.getResult();
-                if (result.state === BlinkIDSDK.RecognizerResultState.Empty) return
+                if (result.state === BlinkIDSDK.RecognizerResultState.Empty){
+                Swal.fire({ icon: 'error', title: '', text: 'El estado del resultado esta vacio' });
+                return 
+                } 
                 console.log("BlinkIDCombined results", result);
-                console.log("faceImage", result.faceImage)
-                
-                
+                console.log("faceImage", result.faceImage);
+                console.log("encodedImage", result.faceImage.encodedImage);
+                console.log("fathersName", result.fathersName);
+                console.log("mothersName", result.mothersName);
+
+                const { faceImage } = result;
+                const { encodedImage } = faceImage;
+                const _arrayBufferToBase64 = (buffer) => {
+                    let binary = '';
+                    let bytes = new Uint8Array(buffer);
+                    let len = bytes.byteLength;
+                    for (let i = 0; i < len; i++) {
+                        binary += String.fromCharCode(bytes[i]);
+                    }
+                    return window.btoa(binary);
+                }
+                let photo = _arrayBufferToBase64(encodedImage.buffer);
+                console.log("photo",photo)
                 Swal.fire({
                     title: 'DUI',
                     showDenyButton: true,
@@ -88,7 +112,8 @@ const startScan = async (sdk) => {
                     confirmButtonText: 'Guardar',
                     denyButtonText: 'No Guardar',
                     cancelButtonText: 'Cancelar',
-                    html: `<br> Nombre: ${result.firstName} 
+                    html: `<img height="150" width:"200" src="data:image/png;base64,${photo && photo}">
+                           <br> Nombre: ${result.firstName} 
                            <br> Apellido: ${result.lastName}
                            <br> Fecha de Nacimiento: ${result.dateOfBirth.year}-${result.dateOfBirth.month}-${result.dateOfBirth.day} 
                            <br> Lugar de Nacimiento: ${result.placeOfBirth} 
@@ -100,7 +125,6 @@ const startScan = async (sdk) => {
                            <br> Genero: ${result.sex} 
                            <br> Estado Marital: ${result.maritalStatus}
                            <br> Ocupacion: ${result.profession}
-                           <br>
                            `
                 }).then((result) => {
                     if (result.isConfirmed) Swal.fire('Guardado!', '', 'success')
@@ -120,6 +144,7 @@ const startScan = async (sdk) => {
         );
     } catch (error) {
         console.error("Error during initialization of VideoRecognizer:", error);
+        Swal.fire({ icon: 'error', title: '', text: `Error during initialization of VideoRecognizer:${error.message}` });
         return;
     }
 }
