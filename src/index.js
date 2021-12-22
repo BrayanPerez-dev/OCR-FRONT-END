@@ -87,15 +87,11 @@ const startScan = async (sdk) => {
                 } 
                 console.log("BlinkIDCombined results", result);
                 console.log("faceImage", result.faceImage);
-                console.log("encodedImage", result.faceImage.encodedImage);
-                console.log("fathersName", result.fathersName);
-                console.log("mothersName", result.mothersName);
                 console.log("digitalSignature",result.digitalSignature)
-                console.log("signatureBuffer",result.digitalSignature.signature.buffer)
                 const { faceImage,digitalSignature } = result;
                 const { encodedImage } = faceImage;
                 const {signature} = digitalSignature;
-                const _arrayBufferToBase64Photo = (buffer) => {
+                const _arrayBufferToBase64 = (buffer) => {
                     let binary = '';
                     let bytes = new Uint8Array(buffer);
                     let len = bytes.byteLength;
@@ -104,19 +100,7 @@ const startScan = async (sdk) => {
                     }
                     return window.btoa(binary);
                 }
-                let photo = _arrayBufferToBase64Photo(encodedImage.buffer);
-                console.log("photo",photo)
-                const _arrayBufferToBase64Signature = (buffer) => {
-                    let binary = '';
-                    let bytes = new Uint8Array(buffer);
-                    let len = bytes.byteLength;
-                    for (let i = 0; i < len; i++) {
-                        binary += String.fromCharCode(bytes[i]);
-                    }
-                    return window.btoa(binary);
-                }
-                let resultSignature = _arrayBufferToBase64Signature(signature.buffer);
-                console.log("Signature",resultSignature)
+                
 
                 Swal.fire({
                     title: 'DUI',
@@ -126,7 +110,7 @@ const startScan = async (sdk) => {
                     confirmButtonText: 'Guardar',
                     denyButtonText: 'No Guardar',
                     cancelButtonText: 'Cancelar',
-                    html: `<img height="150" width:"200" src="data:image/png;base64,${photo}">
+                    html: `<img height="150" width:"200" src="data:image/png;base64,${_arrayBufferToBase64(encodedImage.buffer)}">
                            <br> Nombre: ${result.firstName} 
                            <br> Apellido: ${result.lastName}
                            <br> Fecha de Nacimiento: ${result.dateOfBirth.year}-${result.dateOfBirth.month}-${result.dateOfBirth.day} 
@@ -139,7 +123,9 @@ const startScan = async (sdk) => {
                            <br> Genero: ${result.sex} 
                            <br> Estado Marital: ${result.maritalStatus}
                            <br> Ocupacion: ${result.profession}
-                           <br> <img height="100" width:"150" src="data:image/png;base64,${resultSignature}"
+                           <br> <img height="100" width:"150" style={{backgroundColor:"transparent"}}
+                           src="data:image/png;base64,${_arrayBufferToBase64(signature.buffer)
+                           }"
                            `
                 }).then((result) => {
                     if (result.isConfirmed) Swal.fire('Guardado!', '', 'success')
