@@ -92,8 +92,9 @@ const startScan = async (sdk) => {
                 console.log("mothersName", result.mothersName);
                 console.log("digitalSignature",result.digitalSignature)
                 console.log("signatureBuffer",result.digitalSignature.signature.buffer)
-                const { faceImage } = result;
+                const { faceImage,digitalSignature } = result;
                 const { encodedImage } = faceImage;
+                const {signature} = digitalSignature;
                 const _arrayBufferToBase64Photo = (buffer) => {
                     let binary = '';
                     let bytes = new Uint8Array(buffer);
@@ -105,6 +106,18 @@ const startScan = async (sdk) => {
                 }
                 let photo = _arrayBufferToBase64Photo(encodedImage.buffer);
                 console.log("photo",photo)
+                const _arrayBufferToBase64Signature = (buffer) => {
+                    let binary = '';
+                    let bytes = new Uint8Array(buffer);
+                    let len = bytes.byteLength;
+                    for (let i = 0; i < len; i++) {
+                        binary += String.fromCharCode(bytes[i]);
+                    }
+                    return window.btoa(binary);
+                }
+                let signature = _arrayBufferToBase64Signature(signature.buffer);
+                console.log("Signature",signature)
+
                 Swal.fire({
                     title: 'DUI',
                     showDenyButton: true,
@@ -126,6 +139,7 @@ const startScan = async (sdk) => {
                            <br> Genero: ${result.sex} 
                            <br> Estado Marital: ${result.maritalStatus}
                            <br> Ocupacion: ${result.profession}
+                           <br> <img height="100" width:"150" src="data:image/png;base64,${signature}"
                            `
                 }).then((result) => {
                     if (result.isConfirmed) Swal.fire('Guardado!', '', 'success')
