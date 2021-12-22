@@ -123,9 +123,8 @@ const startScan = async (sdk) => {
                            <br> Genero: ${result.sex} 
                            <br> Estado Marital: ${result.maritalStatus}
                            <br> Ocupacion: ${result.profession}
-                           <br> <img height="100" width:"150" style={{backgroundColor:"transparent"}}
-                           src="data:image/png;base64,${_arrayBufferToBase64(signature.buffer)
-                           }"
+                           <br><img height="150" width:"200" style={{backgroundColor:"transparent"}}
+                           src="data:image/png;base64,${_arrayBufferToBase64(signature.buffer)}">
                            `
                 }).then((result) => {
                     if (result.isConfirmed) Swal.fire('Guardado!', '', 'success')
