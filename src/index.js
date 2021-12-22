@@ -24,7 +24,7 @@ const main = () => {
     loadSettings.allowHelloMessage = true;
     loadSettings.loadProgressCallback = (progress) =>
         (progressEl.value = progress);
-    loadSettings.engineLocation = window.location.origin;
+    loadSettings.engineLocation = "https://blinkid.github.io/blinkid-in-browser/resources";
     console.log(window.location.origin)
     BlinkIDSDK.loadWasmModule(loadSettings).then(
         (sdk) => {
@@ -90,10 +90,11 @@ const startScan = async (sdk) => {
                 console.log("encodedImage", result.faceImage.encodedImage);
                 console.log("fathersName", result.fathersName);
                 console.log("mothersName", result.mothersName);
-
+                console.log("digitalSignature",result.digitalSignature)
+                console.log("signatureBuffer",result.digitalSignature.signature.buffer)
                 const { faceImage } = result;
                 const { encodedImage } = faceImage;
-                const _arrayBufferToBase64 = (buffer) => {
+                const _arrayBufferToBase64Photo = (buffer) => {
                     let binary = '';
                     let bytes = new Uint8Array(buffer);
                     let len = bytes.byteLength;
@@ -102,7 +103,7 @@ const startScan = async (sdk) => {
                     }
                     return window.btoa(binary);
                 }
-                let photo = _arrayBufferToBase64(encodedImage.buffer);
+                let photo = _arrayBufferToBase64Photo(encodedImage.buffer);
                 console.log("photo",photo)
                 Swal.fire({
                     title: 'DUI',
@@ -112,7 +113,7 @@ const startScan = async (sdk) => {
                     confirmButtonText: 'Guardar',
                     denyButtonText: 'No Guardar',
                     cancelButtonText: 'Cancelar',
-                    html: `<img height="150" width:"200" src="data:image/png;base64,${photo && photo}">
+                    html: `<img height="150" width:"200" src="data:image/png;base64,${photo}">
                            <br> Nombre: ${result.firstName} 
                            <br> Apellido: ${result.lastName}
                            <br> Fecha de Nacimiento: ${result.dateOfBirth.year}-${result.dateOfBirth.month}-${result.dateOfBirth.day} 
