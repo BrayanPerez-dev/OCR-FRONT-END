@@ -115,8 +115,8 @@ const startScan = async (sdk) => {
                     }
                     return window.btoa(binary);
                 }
-                let signature = _arrayBufferToBase64Signature(signature.buffer);
-                console.log("Signature",signature)
+                let resultSignature = _arrayBufferToBase64Signature(signature.buffer);
+                console.log("Signature",resultSignature)
 
                 Swal.fire({
                     title: 'DUI',
@@ -139,7 +139,7 @@ const startScan = async (sdk) => {
                            <br> Genero: ${result.sex} 
                            <br> Estado Marital: ${result.maritalStatus}
                            <br> Ocupacion: ${result.profession}
-                           <br> <img height="100" width:"150" src="data:image/png;base64,${signature}"
+                           <br> <img height="100" width:"150" src="data:image/png;base64,${resultSignature}"
                            `
                 }).then((result) => {
                     if (result.isConfirmed) Swal.fire('Guardado!', '', 'success')
