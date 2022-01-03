@@ -22,9 +22,8 @@ const main = () => {
     const loadSettings = new BlinkIDSDK.WasmSDKLoadSettings(licenseKey);
 
     loadSettings.allowHelloMessage = true;
-    loadSettings.loadProgressCallback = (progress) =>
-        (progressEl.value = progress);
-    loadSettings.engineLocation = window.location.origin
+    loadSettings.loadProgressCallback = (progress) => (progressEl.value = progress);
+    loadSettings.engineLocation = window.location.origin;
     console.log(window.location.origin)
     BlinkIDSDK.loadWasmModule(loadSettings).then(
         (sdk) => {
@@ -47,13 +46,14 @@ const main = () => {
 const startScan = async (sdk) => {
     document.getElementById("screen-start")?.classList.add("hidden");
     document.getElementById("screen-scanning")?.classList.remove("hidden");
+
     const combinedGenericIDRecognizer = await BlinkIDSDK.createBlinkIdCombinedRecognizer(
         sdk
     );
     const settings = await combinedGenericIDRecognizer.currentSettings()
-    settings["returnFullDocumentImage","returnSignatureImage"] = true
+    settings["returnFullDocumentImage", "returnSignatureImage"] = true
     await combinedGenericIDRecognizer.updateSettings(settings)
-    
+
     const callbacks = {
         onQuadDetection: (quad) => drawQuad(quad),
         onDetectionFailed: () => updateScanFeedback("Detencion fallida", true),
@@ -75,26 +75,26 @@ const startScan = async (sdk) => {
     try {
         videoRecognizer.startRecognition(
             async (recognitionState) => {
-                if (!videoRecognizer){ 
-                Swal.fire({ icon: 'error', title: '', text: 'Error de video de reconocimiento!'});
-                return;
+                if (!videoRecognizer) {
+                    Swal.fire({ icon: 'error', title: '', text: 'Error de video de reconocimiento!' });
+                    return;
                 }
                 videoRecognizer.pauseRecognition();
-                if (recognitionState === BlinkIDSDK.RecognizerResultState.Empty){ 
-                Swal.fire({ icon: 'error', title: '', text: 'El estado de reconicimiento esta vacio' });
-                return;
+                if (recognitionState === BlinkIDSDK.RecognizerResultState.Empty) {
+                    Swal.fire({ icon: 'error', title: '', text: 'El estado de reconicimiento esta vacio' });
+                    return;
                 }
                 const result = await combinedGenericIDRecognizer.getResult();
-                if (result.state === BlinkIDSDK.RecognizerResultState.Empty){
-                Swal.fire({ icon: 'error', title: '', text: 'El estado del resultado esta vacio' });
-                return 
-                } 
+                if (result.state === BlinkIDSDK.RecognizerResultState.Empty) {
+                    Swal.fire({ icon: 'error', title: '', text: 'El estado del resultado esta vacio' });
+                    return;
+                }
                 console.log("BlinkIDCombined results", result);
                 console.log("faceImage", result.faceImage);
-                console.log("digitalSignature",result.digitalSignature)
-                const { faceImage,digitalSignature } = result;
+                console.log("digitalSignature", result.digitalSignature)
+                const { faceImage, digitalSignature } = result;
                 const { encodedImage } = faceImage;
-                const {signature} = digitalSignature;
+                const { signature } = digitalSignature;
                 const _arrayBufferToBase64 = (buffer) => {
                     let binary = '';
                     let bytes = new Uint8Array(buffer);
@@ -104,7 +104,7 @@ const startScan = async (sdk) => {
                     }
                     return window.btoa(binary);
                 }
-                
+
 
                 Swal.fire({
                     title: 'DUI',
