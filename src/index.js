@@ -50,6 +50,11 @@ const startScan = async (sdk) => {
     const combinedGenericIDRecognizer = await BlinkIDSDK.createBlinkIdCombinedRecognizer(
         sdk
     );
+    const settings = await combinedGenericIDRecognizer.currentSettings()
+
+    settings["returnFullDocumentImage","returnSignatureImage"] = true
+
+    await combinedGenericIDRecognizer.updateSettings()
     const callbacks = {
         onQuadDetection: (quad) => drawQuad(quad),
         onDetectionFailed: () => updateScanFeedback("Detencion fallida", true),
@@ -123,7 +128,7 @@ const startScan = async (sdk) => {
                            <br> Genero: ${result.sex} 
                            <br> Estado Marital: ${result.maritalStatus}
                            <br> Ocupacion: ${result.profession}
-                           <br><img height="150" width:"200" style={{backgroundColor:"transparent"}}
+                           <br><img height="75" width:"125" 
                            src="data:image/png;base64,${_arrayBufferToBase64(signature.buffer)}">
                            `
                 }).then((result) => {
