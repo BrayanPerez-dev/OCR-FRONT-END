@@ -13,7 +13,7 @@ const main = () => {
         initialMessageEl.innerText = "Este navegador no es soportado!";
         return;
     }
-    let licenseKey = "sRwAAAYJbG9jYWxob3N0r/lOPgo/w35CpJmmLl0/ZtejnQ3iqJwwEiE2MsSVGiXRGL3R2hMDNZ72MwPzXh8CE3afYoct+rLb1FmhDLcT9BigmSWUfLs5LoYjcSntAAzXdcJMcyMZtIPs8BTcN4JymLbm9OJ6dHcBMSEcmjV64y5+oAWfbpXGRY9Df90JJWYjs7Tzw0kFlfa3YpJ8hpIGH+RbBmRlUKVrwpgoF4/zQgU2NQu8ueCOlws="
+    let licenseKey = "sRwAAAYJbG9jYWxob3N0r/lOPk4/w35CpJlWLc09Zs/mjuGYKJq7GjtRvUpB50NLGDbNQfrme34VlyR9wNs/P4L6GtUVgiQ1Rahc34/rXvsi/ca+hsgPa6udsMam5GcIQBblkWcamv/qu2cYWmM8Tm9Uk2PwHy7Jw1jBRoK5tfvZgo7AiNWUmvJoR2JgkyCSH3ZZOZcGiOdOk5O86+LDIRCoLo//ARugB9Wh/3ym5JPQvYCyzyGpkJtlA4HTnRduma2oAT7Qw/XLjVX7t5Js7MeX59oY0pKA9EQUPIKFWYLcQKeKmTVdj1QVf17DBFJgHY3N587WALhyznh5CJTNMeSTgUikTAGvT48SSDonVqFc";
 
     console.log(window.location.hostname)
     if (window.location.hostname === 'technosal-prototipo.herokuapp.com') licenseKey = "sRwAAAYhdGVjaG5vc2FsLXByb3RvdGlwby5oZXJva3VhcHAuY29t0NzeS8194PqCX21GrqYFvcg2p9O9RdJEA71jthEXJsAHwQrA0VmowzwKlQTixeBnorEu2xEIppEmNcDQU6vscZ4M8QGJYaDghTxXiKSIhBHr9dmI2OhCcMRMY1lvBaXRVOlJWjf0Z28M9Z1o5C67sLiCe/1Ynvh6NbYALLaRPH6+v/TWSWDkClwhZdFspRhQ77+MJwyfrU9Eovvj8fqpnmO1TjomsAvk5wk="
@@ -51,10 +51,9 @@ const startScan = async (sdk) => {
         sdk
     );
     const settings = await combinedGenericIDRecognizer.currentSettings()
-
     settings["returnFullDocumentImage","returnSignatureImage"] = true
-
-    await combinedGenericIDRecognizer.updateSettings()
+    await combinedGenericIDRecognizer.updateSettings(settings)
+    
     const callbacks = {
         onQuadDetection: (quad) => drawQuad(quad),
         onDetectionFailed: () => updateScanFeedback("Detencion fallida", true),
