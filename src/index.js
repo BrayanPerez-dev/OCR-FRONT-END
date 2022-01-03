@@ -24,7 +24,7 @@ const main = () => {
     loadSettings.allowHelloMessage = true;
     loadSettings.loadProgressCallback = (progress) =>
         (progressEl.value = progress);
-    loadSettings.engineLocation = "https://blinkid.github.io/blinkid-in-browser/resources";
+    loadSettings.engineLocation = window.location.origin
     console.log(window.location.origin)
     BlinkIDSDK.loadWasmModule(loadSettings).then(
         (sdk) => {
