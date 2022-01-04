@@ -1,6 +1,4 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable computed-property-spacing */
-/* eslint-disable dot-notation */
 /* eslint-disable no-sequences */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-return-assign */
@@ -58,8 +56,13 @@ const startScaning = async (sdk) => {
     sdk,
   );
   const settings = await combinedGenericIDRecognizer.currentSettings();
-  settings[ 'returnFullDocumentImage' ] = true;
-  settings[ 'returnSignatureImage' ] = true;
+  settings.allowSignature = true;
+  settings.returnEncodedFaceImage = true;
+  settings.returnEncodedFullDocumentImage = true;
+  settings.returnEncodedSignatureImage = true;
+  settings.returnFaceImage = true;
+  settings.returnFullDocumentImage = true;
+  settings.returnSignatureImage = true;
   await combinedGenericIDRecognizer.updateSettings(settings);
   const callbacks = {
     onQuadDetection: (quad) => drawQuad(quad),
@@ -120,6 +123,8 @@ const startScaning = async (sdk) => {
         denyButtonText: 'No Guardar',
         cancelButtonText: 'Cancelar',
         html: `<img height="150" width:"200" src="data:image/png;base64,${arrayBufferToBase64(encodedImage.buffer)}">
+               <br><img height="150" width:"200" src="data:image/png;base64,${arrayBufferToBase64(faceImage.rawImage.data.buffer)}">
+                
                            <br> Nombre: ${result.firstName} 
                            <br> Apellido: ${result.lastName}
                            <br> Fecha de Nacimiento: ${result.dateOfBirth.year}-${result.dateOfBirth.month}-${result.dateOfBirth.day} 
