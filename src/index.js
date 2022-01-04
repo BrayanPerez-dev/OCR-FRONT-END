@@ -104,6 +104,7 @@ const startScaning = async (sdk) => {
       const { faceImage, digitalSignature } = result;
       const { encodedImage } = faceImage;
       const { signature } = digitalSignature;
+      console.log(signature);
       const arrayBufferToBase64 = (buffer) => {
         let binary = '';
         const bytes = new Uint8Array(buffer);
@@ -123,7 +124,6 @@ const startScaning = async (sdk) => {
         denyButtonText: 'No Guardar',
         cancelButtonText: 'Cancelar',
         html: `<img height="150" width:"200" src="data:image/png;base64,${arrayBufferToBase64(encodedImage.buffer)}">
-               <br><img height="150" width:"200" src="data:image/png;base64,${arrayBufferToBase64(faceImage.rawImage.data.buffer)}">
                 
                            <br> Nombre: ${result.firstName} 
                            <br> Apellido: ${result.lastName}
@@ -137,10 +137,6 @@ const startScaning = async (sdk) => {
                            <br> Genero: ${result.sex} 
                            <br> Estado Marital: ${result.maritalStatus}
                            <br> Ocupacion: ${result.profession}
-                           <br> Nombre de el Padre: ${result.fathersName}
-                           <br> Nombre de el Madre: ${result.mothersName}
-                           <br><img height="75" width:"125" 
-                           src="data:image/png;base64,${arrayBufferToBase64(signature.buffer)}">
                            `,
       }).then((value) => {
         if (value.isConfirmed) Swal.fire('Guardado!', '', 'success');
