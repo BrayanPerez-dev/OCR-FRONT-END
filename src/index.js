@@ -99,9 +99,8 @@ const startScaning = async (sdk) => {
         return;
       }
       console.log('BlinkIDCombined results', result);
-      const { faceImage, signatureImage } = result;
+      const { faceImage } = result;
       const { encodedImage } = faceImage;
-      console.log(signatureImage);
       const encodedImageToBase64 = (buffer) => {
         let binary = '';
         const bytes = new Uint8Array(buffer);
@@ -111,18 +110,6 @@ const startScaning = async (sdk) => {
         }
         return window.btoa(binary);
       };
-      const signatureToBase64 = (buffer) => {
-        let binary = '';
-        const bytes = new Uint8Array(buffer);
-        const len = bytes.byteLength;
-        for (let i = 0; i < len; i++) {
-          binary += String.fromCharCode(bytes[i]);
-        }
-        return window.btoa(binary);
-      };
-      console.log('dataBuffer', signatureImage.rawImage.data.buffer);
-      console.log('data', signatureImage.rawImage.data);
-      console.log('encoded', signatureImage.encodedImage.buffer);
 
       Swal.fire({
         title: 'DUI',
@@ -145,7 +132,6 @@ const startScaning = async (sdk) => {
                            <br> Genero: ${result.sex} 
                            <br> Estado Marital: ${result.maritalStatus}
                            <br> Ocupacion: ${result.profession}
-                           <br> <img height="99" width:"99" src="data:image/png;base64,${signatureToBase64(signatureImage.rawImage.data.buffer)}">
                            `,
       }).then((value) => {
         if (value.isConfirmed) Swal.fire('Guardado!', '', 'success');
