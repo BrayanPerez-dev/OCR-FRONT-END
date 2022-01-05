@@ -99,13 +99,19 @@ const startScaning = async (sdk) => {
         return;
       }
       console.log('BlinkIDCombined results', result);
-      console.log('faceImage', result.faceImage);
-      console.log('digitalSignature', result.digitalSignature);
-      const { faceImage, digitalSignature } = result;
+      const { faceImage, signatureImage } = result;
       const { encodedImage } = faceImage;
-      const { signature } = digitalSignature;
-      console.log(signature);
-      const arrayBufferToBase64 = (buffer) => {
+      console.log(signatureImage);
+      const encodedImageToBase64 = (buffer) => {
+        let binary = '';
+        const bytes = new Uint8Array(buffer);
+        const len = bytes.byteLength;
+        for (let i = 0; i < len; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        return window.btoa(binary);
+      };
+      const encodedSignatureToBase64 = (buffer) => {
         let binary = '';
         const bytes = new Uint8Array(buffer);
         const len = bytes.byteLength;
@@ -123,8 +129,7 @@ const startScaning = async (sdk) => {
         confirmButtonText: 'Guardar',
         denyButtonText: 'No Guardar',
         cancelButtonText: 'Cancelar',
-        html: `<img height="150" width:"200" src="data:image/png;base64,${arrayBufferToBase64(encodedImage.buffer)}">
-                
+        html: `<img height="150" width:"200" src="data:image/png;base64,${encodedImageToBase64(encodedImage.buffer)}">
                            <br> Nombre: ${result.firstName} 
                            <br> Apellido: ${result.lastName}
                            <br> Fecha de Nacimiento: ${result.dateOfBirth.year}-${result.dateOfBirth.month}-${result.dateOfBirth.day} 
@@ -137,6 +142,7 @@ const startScaning = async (sdk) => {
                            <br> Genero: ${result.sex} 
                            <br> Estado Marital: ${result.maritalStatus}
                            <br> Ocupacion: ${result.profession}
+                           <br> <img height="99" width:"99" src="data:image/png;base64,${encodedSignatureToBase64(signatureImage.encodedImage.buffer)}">
                            `,
       }).then((value) => {
         if (value.isConfirmed) Swal.fire('Guardado!', '', 'success');
