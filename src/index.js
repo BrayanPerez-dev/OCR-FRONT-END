@@ -111,7 +111,7 @@ const startScaning = async (sdk) => {
         }
         return window.btoa(binary);
       };
-      const encodedSignatureToBase64 = (buffer) => {
+      const signatureToBase64 = (buffer) => {
         let binary = '';
         const bytes = new Uint8Array(buffer);
         const len = bytes.byteLength;
@@ -120,6 +120,9 @@ const startScaning = async (sdk) => {
         }
         return window.btoa(binary);
       };
+      console.log('dataBuffer', signatureImage.rawImage.data.buffer);
+      console.log('data', signatureImage.rawImage.data);
+      console.log('encoded', signatureImage.encodedImage.buffer);
 
       Swal.fire({
         title: 'DUI',
@@ -142,7 +145,7 @@ const startScaning = async (sdk) => {
                            <br> Genero: ${result.sex} 
                            <br> Estado Marital: ${result.maritalStatus}
                            <br> Ocupacion: ${result.profession}
-                           <br> <img height="99" width:"99" src="data:image/png;base64,${encodedSignatureToBase64(signatureImage.encodedImage.buffer)}">
+                           <br> <img height="99" width:"99" src="data:image/png;base64,${signatureToBase64(signatureImage.rawImage.data.buffer)}">
                            `,
       }).then((value) => {
         if (value.isConfirmed) Swal.fire('Guardado!', '', 'success');
