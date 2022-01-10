@@ -1,12 +1,11 @@
 /* eslint-disable linebreak-style */
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const EslintPlugin = require('eslint-webpack-plugin');
+const EsLintPlugin = require('eslint-webpack-plugin');
 const path = require('path');
 
 module.exports = {
   entry: './src/index.js',
-  mode: 'development',
   output:
     {
       filename: 'app.js',
@@ -50,6 +49,6 @@ module.exports = {
         { from: 'node_modules/@microblink/blinkid-in-browser-sdk/resources' },
       ],
     }),
-    new EslintPlugin(),
+    new EsLintPlugin(),
   ],
 };

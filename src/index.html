@@ -9,11 +9,20 @@
             <h1 id="msg">Cargando...</h1>
             <progress id="load-progress" value="0" max="100"></progress>
         </div>
-
         <div id="screen-start" class="hidden">
             <a class="button" id="start-scan">Iniciar Escaneo</a>
+<!--    <a id="btnDocu" class="btnDocu">Ver Docuementos</a>-->
+         <div id="getDocuments">
+             <div>
+                 Sin documentos
+             </div>
+         </div>
         </div>
-
+            <template id="template">
+            <img></img>
+            <p></p>
+            </template>
+        </div>
         <div id="screen-scanning" class="hidden">
             <video id="camera-feed" playsinline></video>
             <canvas id="camera-feedback"></canvas>

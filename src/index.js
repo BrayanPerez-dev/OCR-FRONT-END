@@ -18,6 +18,10 @@ const screenStart = document.getElementById('screen-start');
 const screenScanning = document.getElementById('screen-scanning');
 const screenInitial = document.getElementById('screen-initial');
 const startScan = document.getElementById('start-scan');
+/* const btnDocu = document.getElementById('btnDocu');
+ */const fragment = document.createDocumentFragment();
+const template = document.getElementById('template').content;
+const listDocs = document.getElementById('getDocuments');
 const main = () => {
   if (!BlinkIDSDK.isBrowserSupported()) {
     initialMessageEl.innerText = 'Este navegador no es soportado!';
@@ -48,6 +52,9 @@ const main = () => {
   );
 };
 
+document.addEventListener('DOMContentLoaded', () => {
+  paintDocs();
+});
 const startScaning = async (sdk) => {
   screenStart?.classList.add('hidden');
   screenScanning?.classList.remove('hidden');
@@ -56,13 +63,10 @@ const startScaning = async (sdk) => {
     sdk,
   );
   const settings = await combinedGenericIDRecognizer.currentSettings();
-  settings.allowSignature = true;
   settings.returnEncodedFaceImage = true;
   settings.returnEncodedFullDocumentImage = true;
-  settings.returnEncodedSignatureImage = true;
   settings.returnFaceImage = true;
   settings.returnFullDocumentImage = true;
-  settings.returnSignatureImage = true;
   await combinedGenericIDRecognizer.updateSettings(settings);
   const callbacks = {
     onQuadDetection: (quad) => drawQuad(quad),
@@ -110,6 +114,7 @@ const startScaning = async (sdk) => {
         }
         return window.btoa(binary);
       };
+      const photo = encodedImageToBase64(encodedImage.buffer);
 
       Swal.fire({
         title: 'DUI',
@@ -119,7 +124,7 @@ const startScaning = async (sdk) => {
         confirmButtonText: 'Guardar',
         denyButtonText: 'No Guardar',
         cancelButtonText: 'Cancelar',
-        html: `<img height="150" width:"200" src="data:image/png;base64,${encodedImageToBase64(encodedImage.buffer)}">
+        html: `<img height="150" width:"350" src="data:image/png;base64,${photo}">
                            <br> Nombre: ${result.firstName} 
                            <br> Apellido: ${result.lastName}
                            <br> Fecha de Nacimiento: ${result.dateOfBirth.year}-${result.dateOfBirth.month}-${result.dateOfBirth.day} 
@@ -134,8 +139,10 @@ const startScaning = async (sdk) => {
                            <br> Ocupacion: ${result.profession}
                            `,
       }).then((value) => {
-        if (value.isConfirmed) Swal.fire('Guardado!', '', 'success');
-        else if (value.isDenied) Swal.fire('La informacion no fue guardada', '', 'info');
+        if (value.isConfirmed) {
+          Swal.fire('Guardado!', '', 'success');
+          createDocument(result, photo);
+        } else if (value.isDenied) { Swal.fire('La informacion no fue guardada', '', 'info'); }
       });
       videoRecognizer?.releaseVideoFeed();
       recognizerRunner?.delete();
@@ -151,6 +158,57 @@ const startScaning = async (sdk) => {
     Swal.fire({ icon: 'error', title: '', text: `Error during initialization of VideoRecognizer:${error.message}` });
   }
 };
+
+/* btnDocu.addEventListener('click', () => {
+  console.log('f');
+});
+ */
+const paintDocs = async () => {
+  let docs = [];
+  await fetch('https://intellityc-scanner-server.herokuapp.com/api/document')
+    .then((res) => res.json())
+    .then((data) => docs = data);
+  console.log('docs', docs);
+  listDocs.innerHTML = '';
+  docs.forEach((item) => {
+    const clone = template.cloneNode(true);
+    clone.querySelector('p').textContent = item.first_name;
+    clone.querySelector('img').src = `data:image/png;base64,${item.photo}`;
+    fragment.appendChild(clone);
+  });
+  listDocs.appendChild(fragment);
+};
+const createDocument = async (result, photo) => {
+  console.log(result);
+  const datebirth = `${result.dateOfBirth.month}/${result.dateOfBirth.day}/${result.dateOfBirth.year}`;
+  const dateissue = `${result.dateOfIssue.month}/${result.dateOfIssue.day}/${result.dateOfIssue.year}`;
+  const dateexpiry = `${result.dateOfExpiry.month}/${result.dateOfExpiry.day}/${result.dateOfExpiry.year}`;
+  const rawResponse = await fetch('https://intellityc-scanner-server.herokuapp.com/api/document', {
+    method: 'POST',
+    headers: {
+      // eslint-disable-next-line quote-props
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: {
+      firstname: result.firstName,
+      lastname: result.lastName,
+      datebirth,
+      dateissue,
+      dateexpiry,
+      numdocument: result.documentNumber,
+      addres: result.address,
+      nationality: 'SALVADOREÑA',
+      gender: result.sex,
+      marital_status: result.maritalStatus,
+      proffesion: result.profession,
+      photo,
+    },
+  });
+  const content = await rawResponse.json();
+  console.log(content);
+};
+
 const drawQuad = (quad) => {
   clearDrawCanvas();
   setupColor(quad);

@@ -1,21 +1,23 @@
 {
-  "name": "deploy-blinkid",
+  "name": "intellityc-blinkid",
   "version": "1.0.0",
   "engines": {
     "node": "16.13.1"
   },
-  "description": "",
+  "description": "Web app scanner",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack serve",
+    "dev": "webpack serve --mode development",
     "start": "node server.js",
     "build": "webpack --mode production"
   },
   "keywords": [],
-  "author": "",
+  "author": "technosal",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.16.7",
     "@babel/core": "^7.16.0",
+    "@babel/node": "^7.16.7",
     "@babel/plugin-transform-runtime": "^7.16.4",
     "@babel/preset-env": "^7.16.4",
     "babel-loader": "^8.2.3",
@@ -34,8 +36,10 @@
     "webpack-dev-server": "^4.6.0"
   },
   "dependencies": {
+    "@babel/runtime": "^7.16.7",
     "@microblink/blinkid-in-browser-sdk": "^5.14.2",
     "express": "^4.17.1",
-    "sweetalert2": "^11.3.0"
+    "sweetalert2": "^11.3.0",
+    "url": "^0.11.0"
   }
 }
