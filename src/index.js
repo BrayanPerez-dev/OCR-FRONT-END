@@ -17,11 +17,11 @@ const scanFeedback = document.getElementById('camera-guides');
 const screenStart = document.getElementById('screen-start');
 const screenScanning = document.getElementById('screen-scanning');
 const screenInitial = document.getElementById('screen-initial');
-const startScan = document.getElementById('start-scan');
-/* const btnDocu = document.getElementById('btnDocu');
- */const fragment = document.createDocumentFragment();
+const startScan = document.getElementById('start-scan'); /*
+const docs = document.getElementById('docs');
 const template = document.getElementById('template').content;
-const listDocs = document.getElementById('getDocuments');
+const fragment = document.createDocumentFragment(); */
+const documentsTable = document.getElementById('documents-table');
 const main = () => {
   if (!BlinkIDSDK.isBrowserSupported()) {
     initialMessageEl.innerText = 'Este navegador no es soportado!';
@@ -29,7 +29,7 @@ const main = () => {
   }
   let licenseKey = 'sRwAAAYJbG9jYWxob3N0r/lOPk4/w35CpJlWLc09Zs/mjuGYKJq7GjtRvUpB50NLGDbNQfrme34VlyR9wNs/P4L6GtUVgiQ1Rahc34/rXvsi/ca+hsgPa6udsMam5GcIQBblkWcamv/qu2cYWmM8Tm9Uk2PwHy7Jw1jBRoK5tfvZgo7AiNWUmvJoR2JgkyCSH3ZZOZcGiOdOk5O86+LDIRCoLo//ARugB9Wh/3ym5JPQvYCyzyGpkJtlA4HTnRduma2oAT7Qw/XLjVX7t5Js7MeX59oY0pKA9EQUPIKFWYLcQKeKmTVdj1QVf17DBFJgHY3N587WALhyznh5CJTNMeSTgUikTAGvT48SSDonVqFc';
 
-  if (window.location.hostname === 'technosal-prototipo.herokuapp.com') licenseKey = 'sRwAAAYhdGVjaG5vc2FsLXByb3RvdGlwby5oZXJva3VhcHAuY29t0NzeS8194PqCX21GrqYFvcg2p9O9RdJEA71jthEXJsAHwQrA0VmowzwKlQTixeBnorEu2xEIppEmNcDQU6vscZ4M8QGJYaDghTxXiKSIhBHr9dmI2OhCcMRMY1lvBaXRVOlJWjf0Z28M9Z1o5C67sLiCe/1Ynvh6NbYALLaRPH6+v/TWSWDkClwhZdFspRhQ77+MJwyfrU9Eovvj8fqpnmO1TjomsAvk5wk=';
+  if (window.location.hostname === 'technosal-prototipo.herokuapp.com') { licenseKey = 'sRwAAAYhdGVjaG5vc2FsLXByb3RvdGlwby5oZXJva3VhcHAuY29t0NzeS8194PqCX21GrqYFvcg2p9O9RdJEA71jthEXJsAHwQrA0VmowzwKlQTixeBnorEu2xEIppEmNcDQU6vscZ4M8QGJYaDghTxXiKSIhBHr9dmI2OhCcMRMY1lvBaXRVOlJWjf0Z28M9Z1o5C67sLiCe/1Ynvh6NbYALLaRPH6+v/TWSWDkClwhZdFspRhQ77+MJwyfrU9Eovvj8fqpnmO1TjomsAvk5wk='; }
 
   const loadSettings = new BlinkIDSDK.WasmSDKLoadSettings(licenseKey);
 
@@ -52,16 +52,11 @@ const main = () => {
   );
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-  paintDocs();
-});
 const startScaning = async (sdk) => {
   screenStart?.classList.add('hidden');
   screenScanning?.classList.remove('hidden');
 
-  const combinedGenericIDRecognizer = await BlinkIDSDK.createBlinkIdCombinedRecognizer(
-    sdk,
-  );
+  const combinedGenericIDRecognizer = await BlinkIDSDK.createBlinkIdCombinedRecognizer(sdk);
   const settings = await combinedGenericIDRecognizer.currentSettings();
   settings.returnEncodedFaceImage = true;
   settings.returnEncodedFullDocumentImage = true;
@@ -89,17 +84,29 @@ const startScaning = async (sdk) => {
   try {
     videoRecognizer.startRecognition(async (recognitionState) => {
       if (!videoRecognizer) {
-        Swal.fire({ icon: 'error', title: '', text: 'Error de video de reconocimiento!' });
+        Swal.fire({
+          icon: 'error',
+          title: '',
+          text: 'Error de video de reconocimiento!',
+        });
         return;
       }
       videoRecognizer.pauseRecognition();
       if (recognitionState === BlinkIDSDK.RecognizerResultState.Empty) {
-        Swal.fire({ icon: 'error', title: '', text: 'El estado de reconicimiento esta vacio' });
+        Swal.fire({
+          icon: 'error',
+          title: '',
+          text: 'El estado de reconicimiento esta vacio',
+        });
         return;
       }
       const result = await combinedGenericIDRecognizer.getResult();
       if (result.state === BlinkIDSDK.RecognizerResultState.Empty) {
-        Swal.fire({ icon: 'error', title: '', text: 'El estado del resultado esta vacio' });
+        Swal.fire({
+          icon: 'error',
+          title: '',
+          text: 'El estado del resultado esta vacio',
+        });
         return;
       }
       console.log('BlinkIDCombined results', result);
@@ -127,13 +134,25 @@ const startScaning = async (sdk) => {
         html: `<img height="150" width:"350" src="data:image/png;base64,${photo}">
                            <br> Nombre: ${result.firstName} 
                            <br> Apellido: ${result.lastName}
-                           <br> Fecha de Nacimiento: ${result.dateOfBirth.year}-${result.dateOfBirth.month}-${result.dateOfBirth.day} 
+                           <br> Fecha de Nacimiento: ${
+  result.dateOfBirth.day
+}-${result.dateOfBirth.month}-${
+  result.dateOfBirth.year
+} 
                            <br> Lugar de Nacimiento: ${result.placeOfBirth} 
-                           <br> Fecha de Emisión: ${result.dateOfIssue.day}-${result.dateOfIssue.month}-${result.dateOfIssue.year}
-                           <br> Fecha de Expiracion: ${result.dateOfExpiry.day}-${result.dateOfExpiry.month}-${result.dateOfExpiry.year}
+                           <br> Fecha de Emisión: ${result.dateOfIssue.day}-${
+  result.dateOfIssue.month
+}-${result.dateOfIssue.year}
+                           <br> Fecha de Expiracion: ${
+  result.dateOfExpiry.day
+}-${result.dateOfExpiry.month}-${
+  result.dateOfExpiry.year
+}
                            <br> Numero de Documento: ${result.documentNumber} 
                            <br> Direccion: ${result.address} 
-                           <br> Nacionalidad: ${result.nationality && 'SALVADOREÑA'} 
+                           <br> Nacionalidad: ${
+  result.nationality && 'SALVADOREÑA'
+} 
                            <br> Genero: ${result.sex} 
                            <br> Estado Marital: ${result.maritalStatus}
                            <br> Ocupacion: ${result.profession}
@@ -142,69 +161,95 @@ const startScaning = async (sdk) => {
         if (value.isConfirmed) {
           Swal.fire('Guardado!', '', 'success');
           createDocument(result, photo);
-        } else if (value.isDenied) { Swal.fire('La informacion no fue guardada', '', 'info'); }
+        } else if (value.isDenied) {
+          Swal.fire('La informacion no fue guardada', '', 'info');
+        }
       });
       videoRecognizer?.releaseVideoFeed();
       recognizerRunner?.delete();
       combinedGenericIDRecognizer?.delete();
       clearDrawCanvas();
-      screenStart
-        ?.classList.remove('hidden');
-      screenScanning
-        ?.classList.add('hidden');
+      screenStart?.classList.remove('hidden');
+      screenScanning?.classList.add('hidden');
     }, scanTimeoutSeconds * 1000);
   } catch (error) {
     console.error('Error during initialization of VideoRecognizer:', error);
-    Swal.fire({ icon: 'error', title: '', text: `Error during initialization of VideoRecognizer:${error.message}` });
+    Swal.fire({
+      icon: 'error',
+      title: '',
+      text: `Error during initialization of VideoRecognizer:${error.message}`,
+    });
   }
 };
 
-/* btnDocu.addEventListener('click', () => {
-  console.log('f');
+document.addEventListener('DOMContentLoaded', () => {
+  fetchDocs();
 });
- */
-const paintDocs = async () => {
-  let docs = [];
-  await fetch('https://intellityc-scanner-server.herokuapp.com/api/document')
-    .then((res) => res.json())
-    .then((data) => docs = data);
-  console.log('docs', docs);
-  listDocs.innerHTML = '';
-  docs.forEach((item) => {
-    const clone = template.cloneNode(true);
-    clone.querySelector('p').textContent = item.first_name;
-    clone.querySelector('img').src = `data:image/png;base64,${item.photo}`;
-    fragment.appendChild(clone);
-  });
-  listDocs.appendChild(fragment);
+
+const fetchDocs = async () => {
+  const res = await fetch(
+    'https://intellityc-scanner-server.herokuapp.com/api/document',
+  );
+  const data = await res.json();
+  paintDocs(data);
+};
+const paintDocs = async (data) => {
+  console.log('docs', data);
+  let tab = `
+  <tr>
+  <th scope="col">#</th>
+  <th scope="col">Foto</th>
+  <th scope="col">Nombre</th>
+  <th scope="col">Apellido</th>
+  <th scope="col">Fecha de nacimiento</th>
+  <th scope="col">Fecha de emision</th>
+  <th scope="col">Fecha de expiracion</th>
+  <th scope="col">Numero de documento</th>
+  <th scope="col">Direccion</th>
+  <th scope="col">Nacionalidad</th>
+  <th scope="col">Genero</th>
+  <th scope="col">Estado Marital</th>
+  <th scope="col">Ocupacion</th>
+</tr>
+  `;
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const doc of data) {
+    tab += `<tr><td>${doc.id}</td><td><img src='data:image/png;base64,${doc.photo}' alt='photo'></td><td>${doc.first_name}</td><td>${doc.last_name}</td><td>${new Date(doc.date_birth).toLocaleDateString()}</td><td>${new Date(doc.date_issue).toLocaleDateString()}
+    </td><td>${new Date(doc.date_expiry).toLocaleDateString()}</td><td>${doc.num_document}</td><td>${doc.addres}</td><td>${doc.nationality}</td><td>${doc.gender}</td><td>${doc.marital_status}</td><td>${doc.proffesion}</td></tr>`;
+  }
+  documentsTable.innerHTML = tab;
 };
 const createDocument = async (result, photo) => {
   console.log(result);
   const datebirth = `${result.dateOfBirth.month}/${result.dateOfBirth.day}/${result.dateOfBirth.year}`;
   const dateissue = `${result.dateOfIssue.month}/${result.dateOfIssue.day}/${result.dateOfIssue.year}`;
   const dateexpiry = `${result.dateOfExpiry.month}/${result.dateOfExpiry.day}/${result.dateOfExpiry.year}`;
-  const rawResponse = await fetch('https://intellityc-scanner-server.herokuapp.com/api/document', {
-    method: 'POST',
-    headers: {
-      // eslint-disable-next-line quote-props
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
+  const rawResponse = await fetch(
+    'https://intellityc-scanner-server.herokuapp.com/api/document',
+    {
+      method: 'POST',
+      headers: {
+        // eslint-disable-next-line quote-props
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: {
+        firstname: result.firstName,
+        lastname: result.lastName,
+        datebirth,
+        dateissue,
+        dateexpiry,
+        numdocument: result.documentNumber,
+        addres: result.address,
+        nationality: 'SALVADOREÑA',
+        gender: result.sex,
+        marital_status: result.maritalStatus,
+        proffesion: result.profession,
+        photo,
+      },
     },
-    body: {
-      firstname: result.firstName,
-      lastname: result.lastName,
-      datebirth,
-      dateissue,
-      dateexpiry,
-      numdocument: result.documentNumber,
-      addres: result.address,
-      nationality: 'SALVADOREÑA',
-      gender: result.sex,
-      marital_status: result.maritalStatus,
-      proffesion: result.profession,
-      photo,
-    },
-  });
+  );
   const content = await rawResponse.json();
   console.log(content);
 };

@@ -11,18 +11,31 @@
         </div>
         <div id="screen-start" class="hidden">
             <a class="button" id="start-scan">Iniciar Escaneo</a>
-<!--    <a id="btnDocu" class="btnDocu">Ver Docuementos</a>-->
-         <div id="getDocuments">
-             <div>
-                 Sin documentos
-             </div>
+         <div id="documents">
+             <h4>Documentos</h4>
+             <table id="documents-table" class="table">
+             </table>
+             <template id="template">
+                <tr>
+                    <th scope="row">correlativo</th>
+                    <td><img src="''" alt="photo"></img></td>
+                    <td>Nombre</td>
+                    <td>Apellido</td>
+                    <td>Fecha de nacimiento</td>
+                    <td>Lugar de nacimiento</td>
+                    <td>Fecha de emision</td>
+                    <td>Fecha de expiracion</td>
+                    <td>Numero de documento</td>
+                    <td>Direccion</td>
+                    <td>Nacionalidad</td>
+                    <td>Genero</td>
+                    <td>Estado Marital</td>
+                    <td>Ocupacion</td>
+                </tr>
+                </template>
          </div>
         </div>
-            <template id="template">
-            <img></img>
-            <p></p>
-            </template>
-        </div>
+           
         <div id="screen-scanning" class="hidden">
             <video id="camera-feed" playsinline></video>
             <canvas id="camera-feedback"></canvas>

@@ -8,8 +8,8 @@ module.exports = {
   entry: './src/index.js',
   output:
     {
-      filename: 'app.js',
       path: path.resolve(__dirname, 'dist'),
+      filename: 'app.js',
     },
   module: {
     rules: [
@@ -42,7 +42,6 @@ module.exports = {
   plugins: [
     new HtmlWebPackPlugin({
       template: './src/index.html',
-      filename: './index.html',
     }),
     new CopyPlugin({
       patterns: [
@@ -51,4 +50,6 @@ module.exports = {
     }),
     new EsLintPlugin(),
   ],
+  devtool: 'eval-source-map',
+
 };
