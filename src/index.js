@@ -4,6 +4,10 @@
 /* eslint-disable no-return-assign */
 /* eslint-disable no-console */
 /* eslint-disable no-use-before-define */
+/* eslint-disable max-len */
+/* eslint-disable quotes */
+/* eslint-disable radix */
+
 import * as BlinkIDSDK from '@microblink/blinkid-in-browser-sdk';
 import Swal from 'sweetalert2';
 import './style.css';
@@ -184,6 +188,7 @@ const startScaning = async (sdk) => {
 
 document.addEventListener('DOMContentLoaded', () => {
   fetchDocs();
+  createDocument();
 });
 
 const fetchDocs = async () => {
@@ -202,6 +207,7 @@ const paintDocs = async (data) => {
   <th scope="col">Nombre</th>
   <th scope="col">Apellido</th>
   <th scope="col">Fecha de nacimiento</th>
+  <th scope="col">Lugar de nacimiento</th>
   <th scope="col">Fecha de emision</th>
   <th scope="col">Fecha de expiracion</th>
   <th scope="col">Numero de documento</th>
@@ -215,43 +221,40 @@ const paintDocs = async (data) => {
 
   // eslint-disable-next-line no-restricted-syntax
   for (const doc of data) {
-    tab += `<tr><td>${doc.id}</td><td><img src='data:image/png;base64,${doc.photo}' alt='photo'></td><td>${doc.first_name}</td><td>${doc.last_name}</td><td>${new Date(doc.date_birth).toLocaleDateString()}</td><td>${new Date(doc.date_issue).toLocaleDateString()}
-    </td><td>${new Date(doc.date_expiry).toLocaleDateString()}</td><td>${doc.num_document}</td><td>${doc.addres}</td><td>${doc.nationality}</td><td>${doc.gender}</td><td>${doc.marital_status}</td><td>${doc.proffesion}</td></tr>`;
+    tab += `<tr><td>${doc.id}</td><td><img src='data:image/png;base64,${doc.photo}' alt='photo'></td><td>${doc.first_name}</td><td>${doc.last_name}</td><td>${new Date(doc.date_birth).getDay()}-${new Date(doc.date_birth).getMonth()}-${new Date(doc.date_birth).getFullYear()}</td><td>${doc.place_birth}</td><td>${new Date(doc.date_issue).getDay()}-${new Date(doc.date_issue).getMonth()}-${new Date(doc.date_issue).getFullYear()}
+    </td><td>${new Date(doc.date_expiry).getDay()}-${new Date(doc.date_expiry).getMonth()}-${new Date(doc.date_expiry).getFullYear()}</td><td>${doc.num_document}</td><td>${doc.addres}</td><td>${doc.nationality}</td><td>${doc.gender}</td><td>${doc.marital_status}</td><td>${doc.proffesion}</td></tr>`;
   }
   documentsTable.innerHTML = tab;
 };
-const createDocument = async (result, photo) => {
-  console.log(result);
-  const datebirth = `${result.dateOfBirth.month}/${result.dateOfBirth.day}/${result.dateOfBirth.year}`;
-  const dateissue = `${result.dateOfIssue.month}/${result.dateOfIssue.day}/${result.dateOfIssue.year}`;
-  const dateexpiry = `${result.dateOfExpiry.month}/${result.dateOfExpiry.day}/${result.dateOfExpiry.year}`;
-  const rawResponse = await fetch(
+
+const createDocument = async (result, base64Photo) => {
+  console.log(result, base64Photo);
+  const dateBirth = new Date(result.dateOfBirth.year, result.dateOfBirth.month, result.dateOfBirth.day);
+  const dateIssue = new Date(result.dateOfIssue.year, result.dateOfIssue.month, result.dateOfIssue.day);
+  const dateExpiry = new Date(result.dateOfExpiry.year, result.dateOfExpiry.month, result.dateOfExpiry.day);
+  const documentNumber = parseInt(result.documentNumber);
+  fetch(
     'https://intellityc-scanner-server.herokuapp.com/api/document',
     {
       method: 'POST',
-      headers: {
-        // eslint-disable-next-line quote-props
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: {
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
         firstname: result.firstName,
         lastname: result.lastName,
-        datebirth,
-        dateissue,
-        dateexpiry,
-        numdocument: result.documentNumber,
+        datebirth: dateBirth,
+        dateissue: dateIssue,
+        dateexpiry: dateExpiry,
+        numdocument: documentNumber,
         addres: result.address,
-        nationality: 'SALVADOREÑA',
+        nationality: result.nationality,
         gender: result.sex,
         marital_status: result.maritalStatus,
         proffesion: result.profession,
-        photo,
-      },
+        photo: base64Photo,
+        placebirth: 'mejicanos, san salvador',
+      }),
     },
-  );
-  const content = await rawResponse.json();
-  console.log(content);
+  ).then((response) => response.json()).then((data) => console.log(data));
 };
 
 const drawQuad = (quad) => {
