@@ -188,7 +188,6 @@ const startScaning = async (sdk) => {
 
 document.addEventListener('DOMContentLoaded', () => {
   fetchDocs();
-  createDocument();
 });
 
 const fetchDocs = async () => {
