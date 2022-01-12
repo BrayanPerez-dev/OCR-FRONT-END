@@ -39,7 +39,6 @@
     "@babel/runtime": "^7.16.7",
     "@microblink/blinkid-in-browser-sdk": "^5.14.2",
     "express": "^4.17.1",
-    "sweetalert2": "^11.3.0",
-    "url": "^0.11.0"
+    "sweetalert2": "^11.3.0"
   }
 }

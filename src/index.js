@@ -21,10 +21,7 @@ const scanFeedback = document.getElementById('camera-guides');
 const screenStart = document.getElementById('screen-start');
 const screenScanning = document.getElementById('screen-scanning');
 const screenInitial = document.getElementById('screen-initial');
-const startScan = document.getElementById('start-scan'); /*
-const docs = document.getElementById('docs');
-const template = document.getElementById('template').content;
-const fragment = document.createDocumentFragment(); */
+const startScan = document.getElementById('start-scan');
 const documentsTable = document.getElementById('documents-table');
 const main = () => {
   if (!BlinkIDSDK.isBrowserSupported()) {
@@ -220,8 +217,12 @@ const paintDocs = async (data) => {
 
   // eslint-disable-next-line no-restricted-syntax
   for (const doc of data) {
-    tab += `<tr><td>${doc.id}</td><td><img src='data:image/png;base64,${doc.photo}' alt='photo'></td><td>${doc.first_name}</td><td>${doc.last_name}</td><td>${new Date(doc.date_birth).getDay()}-${new Date(doc.date_birth).getMonth()}-${new Date(doc.date_birth).getFullYear()}</td><td>${doc.place_birth}</td><td>${new Date(doc.date_issue).getDay()}-${new Date(doc.date_issue).getMonth()}-${new Date(doc.date_issue).getFullYear()}
-    </td><td>${new Date(doc.date_expiry).getDay()}-${new Date(doc.date_expiry).getMonth()}-${new Date(doc.date_expiry).getFullYear()}</td><td>${doc.num_document}</td><td>${doc.addres}</td><td>${doc.nationality}</td><td>${doc.gender}</td><td>${doc.marital_status}</td><td>${doc.proffesion}</td></tr>`;
+    const dateBirth = `${new Date(doc.date_birth).getUTCDate()}/${new Date(doc.date_birth).getUTCMonth()}/${new Date(doc.date_birth).getUTCFullYear()}`;
+    const dateIssue = `${new Date(doc.date_issue).getUTCDate()}/${new Date(doc.date_issue).getUTCDate()}/${new Date(doc.date_issue).getUTCFullYear()}`;
+    const dateExpiry = `${new Date(doc.date_expiry).getUTCDate()}/${new Date(doc.date_expiry).getUTCMonth()}/${new Date(doc.date_expiry).getUTCFullYear()}`;
+    const address = doc.addres.toLowerCase();
+    tab += `<tr><td>${doc.id}</td><td><img src='data:image/png;base64,${doc.photo}' alt='photo'></td><td>${doc.first_name}</td><td>${doc.last_name}</td><td>${dateBirth}</td><td>${doc.place_birth}</td><td>${dateIssue}
+    </td><td>${dateExpiry}</td><td>${doc.num_document}</td><td>${address}</td><td>${doc.nationality}</td><td>${doc.gender}</td><td>${doc.marital_status}</td><td>${doc.proffesion}</td></tr>`;
   }
   documentsTable.innerHTML = tab;
 };
@@ -231,7 +232,6 @@ const createDocument = async (result, base64Photo) => {
   const dateBirth = new Date(result.dateOfBirth.year, result.dateOfBirth.month, result.dateOfBirth.day);
   const dateIssue = new Date(result.dateOfIssue.year, result.dateOfIssue.month, result.dateOfIssue.day);
   const dateExpiry = new Date(result.dateOfExpiry.year, result.dateOfExpiry.month, result.dateOfExpiry.day);
-  const documentNumber = parseInt(result.documentNumber);
   fetch(
     'https://intellityc-scanner-server.herokuapp.com/api/document',
     {
@@ -243,7 +243,7 @@ const createDocument = async (result, base64Photo) => {
         datebirth: dateBirth,
         dateissue: dateIssue,
         dateexpiry: dateExpiry,
-        numdocument: documentNumber,
+        numdocument: result.documentNumber,
         addres: result.address,
         nationality: result.nationality,
         gender: result.sex,
@@ -253,7 +253,7 @@ const createDocument = async (result, base64Photo) => {
         placebirth: result.placeOfBirth,
       }),
     },
-  ).then((response) => response.json()).then((data) => console.log(data));
+  ).then((response) => response.json()).then(() => fetchDocs());
 };
 
 const drawQuad = (quad) => {
