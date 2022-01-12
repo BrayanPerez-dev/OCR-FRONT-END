@@ -250,7 +250,7 @@ const createDocument = async (result, base64Photo) => {
         marital_status: result.maritalStatus,
         proffesion: result.profession,
         photo: base64Photo,
-        placebirth: 'mejicanos, san salvador',
+        placebirth: result.placeOfBirth,
       }),
     },
   ).then((response) => response.json()).then((data) => console.log(data));
