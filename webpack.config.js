@@ -46,9 +46,7 @@ module.exports = {
     }),
     new CopyPlugin(),
     new EsLintPlugin(),
-    new StyleLintPlugin({
-      files: ['**/*.{htm,html,css,sss,less,scss,sass}'],
-    }),
+    new StyleLintPlugin(),
   ],
   devtool: 'eval-source-map',
 
