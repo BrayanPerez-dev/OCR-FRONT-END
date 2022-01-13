@@ -1,6 +1,5 @@
 /* eslint-disable linebreak-style */
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
 const EsLintPlugin = require('eslint-webpack-plugin');
 const path = require('path');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
@@ -44,7 +43,6 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: './src/index.html',
     }),
-    new CopyPlugin(),
     new EsLintPlugin(),
     new StyleLintPlugin(),
   ],
