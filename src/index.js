@@ -205,7 +205,7 @@ const paintDocs = async (data) => {
   // eslint-disable-next-line no-restricted-syntax
   for (const doc of data) {
     const dateBirth = `${new Date(doc.date_birth).getUTCDate()}/${new Date(doc.date_birth).getUTCMonth()}/${new Date(doc.date_birth).getUTCFullYear()}`;
-    const dateIssue = `${new Date(doc.date_issue).getUTCDate()}/${new Date(doc.date_issue).getUTCDate()}/${new Date(doc.date_issue).getUTCFullYear()}`;
+    const dateIssue = `${new Date(doc.date_issue).getUTCDate()}/${new Date(doc.date_issue).getUTCMonth()}/${new Date(doc.date_issue).getUTCFullYear()}`;
     const dateExpiry = `${new Date(doc.date_expiry).getUTCDate()}/${new Date(doc.date_expiry).getUTCMonth()}/${new Date(doc.date_expiry).getUTCFullYear()}`;
     const address = doc.addres.toLowerCase();
     const imgTag = templateDocs.querySelectorAll('td')[0];
@@ -217,7 +217,7 @@ const paintDocs = async (data) => {
     templateDocs.querySelectorAll('td')[4].textContent = doc.place_birth;
     templateDocs.querySelectorAll('td')[5].textContent = dateIssue;
     templateDocs.querySelectorAll('td')[6].textContent = dateExpiry;
-    templateDocs.querySelectorAll('td')[7].textContent = doc.num_document;
+    templateDocs.querySelectorAll('td')[7].textContent = `${0}${doc.num_document}`;
     templateDocs.querySelectorAll('td')[8].textContent = address;
     templateDocs.querySelectorAll('td')[9].textContent = doc.nationality;
     templateDocs.querySelectorAll('td')[10].textContent = doc.gender;

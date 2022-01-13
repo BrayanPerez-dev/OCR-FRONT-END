@@ -2,7 +2,6 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const EsLintPlugin = require('eslint-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-
 const path = require('path');
 
 module.exports = {
