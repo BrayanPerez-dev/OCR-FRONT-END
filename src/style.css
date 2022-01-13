@@ -33,6 +33,7 @@ body {
 
 #screen-start{
   display: block;
+  margin-top:10%;
   justify-content: center;
   text-align: center;
 }
