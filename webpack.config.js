@@ -2,7 +2,6 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const EsLintPlugin = require('eslint-webpack-plugin');
 const path = require('path');
-const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -44,7 +43,6 @@ module.exports = {
       template: './src/index.html',
     }),
     new EsLintPlugin(),
-    new StyleLintPlugin(),
   ],
   devtool: 'eval-source-map',
 
