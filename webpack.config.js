@@ -3,6 +3,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const EsLintPlugin = require('eslint-webpack-plugin');
 const path = require('path');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -43,12 +44,11 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: './src/index.html',
     }),
-    new CopyPlugin({
-      patterns: [
-        { from: 'node_modules/@microblink/blinkid-in-browser-sdk/resources' },
-      ],
-    }),
+    new CopyPlugin(),
     new EsLintPlugin(),
+    new StyleLintPlugin({
+      files: ['**/*.{htm,html,css,sss,less,scss,sass}'],
+    }),
   ],
   devtool: 'eval-source-map',
 

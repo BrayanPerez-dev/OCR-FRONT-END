@@ -33,7 +33,6 @@ body {
 
 #screen-start{
   display: block;
-  margin-top:10%;
   justify-content: center;
   text-align: center;
 }
@@ -103,12 +102,11 @@ textarea {
   }
   
 
-  .docs {
-    overflow:scroll;
+  .table-responsive {
     height:500px;
-    width:1000px;
+    width:100%;
 }
-  .docs .table{
+  .table-responsive .table{
     width:500px;
-    background-color:lightgray;
+    background-color:ghostwhite;
   }

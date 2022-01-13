@@ -7,10 +7,12 @@
 /* eslint-disable max-len */
 /* eslint-disable quotes */
 /* eslint-disable radix */
+/* eslint-disable import/no-unresolved */
 
 import * as BlinkIDSDK from '@microblink/blinkid-in-browser-sdk';
 import Swal from 'sweetalert2';
 import './style.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const initialMessageEl = document.getElementById('msg');
 const progressEl = document.getElementById('load-progress');
@@ -22,7 +24,10 @@ const screenStart = document.getElementById('screen-start');
 const screenScanning = document.getElementById('screen-scanning');
 const screenInitial = document.getElementById('screen-initial');
 const startScan = document.getElementById('start-scan');
-const documentsTable = document.getElementById('documents-table');
+const docs = document.getElementById('docs');
+const templateDocs = document.getElementById('template-docs').content;
+const fragment = document.createDocumentFragment();
+
 const main = () => {
   if (!BlinkIDSDK.isBrowserSupported()) {
     initialMessageEl.innerText = 'Este navegador no es soportado!';
@@ -196,35 +201,33 @@ const fetchDocs = async () => {
 };
 const paintDocs = async (data) => {
   console.log('docs', data);
-  let tab = `
-  <tr>
-  <th scope="col">#</th>
-  <th scope="col">Foto</th>
-  <th scope="col">Nombre</th>
-  <th scope="col">Apellido</th>
-  <th scope="col">Fecha de nacimiento</th>
-  <th scope="col">Lugar de nacimiento</th>
-  <th scope="col">Fecha de emision</th>
-  <th scope="col">Fecha de expiracion</th>
-  <th scope="col">Numero de documento</th>
-  <th scope="col">Direccion</th>
-  <th scope="col">Nacionalidad</th>
-  <th scope="col">Genero</th>
-  <th scope="col">Estado Marital</th>
-  <th scope="col">Ocupacion</th>
-</tr>
-  `;
-
+  docs.innerHTML = '';
   // eslint-disable-next-line no-restricted-syntax
   for (const doc of data) {
     const dateBirth = `${new Date(doc.date_birth).getUTCDate()}/${new Date(doc.date_birth).getUTCMonth()}/${new Date(doc.date_birth).getUTCFullYear()}`;
     const dateIssue = `${new Date(doc.date_issue).getUTCDate()}/${new Date(doc.date_issue).getUTCDate()}/${new Date(doc.date_issue).getUTCFullYear()}`;
     const dateExpiry = `${new Date(doc.date_expiry).getUTCDate()}/${new Date(doc.date_expiry).getUTCMonth()}/${new Date(doc.date_expiry).getUTCFullYear()}`;
     const address = doc.addres.toLowerCase();
-    tab += `<tr><td>${doc.id}</td><td><img src='data:image/png;base64,${doc.photo}' alt='photo'></td><td>${doc.first_name}</td><td>${doc.last_name}</td><td>${dateBirth}</td><td>${doc.place_birth}</td><td>${dateIssue}
-    </td><td>${dateExpiry}</td><td>${doc.num_document}</td><td>${address}</td><td>${doc.nationality}</td><td>${doc.gender}</td><td>${doc.marital_status}</td><td>${doc.proffesion}</td></tr>`;
+    const imgTag = templateDocs.querySelectorAll('td')[0];
+    templateDocs.querySelector('th').textContent = doc.id;
+    imgTag.querySelector('img').src = `data:image/png;base64,${doc.photo}`;
+    templateDocs.querySelectorAll('td')[1].textContent = doc.first_name;
+    templateDocs.querySelectorAll('td')[2].textContent = doc.last_name;
+    templateDocs.querySelectorAll('td')[3].textContent = dateBirth;
+    templateDocs.querySelectorAll('td')[4].textContent = doc.place_birth;
+    templateDocs.querySelectorAll('td')[5].textContent = dateIssue;
+    templateDocs.querySelectorAll('td')[6].textContent = dateExpiry;
+    templateDocs.querySelectorAll('td')[7].textContent = doc.num_document;
+    templateDocs.querySelectorAll('td')[8].textContent = address;
+    templateDocs.querySelectorAll('td')[9].textContent = doc.nationality;
+    templateDocs.querySelectorAll('td')[10].textContent = doc.gender;
+    templateDocs.querySelectorAll('td')[11].textContent = doc.marital_status;
+    templateDocs.querySelectorAll('td')[12].textContent = doc.proffesion;
+
+    const clone = templateDocs.cloneNode(true);
+    fragment.appendChild(clone);
   }
-  documentsTable.innerHTML = tab;
+  docs.appendChild(fragment);
 };
 
 const createDocument = async (result, base64Photo) => {

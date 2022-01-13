@@ -11,11 +11,49 @@
         </div>
         <div id="screen-start" class="hidden">
             <a class="button" id="start-scan">Iniciar Escaneo</a>
-            <h4>Documentos</h4>
-         <div id="documents" class="docs">
-             <table id="documents-table" class="table">
-             </table>
+        <br>
+        <br>
+        <div class="table-responsive">
+        <table class="table">
+            <thead>
+              <tr class="bg-info">
+                <th scope="col">Id</th>
+                <th scope="col">Foto</th>
+                <th scope="col">Nombres</th>
+                <th scope="col">Apellidos</th>
+                <th scope="col">Fecha de nacimiento</th>
+                <th scope="col">Lugar de nacimiento</th>
+                <th scope="col">Fecha de emision</th>
+                <th scope="col">Fecha de expiracion</th>
+                <th scope="col">Numero de documento</th>
+                <th scope="col">Direccion</th>
+                <th scope="col">Nacionalidad</th>
+                <th scope="col">Genero</th>
+                <th scope="col">Estatus marital</th>
+                <th scope="col">Ocupacion</th>
+              </tr>
+            </thead>
+            <tbody id="docs"></tbody>
+        </table>
         </div>
+        <template id="template-docs">
+            <tr>
+              <th class="table-active" scope="row">id</th>
+              <td ><img src="''"  alt="photo"></td>
+              <td>Nombres</td>
+              <td>Apellidos</td>
+              <td>Fecha de nacimiento</td>
+              <td>Lugar de nacimiento</td>
+              <td>Fecha de emision</td>
+              <td>Fecha de expiracion</td>
+              <td>Numero de documento</td>
+              <td>Direccion</td>
+              <td>Nacionalidad</td>
+              <td>Genero</td>
+              <td>Estatus marital</td>
+              <td>Ocupacion</td>
+            </tr>
+          </template>
         <br>
 
        </div>
