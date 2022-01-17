@@ -35,7 +35,7 @@ const main = () => {
   }
   let licenseKey = 'sRwAAAYJbG9jYWxob3N0r/lOPk4/w35CpJlWLc09Zs/mjuGYKJq7GjtRvUpB50NLGDbNQfrme34VlyR9wNs/P4L6GtUVgiQ1Rahc34/rXvsi/ca+hsgPa6udsMam5GcIQBblkWcamv/qu2cYWmM8Tm9Uk2PwHy7Jw1jBRoK5tfvZgo7AiNWUmvJoR2JgkyCSH3ZZOZcGiOdOk5O86+LDIRCoLo//ARugB9Wh/3ym5JPQvYCyzyGpkJtlA4HTnRduma2oAT7Qw/XLjVX7t5Js7MeX59oY0pKA9EQUPIKFWYLcQKeKmTVdj1QVf17DBFJgHY3N587WALhyznh5CJTNMeSTgUikTAGvT48SSDonVqFc';
 
-  if (window.location.hostname === 'technosal-prototipo.herokuapp.com') { licenseKey = 'sRwAAAYnaW50ZWxsaXR5Yy1zY2FubmVyLWNsaWVudC5oZXJva3VhcHAuY29tno8VB0kQaLk87+LdMffE5VPxR8vmgPCVsH9wm1gVENyvWO8SGyFKAiGH91fYN8/1706669mn3fnHHeRKOZwuWVGbY6Rk36i+G56740d1u7+1IxO9xRm+gW0eSjuGISH8QxLhBNuU2vcKw4Yb99eK5zf2YYUxRyhiPgA5K/4jzNKcc6SyaOwy9JfYjCp4OxPhJBcrKc4NxLPZhJdyJgWW4oVCzfvxNbSu894='; }
+  if (window.location.hostname === 'intellityc-scanner-client.herokuapp.com') { licenseKey = 'sRwAAAYnaW50ZWxsaXR5Yy1zY2FubmVyLWNsaWVudC5oZXJva3VhcHAuY29tno8VB0kQaLk87+LdMffE5VPxR8vmgPCVsH9wm1gVENyvWO8SGyFKAiGH91fYN8/1706669mn3fnHHeRKOZwuWVGbY6Rk36i+G56740d1u7+1IxO9xRm+gW0eSjuGISH8QxLhBNuU2vcKw4Yb99eK5zf2YYUxRyhiPgA5K/4jzNKcc6SyaOwy9JfYjCp4OxPhJBcrKc4NxLPZhJdyJgWW4oVCzfvxNbSu894='; }
   const loadSettings = new BlinkIDSDK.WasmSDKLoadSettings(licenseKey);
 
   loadSettings.allowHelloMessage = true;
