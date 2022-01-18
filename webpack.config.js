@@ -1,6 +1,4 @@
-/* eslint-disable linebreak-style */
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-const EsLintPlugin = require('eslint-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
@@ -48,7 +46,6 @@ module.exports = {
         { from: 'node_modules/@microblink/blinkid-in-browser-sdk/resources' },
       ],
     }),
-    new EsLintPlugin(),
   ],
   devtool: 'eval-source-map',
 

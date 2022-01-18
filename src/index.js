@@ -1,14 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-sequences */
-/* eslint-disable no-plusplus */
-/* eslint-disable no-return-assign */
-/* eslint-disable no-console */
-/* eslint-disable no-use-before-define */
-/* eslint-disable max-len */
-/* eslint-disable quotes */
-/* eslint-disable radix */
-/* eslint-disable import/no-unresolved */
-
 import * as BlinkIDSDK from '@microblink/blinkid-in-browser-sdk';
 import Swal from 'sweetalert2';
 import './style.css';
