@@ -16,8 +16,8 @@ const Dashboard = () => {
       if (isMounted) {
         const { pathname } = window.location;
         if (pathname.indexOf("/") > -1 || pathname.indexOf("/login") > -1 && token) {
+          navigate("/dashboard");
           window.location.reload()
-          return navigate("/dashboard");
         }
       }
     };
@@ -25,6 +25,7 @@ const Dashboard = () => {
 
   const logOut = () => {
     authService.logout();
+    navigate("/login");
     window.location.reload()
   };
 

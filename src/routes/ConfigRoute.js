@@ -4,10 +4,8 @@ import Login from "../views/Login";
 import Dashboard from "../views/Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import NoMatch from "../views/NoMatch";
-import authService  from "../services/auth.service";
 const ConfigRoute = () => {
    
-  const data = authService.gerCurrentUser()
   return (
     <Router>
       <Routes>

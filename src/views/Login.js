@@ -7,18 +7,20 @@ import fondo2 from "../assets/FONDO-2-min.png";
 import fondo3 from "../assets/FONDO-3-min.png";
 import { FaUser } from "react-icons/fa";
 import { AiFillLock } from "react-icons/ai";
-import authService from "../services/auth.service";
 import { useNavigate } from "react-router-dom";
+import authService from "../services/auth.service";
+
 const SingIn = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate();  
   const onFinish = (values) => {
     console.log("Success:", values);
     const { email, password } = values;
     authService.login(email, password).then(
       () => {
-        console.log('llego')
+        console.log('success')
         navigate('/dashboard')
         window.location.reload()
+
       },
       (error) => {
         const resMessage =
