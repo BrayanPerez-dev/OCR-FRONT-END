@@ -7,7 +7,7 @@ module.exports = {
   entry: './src/index.js',
   output:
     {
-      path: path.resolve(__dirname, '../build'),
+      path: path.join(__dirname, '../build'),
       publicPath: "/",
       filename: "[name].[contenthash].js",
     },
