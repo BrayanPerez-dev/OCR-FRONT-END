@@ -2,7 +2,6 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin")
-
 module.exports = {
   entry: './src/index.js',
   output:
