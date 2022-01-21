@@ -34,7 +34,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebPackPlugin({
-      template: '../public/index.html',
+      template: './public/index.html',
     }),
     new CopyPlugin({
       patterns: [
