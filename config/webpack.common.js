@@ -6,7 +6,7 @@ module.exports = {
   entry: './src/index.js',
   output:
     {
-      path: path.join(__dirname, '../build'),
+      path: __dirname,
       publicPath: "/",
       filename: "[name].[contenthash].js",
     },
