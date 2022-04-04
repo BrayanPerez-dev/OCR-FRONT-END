@@ -40,7 +40,6 @@ const SingIn = () => {
         duration={5}
         transition={2}
       />
-      <div className="singin-container">
         <div className="box-login">
           <img src={logo} />
           <Form
@@ -88,7 +87,6 @@ const SingIn = () => {
             </Form.Item>
           </Form>
         </div>
-      </div>
     </Wrapper>
   );
 };
@@ -109,7 +107,7 @@ const Wrapper = styled.div`
     margin: auto;
   }
   .ant-form {
-    margin: -10% 20% 13% 20%;
+    margin: -2% 20% 13% 20%;
   }
   .ant-btn-primary {
     color: black;

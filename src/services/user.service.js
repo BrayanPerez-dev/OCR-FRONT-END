@@ -3,5 +3,7 @@ import authHeader from './auth.header'
 const API_URL = 'https://intellityc-scanner-server.herokuapp.com/api/documents'
 
 export const getDocuments = () => {
-    return axios.get(API_URL,{headers:{authHeader()}})
+    return axios.get(API_URL,{
+        headers:{authHeader}
+    })
 }
