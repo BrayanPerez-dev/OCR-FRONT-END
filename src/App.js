@@ -4,7 +4,7 @@ import 'antd/dist/antd.css'
 const App = () => {
 
   return (
-      <ConfigRoute/>
+      <h1>hola mundo</h1>
   );
 }
 
