@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import { useState,useEffect } from "react";
 import styled from "styled-components";
 import authService from "../services/auth.service";
 import { Link, useNavigate, Outlet } from "react-router-dom";
-import { useState } from "react";
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const data = authService.gerCurrentUser();
