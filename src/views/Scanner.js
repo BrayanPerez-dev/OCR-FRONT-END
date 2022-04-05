@@ -7,6 +7,7 @@ import styled from "styled-components";
 const Scanner = () => {
   const initialMessageEl = useRef("");
   const progressEl = useRef(0);
+
   const screenInitial = useRef("");
   const screenStart = useRef("");
   const startScan = useRef("");
@@ -15,6 +16,7 @@ const Scanner = () => {
   const cameraFeedback = useRef("");
   const scanFeedback = useRef("");
   const [drawContext, setDrawContext] = useState();
+
   const main = () => {
     if (!BlinkIDSDK.isBrowserSupported()) {
       initialMessageEl.current.innerText = "Este navegador no es soportado!";
@@ -65,7 +67,6 @@ const Scanner = () => {
     settings.returnFullDocumentImage = true;
     await combinedGenericIDRecognizer.updateSettings(settings);
 
-
     const callbacks = {
       onQuadDetection: (quad) => drawQuad(quad),
       onDetectionFailed: () => updateScanFeedback("Detencion fallida", true),
@@ -78,7 +79,8 @@ const Scanner = () => {
       callbacks
     );
 
-    const videoRecognizer = await BlinkIDSDK.VideoRecognizer.createVideoRecognizerFromCameraStream(
+    const videoRecognizer =
+      await BlinkIDSDK.VideoRecognizer.createVideoRecognizerFromCameraStream(
         cameraFeed.current,
         recognizerRunner
       );
@@ -138,32 +140,19 @@ const Scanner = () => {
           html: `<img height="150" width:"350" src="data:image/png;base64,${photo}">
                            <br> Nombre: ${result.firstName} 
                            <br> Apellido: ${result.lastName}
-                           <br> Fecha de Nacimiento: ${
-                             result.dateOfBirth.day
-                           }-${result.dateOfBirth.month}-${
-            result.dateOfBirth.year
-          } 
+                           <br> Fecha de Nacimiento: ${result.dateOfBirth.day}-${result.dateOfBirth.month}-${result.dateOfBirth.year} 
                            <br> Lugar de Nacimiento: ${result.placeOfBirth} 
-                           <br> Fecha de Emisión: ${result.dateOfIssue.day}-${
-            result.dateOfIssue.month
-          }-${result.dateOfIssue.year}
-                           <br> Fecha de Expiracion: ${
-                             result.dateOfExpiry.day
-                           }-${result.dateOfExpiry.month}-${
-            result.dateOfExpiry.year
-          }
+                           <br> Fecha de Emisión: ${result.dateOfIssue.day}-${result.dateOfIssue.month}-${result.dateOfIssue.year}
+                           <br> Fecha de Expiracion: ${result.dateOfExpiry.day}-${result.dateOfExpiry.month}-${result.dateOfExpiry.year}
                            <br> Numero de Documento: ${result.documentNumber} 
                            <br> Direccion: ${result.address} 
-                           <br> Nacionalidad: ${
-                             result.nationality && "SALVADOREÑA"
-                           } 
                            <br> Genero: ${result.sex} 
                            <br> Estado Marital: ${result.maritalStatus}
                            <br> Ocupacion: ${result.profession}
                            `,
         }).then((value) => {
           if (value.isConfirmed) {
-            Swal.fire("Guardado!", "", "success");
+            sendDocument(result, photo);
           } else if (value.isDenied) {
             Swal.fire("La informacion no fue guardada", "", "info");
           }
@@ -197,11 +186,12 @@ const Scanner = () => {
     drawContext.lineTo(quad.bottomLeft.x, quad.bottomLeft.y);
     drawContext.closePath();
     drawContext.stroke();
-
   };
   const applyTransform = (transformMatrix) => {
-    const canvasAR = cameraFeedback.current.width / cameraFeedback.current.height;
-    const videoAR = cameraFeed.current.videoWidth / cameraFeed.current.videoHeight;
+    const canvasAR =
+      cameraFeedback.current.width / cameraFeedback.current.height;
+    const videoAR =
+      cameraFeed.current.videoWidth / cameraFeed.current.videoHeight;
     let xOffset = 0;
     let yOffset = 0;
     let scaledVideoHeight = 0;
@@ -232,7 +222,12 @@ const Scanner = () => {
   const clearDrawCanvas = () => {
     cameraFeedback.current.width = cameraFeedback.current.clientWidth;
     cameraFeedback.current.height = cameraFeedback.current.clientHeight;
-    drawContext.clearRect(0, 0, cameraFeedback.current.width, cameraFeedback.current.height);
+    drawContext.clearRect(
+      0,
+      0,
+      cameraFeedback.current.width,
+      cameraFeedback.current.height
+    );
   };
   const setupColor = (displayable) => {
     let color = "#FFFF00FF";
@@ -287,7 +282,39 @@ const Scanner = () => {
     setDrawContext(drawContext);
     main();
   }, []);
+  const sendDocument = () => {
+    console.log(result, base64Photo);
+    const dateBirth = `${result.dateOfBirth.day}/${result.dateOfBirth.month}/${result.dateOfBirth.year}`;
+    const dateIssue = `${result.dateOfIssue.day}/${result.dateOfIssue.month}/${result.dateOfIssue.year}`;
+    const dateExpiry = `${result.dateOfExpiry.day}/${result.dateOfExpiry.month}/${result.dateOfExpiry.year}`;
 
+    fetch("https://intellityc-scanner-server.herokuapp.com/api/document", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      body: JSON.stringify({
+        firstname: result.firstName,
+        lastname: result.lastName,
+        datebirth: dateBirth,
+        dateissue: dateIssue,
+        dateexpiry: dateExpiry,
+        numdocument: result.documentNumber,
+        addres: result.address,
+        gender: result.sex,
+        marital_status: result.maritalStatus,
+        proffesion: result.profession,
+        photo: base64Photo,
+        placebirth: result.placeOfBirth,
+      }),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        Swal.fire("Guardado!", "", "success");
+        console.log(result);
+      });
+  };
   return (
     <WrapperScanner>
       <h1>Scanner</h1>

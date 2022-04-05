@@ -7,3 +7,9 @@ export const getDocuments = () => {
         headers:{authHeader}
     })
 }
+
+export const sendDocuments = () => {
+    return axios.get(API_URL,{
+        headers:{authHeader}
+    })
+}

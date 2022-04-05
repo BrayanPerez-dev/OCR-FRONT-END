@@ -6,7 +6,6 @@ import { Link, useNavigate, Outlet } from "react-router-dom";
 const Dashboard = () => {
   const navigate = useNavigate();
   const data = authService.gerCurrentUser();
-  console.log(data);
   const { user, token } = data;
   const [curretUser, setCurrentUser] = useState(user);
 

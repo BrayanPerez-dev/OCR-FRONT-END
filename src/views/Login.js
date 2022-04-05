@@ -13,11 +13,9 @@ import authService from "../services/auth.service";
 const SingIn = () => {
   const navigate = useNavigate();  
   const onFinish = (values) => {
-    console.log("Success:", values);
     const { email, password } = values;
     authService.login(email, password).then(
       () => {
-        console.log('success')
         navigate('/dashboard')
         window.location.reload()
 
@@ -29,7 +27,6 @@ const SingIn = () => {
             error.response.data.error) ||
           error.message ||
           error.toString();
-         console.log("message",resMessage)
       }
     ); 
   };
