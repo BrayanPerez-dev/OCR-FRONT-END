@@ -9,15 +9,24 @@ import { FaUser } from "react-icons/fa";
 import { AiFillLock } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import authService from "../services/auth.service";
+import { useEffect } from "react";
 
 const SingIn = () => {
   const navigate = useNavigate();  
+  const data = authService.gerCurrentUser();
+
+  useEffect(()=>{
+    if (data?.token) {
+     return navigate('/dashboard')
+    }
+  },[])
+   
   const onFinish = (values) => {
     const { email, password } = values;
     authService.login(email, password).then(
       () => {
         navigate('/dashboard')
-        window.location.reload()
+        //window.location.reload()
 
       },
       (error) => {
@@ -30,6 +39,9 @@ const SingIn = () => {
       }
     ); 
   };
+
+  
+
   return (
     <Wrapper>
       <BackgroundSlider

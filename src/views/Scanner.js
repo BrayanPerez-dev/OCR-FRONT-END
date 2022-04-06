@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import * as BlinkIDSDK from "@microblink/blinkid-in-browser-sdk";
 import Swal from "sweetalert2";
-
+import {sendDocuments} from "../services/document.service"
 import styled from "styled-components";
 
 const Scanner = () => {
@@ -128,6 +128,9 @@ const Scanner = () => {
           return window.btoa(binary);
         };
         const photo = encodedImageToBase64(encodedImage.buffer);
+        const dateBirth = `${result.dateOfBirth.day}/${result.dateOfBirth.month}/${result.dateOfBirth.year}`;
+        const dateIssue = `${result.dateOfIssue.day}/${result.dateOfIssue.month}/${result.dateOfIssue.year}`;
+        const dateExpiry = `${result.dateOfExpiry.day}/${result.dateOfExpiry.month}/${result.dateOfExpiry.year}`;
 
         Swal.fire({
           title: "DUI",
@@ -140,10 +143,10 @@ const Scanner = () => {
           html: `<img height="150" width:"350" src="data:image/png;base64,${photo}">
                            <br> Nombre: ${result.firstName} 
                            <br> Apellido: ${result.lastName}
-                           <br> Fecha de Nacimiento: ${result.dateOfBirth.day}-${result.dateOfBirth.month}-${result.dateOfBirth.year} 
+                           <br> Fecha de Nacimiento: ${dateBirth} 
                            <br> Lugar de Nacimiento: ${result.placeOfBirth} 
-                           <br> Fecha de Emisión: ${result.dateOfIssue.day}-${result.dateOfIssue.month}-${result.dateOfIssue.year}
-                           <br> Fecha de Expiracion: ${result.dateOfExpiry.day}-${result.dateOfExpiry.month}-${result.dateOfExpiry.year}
+                           <br> Fecha de Emisión: ${dateIssue}
+                           <br> Fecha de Expiracion: ${dateExpiry}
                            <br> Numero de Documento: ${result.documentNumber} 
                            <br> Direccion: ${result.address} 
                            <br> Genero: ${result.sex} 
@@ -152,7 +155,12 @@ const Scanner = () => {
                            `,
         }).then((value) => {
           if (value.isConfirmed) {
-            sendDocument(result, photo);
+            
+            sendDocuments(result,photo,dateBirth,dateIssue,dateExpiry).then((res) => {
+              console.log(res)
+            });
+            Swal.fire("Guardado!", "", "success");
+
           } else if (value.isDenied) {
             Swal.fire("La informacion no fue guardada", "", "info");
           }
@@ -282,39 +290,7 @@ const Scanner = () => {
     setDrawContext(drawContext);
     main();
   }, []);
-  const sendDocument = () => {
-    console.log(result, base64Photo);
-    const dateBirth = `${result.dateOfBirth.day}/${result.dateOfBirth.month}/${result.dateOfBirth.year}`;
-    const dateIssue = `${result.dateOfIssue.day}/${result.dateOfIssue.month}/${result.dateOfIssue.year}`;
-    const dateExpiry = `${result.dateOfExpiry.day}/${result.dateOfExpiry.month}/${result.dateOfExpiry.year}`;
-
-    fetch("https://intellityc-scanner-server.herokuapp.com/api/document", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
-      body: JSON.stringify({
-        firstname: result.firstName,
-        lastname: result.lastName,
-        datebirth: dateBirth,
-        dateissue: dateIssue,
-        dateexpiry: dateExpiry,
-        numdocument: result.documentNumber,
-        addres: result.address,
-        gender: result.sex,
-        marital_status: result.maritalStatus,
-        proffesion: result.profession,
-        photo: base64Photo,
-        placebirth: result.placeOfBirth,
-      }),
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        Swal.fire("Guardado!", "", "success");
-        console.log(result);
-      });
-  };
+ 
   return (
     <WrapperScanner>
       <h1>Scanner</h1>
@@ -341,6 +317,7 @@ const Scanner = () => {
           Apunte la cámara hacia la parte frontal del documento.
         </p>
       </div>
+
     </WrapperScanner>
   );
 };

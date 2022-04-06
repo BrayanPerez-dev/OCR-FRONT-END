@@ -12,13 +12,11 @@ const register = (username,email,password) => {
 }
 
 const login = (email,password) => {
-   console.log(email,password)
    return axios.post(API_URL + "signin", {
      email,
      password,
    })
    .then((response) => {
-      console.log(response.data)
      if (response.data.token) {
        localStorage.setItem("user", JSON.stringify(response.data));
      }

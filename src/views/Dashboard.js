@@ -11,21 +11,23 @@ const Dashboard = () => {
 
   useEffect(() => {
     const isMounted = true;
-    window.onpopstate = () => {
+   window.onpopstate = () => {
       if (isMounted) {
         const { pathname } = window.location;
-        if (pathname.indexOf("/") > -1 || pathname.indexOf("/login") > -1 && token) {
+        if (pathname.indexOf("/") > -1 && token) {
           navigate("/dashboard");
           window.location.reload()
         }
       }
     };
+
   }, [window.location.pathname]);
 
   const logOut = () => {
     authService.logout();
-    navigate("/login");
-    window.location.reload()
+    navigate("/");
+    //window.location.reload()
+
   };
 
   return (

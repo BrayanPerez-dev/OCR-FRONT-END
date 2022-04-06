@@ -5,16 +5,15 @@ import Dashboard from "../views/Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import NoMatch from "../views/NoMatch";
 const ConfigRoute = () => {
-   
+  
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />}>
-          <Route path="/login" element={<Login />} />
-        </Route>
+        <Route path="/" element={<Login />}/>
         <Route element={<PrivateRoute />}>
-          <Route path="/dashboard/*" element={<Dashboard />}>
-            <Route path="scanner" element={<Scanner />} />
+          <Route path="/dashboard" element={<Dashboard />}>
+            <Route path="scanner" element={<Scanner />} /> 
+            <Route path="*" element={<NoMatch />} />
           </Route>
         </Route>
         <Route path="*" element={<NoMatch />} />
