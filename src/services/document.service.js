@@ -3,14 +3,11 @@ import {authHeader} from './auth.header'
 const API_URL = 'https://intellityc-scanner-server.herokuapp.com/api/document'
 
 export const getDocuments = () => {
-return axios.get(API_URL,{/*headers:{authHeader}*/})
+return axios.get(API_URL,{headers:authHeader()})
 }
 
 export const sendDocuments = (result,photo,dateBirth,dateIssue,dateExpiry) => {
-    console.log(document)
-    return axios.post(API_URL,{
-       //headers:{authHeader}
-         body:{
+    const data = {
             firstname: result.firstName,
             lastname: result.lastName,
             datebirth: dateBirth,
@@ -23,8 +20,9 @@ export const sendDocuments = (result,photo,dateBirth,dateIssue,dateExpiry) => {
             proffesion: result.profession,
             photo: photo,
             placebirth: result.placeOfBirth,
-         }
-    }).then(res => {
+    }
+    console.log(document)
+    return axios.post(API_URL,data).then(res => {
         return res.data
     })
 }
