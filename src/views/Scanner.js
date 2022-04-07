@@ -16,7 +16,10 @@ const Scanner = () => {
   const cameraFeedback = useRef("");
   const scanFeedback = useRef("");
   const [drawContext, setDrawContext] = useState();
-
+  useEffect(() => {
+    const drawContext = cameraFeedback.current.getContext("2d");
+    setDrawContext(drawContext);
+  }, []);
   const main = () => {
     if (!BlinkIDSDK.isBrowserSupported()) {
       initialMessageEl.current.innerText = "Este navegador no es soportado!";
@@ -158,8 +161,9 @@ const Scanner = () => {
             
             sendDocuments(result,photo,dateBirth,dateIssue,dateExpiry).then((res) => {
               console.log(res)
+              Swal.fire("Guardado!", "", "success");
             });
-            Swal.fire("Guardado!", "", "success");
+          
 
           } else if (value.isDenied) {
             Swal.fire("La informacion no fue guardada", "", "info");
@@ -286,11 +290,11 @@ const Scanner = () => {
     window.setTimeout(() => (scanFeedbackLock = false), 1000);
   };
   useEffect(() => {
-    const drawContext = cameraFeedback.current.getContext("2d");
-    setDrawContext(drawContext);
     main();
   }, []);
- 
+   console.log("client size", cameraFeedback.current.clientWidth,cameraFeedback.current.clientHeight)
+   console.log("clear rect",cameraFeedback.current.width,cameraFeedback.current.height)
+
   return (
     <WrapperScanner>
       <h1>Scanner</h1>

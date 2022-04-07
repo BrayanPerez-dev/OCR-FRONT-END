@@ -6,7 +6,7 @@ export const getDocuments = () => {
 return axios.get(API_URL,{/*headers:{authHeader}*/})
 }
 
-export const sendDocuments = (result,photo,dateBirth,dateIssue) => {
+export const sendDocuments = (result,photo,dateBirth,dateIssue,dateExpiry) => {
     console.log(document)
     return axios.post(API_URL,{
        //headers:{authHeader}
