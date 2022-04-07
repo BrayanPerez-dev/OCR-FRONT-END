@@ -9,38 +9,21 @@ const Dashboard = () => {
   const { user, token } = data;
   const [curretUser, setCurrentUser] = useState(user);
 
-  useEffect(() => {
-    const isMounted = true;
-   window.onpopstate = () => {
-      if (isMounted) {
-        const { pathname } = window.location;
-        if (pathname.indexOf("/") > -1 && token) {
-          navigate("/dashboard");
-          window.location.reload()
-        }
-      }
-    };
-
-  }, [window.location.pathname]);
-
   const logOut = () => {
     authService.logout();
     navigate("/");
-    //window.location.reload()
-
   };
 
   return (
     <Wrapper>
       <header>
-        <Link to="/dashboard">Home</Link>
+        <Link to="/dashboard">Inicio</Link>
         <Link to="scanner">Scanner</Link>
         <Link to="/" onClick={() => logOut()}>
-          Log Out
+          Salir
         </Link>
       </header>
-      <h1>{curretUser.user_name}</h1>
-      <h1>{curretUser.email}</h1>
+      <h1>Usuario: {curretUser.user_name} Correo: {curretUser.email}</h1>
       <Outlet />
     </Wrapper>
   );

@@ -16,9 +16,10 @@ const SingIn = () => {
   const data = authService.gerCurrentUser();
 
   useEffect(()=>{
-    if (data?.token) {
+     if (data?.token) {
      return navigate('/dashboard')
-    }
+    } 
+
   },[])
    
   const onFinish = (values) => {
@@ -64,7 +65,7 @@ const SingIn = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please input your username!",
+                  message: "¡Por favor ingrese su nombre de usuario!",
                 },
               ]}
             >
@@ -76,7 +77,7 @@ const SingIn = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please input your password!",
+                  message: "¡Por favor ingrese su contraseña!",
                 },
               ]}
             >
@@ -91,7 +92,7 @@ const SingIn = () => {
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit">
-                Sing In
+              Iniciar sesión
               </Button>
             </Form.Item>
           </Form>

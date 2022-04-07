@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Scanner from "../views/Scanner";
 import Login from "../views/Login";
 import Dashboard from "../views/Dashboard";
+import Documents from "../views/Documents";
 import PrivateRoute from "./PrivateRoute";
 import NoMatch from "../views/NoMatch";
 const ConfigRoute = () => {
@@ -12,7 +13,9 @@ const ConfigRoute = () => {
         <Route path="/" element={<Login />}/>
         <Route element={<PrivateRoute />}>
           <Route path="/dashboard" element={<Dashboard />}>
-            <Route path="scanner" element={<Scanner />} /> 
+            <Route path="scanner" element={<Scanner />}> 
+            <Route path="documentos" element={<Documents />} /> 
+            </Route>
             <Route path="*" element={<NoMatch />} />
           </Route>
         </Route>

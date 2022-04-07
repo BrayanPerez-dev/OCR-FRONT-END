@@ -1,28 +1,36 @@
-import axios from 'axios';
-import {authHeader} from './auth.header'
-const API_URL = 'https://intellityc-scanner-server.herokuapp.com/api/document'
+import apiClient from './http-common'
+import { authHeader } from "./auth.header";
 
 export const getDocuments = () => {
-return axios.get(API_URL,{headers:authHeader()})
-}
+  //return apiClient.get("document", { headers: authHeader() });
+  return apiClient.get("document").then((response)=> {
+            return response.data
+  });
+};
 
-export const sendDocuments = (result,photo,dateBirth,dateIssue,dateExpiry) => {
-    const data = {
-            firstname: result.firstName,
-            lastname: result.lastName,
-            datebirth: dateBirth,
-            dateissue: dateIssue,
-            dateexpiry: dateExpiry,
-            numdocument: result.documentNumber,
-            addres: result.address,
-            gender: result.sex,
-            marital_status: result.maritalStatus,
-            proffesion: result.profession,
-            photo: photo,
-            placebirth: result.placeOfBirth,
-    }
-    console.log(document)
-    return axios.post(API_URL,data).then(res => {
-        return res.data
-    })
-}
+export const sendDocuments = (
+  result,
+  photo,
+  dateBirth,
+  dateIssue,
+  dateExpiry
+) => {
+  const data = {
+    firstname: result.firstName,
+    lastname: result.lastName,
+    datebirth: dateBirth,
+    dateissue: dateIssue,
+    dateexpiry: dateExpiry,
+    numdocument: result.documentNumber,
+    addres: result.address,
+    gender: result.sex,
+    marital_status: result.maritalStatus,
+    proffesion: result.profession,
+    photo: photo,
+    placebirth: result.placeOfBirth,
+  };
+  console.log(document);
+  return apiClient.post("document", data).then((res) => {
+    return res.data;
+  });
+};

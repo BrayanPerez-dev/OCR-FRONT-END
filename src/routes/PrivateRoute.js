@@ -10,7 +10,7 @@ const PrivateRoute = () => {
     const { pathname } = location;
     setPathName(pathname);
   }, [location]);
-
+  console.log(pathName)
   const data = AuthService.gerCurrentUser();
   if (!data?.token) {
     return <Navigate to="/" replace state={{ from: pathName }} />;

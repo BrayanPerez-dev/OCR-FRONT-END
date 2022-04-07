@@ -3,8 +3,10 @@ import * as BlinkIDSDK from "@microblink/blinkid-in-browser-sdk";
 import Swal from "sweetalert2";
 import {sendDocuments} from "../services/document.service"
 import styled from "styled-components";
-
+import { Button } from "antd";
+import { Outlet, useNavigate } from "react-router-dom";
 const Scanner = () => {
+  const navigateTo = useNavigate()
   const initialMessageEl = useRef("");
   const progressEl = useRef(0);
 
@@ -294,10 +296,11 @@ const Scanner = () => {
   }, []);
    console.log("client size", cameraFeedback.current.clientWidth,cameraFeedback.current.clientHeight)
    console.log("clear rect",cameraFeedback.current.width,cameraFeedback.current.height)
-
+  const pushTo = () => {
+    navigateTo("documentos")
+  }
   return (
     <WrapperScanner>
-      <h1>Scanner</h1>
       <div ref={screenInitial} id="screen-initial">
         <h1 ref={initialMessageEl} id="msg">
           Cargando...
@@ -310,9 +313,9 @@ const Scanner = () => {
         ></progress>
       </div>
       <div ref={screenStart} id="screen-start" className="hidden">
-        <a ref={startScan} className="button" id="start-scan">
-          Iniciar Escaneo
-        </a>
+        <Button shape="round" ref={startScan}  id="start-scan">Iniciar Escaneo</Button>
+        <Button shape="round" id="view-documents" onClick={pushTo}>Ver documentos</Button>
+
       </div>
       <div ref={screenScanning} id="screen-scanning" className="hidden">
         <video ref={cameraFeed} id="camera-feed" playsInline></video>
@@ -321,7 +324,7 @@ const Scanner = () => {
           Apunte la cámara hacia la parte frontal del documento.
         </p>
       </div>
-
+      <Outlet/>
     </WrapperScanner>
   );
 };
@@ -361,9 +364,11 @@ const WrapperScanner = styled.div`
   }
 
   #screen-start {
-    display: block;
-    justify-content: center;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: stretch;
   }
 
   /* Rules for better readability */
@@ -413,21 +418,35 @@ const WrapperScanner = styled.div`
     display: none !important;
   }
 
-  .button {
-    background-color: black;
-    border-radius: 4em;
-    font-size: 16px;
+  #start-scan{
+    background-color: #000;
+    font-size: 18px;
     color: white;
-    padding: 0.8em 1.8em;
     cursor: pointer;
     user-select: none;
     text-align: center;
     text-decoration: none;
-    cursor: pointer;
+    width: 180px;
+    height: 40px;
   }
 
-  .button:hover {
+  #start-scan:hover {
     background-color: #3a3a3a;
+    border: 1px solid #fff;
+  }
+  #view-documents{
+    background-color:#45a242;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+    text-decoration: none;
+    width: 180px;
+    height: 40px;
+  }
+  #view-documents:hover{
+    border: 1px solid #fff;
   }
 `;
 export default Scanner;

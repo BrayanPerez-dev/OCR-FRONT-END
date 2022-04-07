@@ -1,10 +1,8 @@
-import axios from 'axios'
-
-const API_URL = "https://intellityc-scanner-server.herokuapp.com/api/auth/"
+import apiClient from './http-common'
 
 
 const register = (username,email,password) => {
-    return axios.post(API_URL + "signup", {
+    return apiClient.post("auth/signup", {
       username,
       email,
       password,
@@ -12,7 +10,7 @@ const register = (username,email,password) => {
 }
 
 const login = (email,password) => {
-   return axios.post(API_URL + "signin", {
+   return apiClient.post("auth/signin", {
      email,
      password,
    })
