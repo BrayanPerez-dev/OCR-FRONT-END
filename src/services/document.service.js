@@ -8,7 +8,7 @@ export const getDocuments = () => {
   });
 };
 
-export const sendDocuments = (
+export const sendDocuments = async (
   result,
   photo,
   dateBirth,
@@ -30,7 +30,7 @@ export const sendDocuments = (
     placebirth: result.placeOfBirth,
   };
   console.log(document);
-  return apiClient.post("document", data).then((res) => {
+  apiClient.post("document", data).then(res => {
     return res.data;
-  });
+  })
 };

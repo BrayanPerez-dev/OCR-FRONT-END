@@ -7,18 +7,23 @@ import fondo2 from "../assets/FONDO-2-min.png";
 import fondo3 from "../assets/FONDO-3-min.png";
 import { FaUser } from "react-icons/fa";
 import { AiFillLock } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import authService from "../services/auth.service";
 import { useEffect } from "react";
 
 const SingIn = () => {
   const navigate = useNavigate();  
+  const location = useLocation();
   const data = authService.gerCurrentUser();
-
+  
+  const from = location.state?.from?.pathname || "/";
+  
+  console.log(from)
   useEffect(()=>{
      if (data?.token) {
-     return navigate('/dashboard')
-    } 
+     navigate(from, { replace: true });
+     return history.go(-1)
+     }
 
   },[])
    
@@ -27,8 +32,6 @@ const SingIn = () => {
     authService.login(email, password).then(
       () => {
         navigate('/dashboard')
-        //window.location.reload()
-
       },
       (error) => {
         const resMessage =

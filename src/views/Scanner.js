@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import * as BlinkIDSDK from "@microblink/blinkid-in-browser-sdk";
 import Swal from "sweetalert2";
-import {sendDocuments} from "../services/document.service"
+import { sendDocuments } from "../services/document.service";
 import styled from "styled-components";
 import { Button } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
 const Scanner = () => {
-  const navigateTo = useNavigate()
+  const navigateTo = useNavigate();
   const initialMessageEl = useRef("");
   const progressEl = useRef(0);
 
@@ -160,13 +160,15 @@ const Scanner = () => {
                            `,
         }).then((value) => {
           if (value.isConfirmed) {
-            
-            sendDocuments(result,photo,dateBirth,dateIssue,dateExpiry).then((res) => {
-              console.log(res)
-              Swal.fire("Guardado!", "", "success");
-            });
-          
-
+            sendDocuments(result, photo, dateBirth, dateIssue, dateExpiry).then(
+              (res) => {
+                console.log(res);
+                Swal.fire("Guardado!", "", "success");
+              },
+              (error) => {
+                console.log(error);
+              }
+            );
           } else if (value.isDenied) {
             Swal.fire("La informacion no fue guardada", "", "info");
           }
@@ -294,11 +296,19 @@ const Scanner = () => {
   useEffect(() => {
     main();
   }, []);
-   console.log("client size", cameraFeedback.current.clientWidth,cameraFeedback.current.clientHeight)
-   console.log("clear rect",cameraFeedback.current.width,cameraFeedback.current.height)
+  console.log(
+    "client size",
+    cameraFeedback.current.clientWidth,
+    cameraFeedback.current.clientHeight
+  );
+  console.log(
+    "clear rect",
+    cameraFeedback.current.width,
+    cameraFeedback.current.height
+  );
   const pushTo = () => {
-    navigateTo("documentos")
-  }
+    navigateTo("documentos");
+  };
   return (
     <WrapperScanner>
       <div ref={screenInitial} id="screen-initial">
@@ -313,9 +323,12 @@ const Scanner = () => {
         ></progress>
       </div>
       <div ref={screenStart} id="screen-start" className="hidden">
-        <Button shape="round" ref={startScan}  id="start-scan">Iniciar Escaneo</Button>
-        <Button shape="round" id="view-documents" onClick={pushTo}>Ver documentos</Button>
-
+        <Button shape="round" ref={startScan} id="start-scan">
+          Iniciar Escaneo
+        </Button>
+        <Button shape="round" id="view-documents" onClick={pushTo}>
+          Ver documentos
+        </Button>
       </div>
       <div ref={screenScanning} id="screen-scanning" className="hidden">
         <video ref={cameraFeed} id="camera-feed" playsInline></video>
@@ -324,7 +337,7 @@ const Scanner = () => {
           Apunte la cámara hacia la parte frontal del documento.
         </p>
       </div>
-      <Outlet/>
+      <Outlet />
     </WrapperScanner>
   );
 };
@@ -418,7 +431,7 @@ const WrapperScanner = styled.div`
     display: none !important;
   }
 
-  #start-scan{
+  #start-scan {
     background-color: #000;
     font-size: 18px;
     color: white;
@@ -434,8 +447,8 @@ const WrapperScanner = styled.div`
     background-color: #3a3a3a;
     border: 1px solid #fff;
   }
-  #view-documents{
-    background-color:#45a242;
+  #view-documents {
+    background-color: #45a242;
     font-size: 18px;
     color: white;
     cursor: pointer;
@@ -445,7 +458,7 @@ const WrapperScanner = styled.div`
     width: 180px;
     height: 40px;
   }
-  #view-documents:hover{
+  #view-documents:hover {
     border: 1px solid #fff;
   }
 `;
