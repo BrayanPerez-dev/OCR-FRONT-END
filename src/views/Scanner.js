@@ -245,6 +245,7 @@ const Scanner = () => {
       cameraFeedback.current.height
     );
   };
+  
   const setupColor = (displayable) => {
     let color = "#FFFF00FF";
     if (displayable.detectionStatus === 0) {

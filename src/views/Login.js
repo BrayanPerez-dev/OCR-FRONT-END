@@ -16,22 +16,20 @@ const SingIn = () => {
   const location = useLocation();
   const data = authService.gerCurrentUser();
   
-  const from = location.state?.from?.pathname || "/";
   
-  console.log(from)
   useEffect(()=>{
-     if (data?.token) {
-     navigate(from, { replace: true });
-     return history.go(-1)
+  
+    if (data?.token) {
+      return navigate("/dashboard")
      }
 
   },[])
-   
+  
   const onFinish = (values) => {
     const { email, password } = values;
     authService.login(email, password).then(
       () => {
-        navigate('/dashboard')
+        navigate("/dashboard")
       },
       (error) => {
         const resMessage =
