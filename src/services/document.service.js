@@ -24,18 +24,18 @@ export const sendDocuments = async (
   console.log(dateExpiry)
   console.log(result.documentNumber)
   const data = {
-    firstname: result.firstName,
-    lastname: result.lastName,
-    datebirth: dateBirth,
-    dateissue: dateIssue,
-    dateexpiry: dateExpiry,
-    numdocument: result.documentNumber,
-    address: result.address,
-    gender: result.sex,
-    marital_status: result.maritalStatus,
-    proffesion: result.profession,
+    firstname: result.firstName || "no escaneado",
+    lastname: result.lastName || "no escaneado",
+    datebirth: dateBirth || "00/00/0000",
+    dateissue: dateIssue  || "00/00/0000",
+    dateexpiry: dateExpiry || "00/00/0000",
+    numdocument: result.documentNumber || "000000000",
+    address: result.address || "no escaneado",
+    gender: result.sex || "no escaneado",
+    marital_status: result.maritalStatus || "no escaneado",
+    proffesion: result.profession || "no escaneado",
     photo: photo,
-    placebirth: result.placeOfBirth
+    placebirth: result.placeOfBirth || "no escaneado"
   }
   return apiClient.post("document",data).then((res) => {
     console.log("res apiClient",res)

@@ -92,6 +92,8 @@ const Scanner = () => {
       const f = await combinedGenericIDRecognizer.getResult();
       console.log(f)
     const scanTimeoutSeconds = 15;
+    
+
     try {
       videoRecognizer.startRecognition(async (recognitionState) => {
         if (!videoRecognizer) {
