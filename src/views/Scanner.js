@@ -62,7 +62,7 @@ const Scanner = () => {
   const startScaning = async (sdk) => {
     screenStart?.current.classList.add("hidden");
     screenScanning?.current.classList.remove("hidden");
-
+   
     const combinedGenericIDRecognizer =
       await BlinkIDSDK.createBlinkIdCombinedRecognizer(sdk);
     const settings = await combinedGenericIDRecognizer.currentSettings();
@@ -89,7 +89,8 @@ const Scanner = () => {
         cameraFeed.current,
         recognizerRunner
       );
-
+      const f = await combinedGenericIDRecognizer.getResult();
+      console.log(f)
     const scanTimeoutSeconds = 15;
     try {
       videoRecognizer.startRecognition(async (recognitionState) => {
@@ -163,12 +164,10 @@ const Scanner = () => {
             sendDocuments(result, photo, dateBirth, dateIssue, dateExpiry).then(
               (res) => {
                 console.log("res scanner",res);
-                Swal.fire("Guardado!", "", "success");
-              },
-              (error) => {
-                console.log("error ",error);
-              }
-            );
+                if(res) Swal.fire("Guardado!", "", "success");
+              }).catch(error => {
+                console.log(error)
+            });
           } else if (value.isDenied) {
             Swal.fire("La informacion no fue guardada", "", "info");
           }

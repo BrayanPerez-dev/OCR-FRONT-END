@@ -11,7 +11,7 @@ const Documents = () => {
   useEffect(() => {
     getDocuments().then(res => {
       console.log(res)
-      setDocuments(...documents,res)
+      setDocuments(res)
     },(error)=>{
       console.log(error)
       if(error) return

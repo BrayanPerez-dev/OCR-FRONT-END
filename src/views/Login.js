@@ -28,18 +28,12 @@ const SingIn = () => {
   const onFinish = (values) => {
     const { email, password } = values;
     authService.login(email, password).then(
-      () => {
+      (res) => {
         navigate("/dashboard")
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.error) ||
-          error.message ||
-          error.toString();
-      }
-    ); 
+        console.log(res)
+      }).catch(error => {
+        console.log(error)
+    });
   };
 
   
