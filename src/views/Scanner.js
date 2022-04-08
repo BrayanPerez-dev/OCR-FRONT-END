@@ -161,7 +161,6 @@ const Scanner = () => {
               (res) => {
                 console.log("res scanner",res);
                 alert(JSON.stringify(res))
-
                 if(res) Swal.fire("Guardado!", "", "success");
               }).catch(error => {
                 alert(JSON.stringify(error))

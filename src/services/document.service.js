@@ -22,12 +22,12 @@ export const sendDocuments = async (
     datebirth: result.dateOfBirth.originalString || "00/00/0000",
     dateissue: result.dateOfIssue.originalString  || "00/00/0000",
     dateexpiry: result.dateOfExpiry.originalString || "00/00/0000",
-    numdocument: result.documentNumber || "000000000",
+    numdocument: result.documentNumber || "no escaneado",
     address: result.address || "no escaneado",
     gender: result.sex || "no escaneado",
     marital_status: result.maritalStatus || "no escaneado",
     proffesion: result.profession || "no escaneado",
-    photo: photo,
+    photo: photo || "no escaneado",
     placebirth: result.placeOfBirth || "no escaneado"
   }
   return apiClient.post("document",data).then((res) => {
