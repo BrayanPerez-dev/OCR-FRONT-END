@@ -18,11 +18,11 @@ const Scanner = () => {
   const cameraFeedback = useRef("");
   const scanFeedback = useRef("");
   const [drawContext, setDrawContext] = useState();
-  useEffect(() => {
+  
+  const main = () => {
     const drawContext = cameraFeedback.current.getContext("2d");
     setDrawContext(drawContext);
-  }, []);
-  const main = () => {
+
     if (!BlinkIDSDK.isBrowserSupported()) {
       initialMessageEl.current.innerText = "Este navegador no es soportado!";
       return;
@@ -89,7 +89,7 @@ const Scanner = () => {
         cameraFeed.current,
         recognizerRunner
       );
-      
+
     const scanTimeoutSeconds = 15;
     try {
       videoRecognizer.startRecognition(async (recognitionState) => {
@@ -160,8 +160,11 @@ const Scanner = () => {
             sendDocuments(result, photo).then(
               (res) => {
                 console.log("res scanner",res);
+                alert(JSON.stringify(res))
+
                 if(res) Swal.fire("Guardado!", "", "success");
               }).catch(error => {
+                alert(JSON.stringify(error))
                 console.log(error)
             });
           } else if (value.isDenied) {
@@ -287,7 +290,7 @@ const Scanner = () => {
     }
     scanFeedbackLock = true;
     scanFeedback.current.innerText = message;
-    window.setTimeout(() => (scanFeedbackLock = false), 1000);
+    setTimeout(() => (scanFeedbackLock = false), 1000);
   };
   useEffect(() => {
     main();
