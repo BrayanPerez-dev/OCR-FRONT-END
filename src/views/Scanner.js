@@ -162,11 +162,11 @@ const Scanner = () => {
           if (value.isConfirmed) {
             sendDocuments(result, photo, dateBirth, dateIssue, dateExpiry).then(
               (res) => {
-                console.log(res);
+                console.log("res scanner",res);
                 Swal.fire("Guardado!", "", "success");
               },
               (error) => {
-                console.log(error);
+                console.log("error ",error);
               }
             );
           } else if (value.isDenied) {
