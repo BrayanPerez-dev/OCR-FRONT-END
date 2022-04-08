@@ -13,22 +13,15 @@ export const getDocuments = () => {
 export const sendDocuments = async (
   result,
   photo,
-  dateBirth,
-  dateIssue,
-  dateExpiry
 ) => {
   console.log(result)
   console.log(photo)
-  console.log(dateBirth)
-  console.log(dateIssue)
-  console.log(dateExpiry)
-  console.log(result.documentNumber)
   const data = {
     firstname: result.firstName || "no escaneado",
     lastname: result.lastName || "no escaneado",
-    datebirth: dateBirth || "00/00/0000",
-    dateissue: dateIssue  || "00/00/0000",
-    dateexpiry: dateExpiry || "00/00/0000",
+    datebirth: result.dateOfBirth.originalString || "00/00/0000",
+    dateissue: result.dateOfIssue.originalString  || "00/00/0000",
+    dateexpiry: result.dateOfExpiry.originalString || "00/00/0000",
     numdocument: result.documentNumber || "000000000",
     address: result.address || "no escaneado",
     gender: result.sex || "no escaneado",

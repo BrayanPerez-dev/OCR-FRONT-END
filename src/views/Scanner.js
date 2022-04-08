@@ -89,11 +89,8 @@ const Scanner = () => {
         cameraFeed.current,
         recognizerRunner
       );
-      const f = await combinedGenericIDRecognizer.getResult();
-      console.log(f)
+      
     const scanTimeoutSeconds = 15;
-    
-
     try {
       videoRecognizer.startRecognition(async (recognitionState) => {
         if (!videoRecognizer) {
@@ -136,9 +133,6 @@ const Scanner = () => {
           return window.btoa(binary);
         };
         const photo = encodedImageToBase64(encodedImage.buffer);
-        const dateBirth = `${result.dateOfBirth.day}/${result.dateOfBirth.month}/${result.dateOfBirth.year}`;
-        const dateIssue = `${result.dateOfIssue.day}/${result.dateOfIssue.month}/${result.dateOfIssue.year}`;
-        const dateExpiry = `${result.dateOfExpiry.day}/${result.dateOfExpiry.month}/${result.dateOfExpiry.year}`;
 
         Swal.fire({
           title: "DUI",
@@ -151,10 +145,10 @@ const Scanner = () => {
           html: `<img height="150" width:"350" src="data:image/png;base64,${photo}">
                            <br> Nombre: ${result.firstName} 
                            <br> Apellido: ${result.lastName}
-                           <br> Fecha de Nacimiento: ${dateBirth} 
+                           <br> Fecha de Nacimiento: ${result.dateOfBirth.originalString} 
                            <br> Lugar de Nacimiento: ${result.placeOfBirth} 
-                           <br> Fecha de Emisión: ${dateIssue}
-                           <br> Fecha de Expiracion: ${dateExpiry}
+                           <br> Fecha de Emisión: ${result.dateOfIssue.originalString}
+                           <br> Fecha de Expiracion: ${result.dateOfExpiry.originalString}
                            <br> Numero de Documento: ${result.documentNumber} 
                            <br> Direccion: ${result.address} 
                            <br> Genero: ${result.sex} 
@@ -163,7 +157,7 @@ const Scanner = () => {
                            `,
         }).then((value) => {
           if (value.isConfirmed) {
-            sendDocuments(result, photo, dateBirth, dateIssue, dateExpiry).then(
+            sendDocuments(result, photo).then(
               (res) => {
                 console.log("res scanner",res);
                 if(res) Swal.fire("Guardado!", "", "success");
