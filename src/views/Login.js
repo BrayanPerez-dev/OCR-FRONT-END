@@ -98,7 +98,7 @@ const SingIn = () => {
 const Wrapper = styled.div`
   .box-login {
     position: absolute;
-    width: 40%;
+    width: 45%;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -112,7 +112,7 @@ const Wrapper = styled.div`
     margin: auto;
   }
   .ant-form {
-    margin: -2% 20% 13% 20%;
+    margin: -2% 20% 12% 20%;
   }
   .ant-btn-primary {
     color: black;
@@ -120,6 +120,15 @@ const Wrapper = styled.div`
     background: #fff;
     cursor: default;
   }
+  .ant-btn > span {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: stretch;
+    justify-content: center;
+    align-items: center;
+   }
+
   .ant-input-group-addon {
     background: #646458;
   }
@@ -141,5 +150,11 @@ const Wrapper = styled.div`
   .ant-btn-primary {
     width: 100%;
   }
+
+  @media only screen and (max-width: 412px) {
+    .box-login{
+      width: 90%;
+  }
+}
 `;
 export default SingIn;

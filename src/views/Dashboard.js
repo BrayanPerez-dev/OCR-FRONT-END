@@ -19,11 +19,12 @@ const Dashboard = () => {
       <header>
         <Link to="/dashboard">Inicio</Link>
         <Link to="scanner">Scanner</Link>
+        <Link to="documentos">Documentos</Link>
         <Link to="/" onClick={() => logOut()}>
           Salir
         </Link>
       </header>
-      <h1>Usuario: {curretUser.user_name} Correo: {curretUser.email}</h1>
+      <h4>Usuario: {curretUser.user_name}   Correo: {curretUser.email}</h4>
       <Outlet />
     </Wrapper>
   );
@@ -35,6 +36,7 @@ const Wrapper = styled.div`
     justify-content: space-between;
     width: 30vw;
     background: currentColor;
+    flex-wrap: wrap;
   }
   a {
     color: darkgray;

@@ -19,9 +19,12 @@ const Scanner = () => {
   const scanFeedback = useRef("");
   const [drawContext, setDrawContext] = useState();
   
-  const main = () => {
+  useEffect(()=>{
     const drawContext = cameraFeedback.current.getContext("2d");
     setDrawContext(drawContext);
+  })
+  const main = () => {
+   
 
     if (!BlinkIDSDK.isBrowserSupported()) {
       initialMessageEl.current.innerText = "Este navegador no es soportado!";
@@ -71,7 +74,7 @@ const Scanner = () => {
     settings.returnFaceImage = true;
     settings.returnFullDocumentImage = true;
     await combinedGenericIDRecognizer.updateSettings(settings);
-
+    
     const callbacks = {
       onQuadDetection: (quad) => drawQuad(quad),
       onDetectionFailed: () => updateScanFeedback("Detencion fallida", true),
@@ -188,6 +191,9 @@ const Scanner = () => {
   };
 
   const drawQuad = (quad) => {
+    console.log("drawQuad",quad)
+    alert(JSON.stringify(quad))
+
     clearDrawCanvas();
     setupColor(quad);
     setupMessage(quad);
@@ -233,6 +239,8 @@ const Scanner = () => {
     );
   };
   const clearDrawCanvas = () => {
+    alert(JSON.stringify(cameraFeedback.current.clientWidth))
+    alert(JSON.stringify(cameraFeedback.current.clientHeight))
     cameraFeedback.current.width = cameraFeedback.current.clientWidth;
     cameraFeedback.current.height = cameraFeedback.current.clientHeight;
     drawContext.clearRect(
@@ -244,6 +252,7 @@ const Scanner = () => {
   };
   
   const setupColor = (displayable) => {
+    console.log(displayable)
     let color = "#FFFF00FF";
     if (displayable.detectionStatus === 0) {
       color = "#FF0000FF";
@@ -293,7 +302,7 @@ const Scanner = () => {
   };
   useEffect(() => {
     main();
-  }, []);
+  });
   console.log(
     "client size",
     cameraFeedback.current.clientWidth,
@@ -335,7 +344,6 @@ const Scanner = () => {
           Apunte la cámara hacia la parte frontal del documento.
         </p>
       </div>
-      <Outlet />
     </WrapperScanner>
   );
 };
@@ -380,6 +388,11 @@ const WrapperScanner = styled.div`
     flex-wrap: wrap;
     align-content: center;
     align-items: stretch;
+    position: absolute;
+    width: 40%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 
   /* Rules for better readability */
