@@ -3,13 +3,15 @@ import * as BlinkIDSDK from "@microblink/blinkid-in-browser-sdk";
 import Swal from "sweetalert2";
 import { sendDocuments } from "../services/document.service";
 import styled from "styled-components";
-import { Button } from "antd";
+import { Button,Spin } from "antd";
+import { LoadingOutlined } from '@ant-design/icons';
+
 import { useNavigate } from "react-router-dom";
 const Scanner = () => {
   const navigateTo = useNavigate();
   const initialMessageEl = useRef("");
-  const progressEl = useRef(0);
-
+  const progressEl = useRef(true);
+ 
   const screenInitial = useRef("");
   const screenStart = useRef("");
   const startScan = useRef("");
@@ -18,7 +20,9 @@ const Scanner = () => {
   const cameraFeedback = useRef("");
   const scanFeedback = useRef("");
   const [drawContext, setDrawContext] = useState();
-  
+
+  const antIcon = <LoadingOutlined style={{ fontSize: 120 }} spin />;
+
   useEffect(()=>{
     const drawContext = cameraFeedback.current.getContext("2d");
     setDrawContext(drawContext);
@@ -43,10 +47,10 @@ const Scanner = () => {
 
     const loadSettings = new BlinkIDSDK.WasmSDKLoadSettings(licenseKey);
     loadSettings.allowHelloMessage = true;
-    loadSettings.loadProgressCallback = (progress) =>
-      (progressEl.current.value = progress);
+    // loadSettings.loadProgressCallback = (progress) =>(progressEl.current.value = progress);
     loadSettings.engineLocation = window.location.origin;
-
+    progressEl.current = false
+    console.log(progressEl)
     BlinkIDSDK.loadWasmModule(loadSettings).then(
       (sdk) => {
         screenInitial?.current.classList.add("hidden");
@@ -297,7 +301,7 @@ const Scanner = () => {
   };
   useEffect(() => {
     main();
-  },[]);
+  });
  
   const pushTo = () => {
     navigateTo("/dashboard/documentos");
@@ -305,16 +309,18 @@ const Scanner = () => {
   
   return (
     <WrapperScanner>
+      
       <div ref={screenInitial} id="screen-initial">
         <h1 ref={initialMessageEl} id="msg">
           Cargando...
         </h1>
-        <progress
+       {/*  <progress
           ref={progressEl}
           id="load-progress"
           value="0"
           max="100"
-        ></progress>
+        ></progress> */}
+        <Spin indicator={antIcon} />
       </div>
       <div ref={screenStart} id="screen-start" className="hidden">
         <Button shape="round" ref={startScan} id="start-scan">
@@ -381,7 +387,12 @@ const WrapperScanner = styled.div`
     top: 50%;
     transform: translate(-50%, -50%);
   }
-
+  #screen-initial{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
   /* Rules for better readability */
   img {
     display: block;

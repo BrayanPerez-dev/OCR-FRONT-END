@@ -37,6 +37,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@babel/runtime": "^7.16.7",
     "@microblink/blinkid-in-browser-sdk": "^5.14.2",
     "antd": "^4.18.4",
