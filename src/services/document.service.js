@@ -34,7 +34,7 @@ export const sendDocuments = async (
     console.log("res apiClient",res)
     return res.data;
   }).catch(error => {
-    console.log(error.response)
+    console.log("res apiClient",error)
     return error.response
 });
 

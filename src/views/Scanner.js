@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import { sendDocuments } from "../services/document.service";
 import styled from "styled-components";
 import { Button } from "antd";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const Scanner = () => {
   const navigateTo = useNavigate();
   const initialMessageEl = useRef("");
@@ -163,16 +163,17 @@ const Scanner = () => {
             sendDocuments(result, photo).then(
               (res) => {
                 console.log("res scanner",res);
-                alert(JSON.stringify(res))
-                if(res) Swal.fire("Guardado!", "", "success");
+                if(res.data.result) Swal.fire("Guardado!", "", "success");
               }).catch(error => {
-                alert(JSON.stringify(error))
-                console.log(error)
+                console.log("error scanner",error)
+                if(error.message) Swal.fire({ icon: 'error', title: '', text: 'Hubo un error,intente de nuevo!'})
+
             });
           } else if (value.isDenied) {
             Swal.fire("La informacion no fue guardada", "", "info");
           }
         });
+
         videoRecognizer?.releaseVideoFeed();
         recognizerRunner?.delete();
         combinedGenericIDRecognizer?.delete();
@@ -191,9 +192,6 @@ const Scanner = () => {
   };
 
   const drawQuad = (quad) => {
-    console.log("drawQuad",quad)
-    alert(JSON.stringify(quad))
-
     clearDrawCanvas();
     setupColor(quad);
     setupMessage(quad);
@@ -239,8 +237,6 @@ const Scanner = () => {
     );
   };
   const clearDrawCanvas = () => {
-    alert(JSON.stringify(cameraFeedback.current.clientWidth))
-    alert(JSON.stringify(cameraFeedback.current.clientHeight))
     cameraFeedback.current.width = cameraFeedback.current.clientWidth;
     cameraFeedback.current.height = cameraFeedback.current.clientHeight;
     drawContext.clearRect(
@@ -252,7 +248,6 @@ const Scanner = () => {
   };
   
   const setupColor = (displayable) => {
-    console.log(displayable)
     let color = "#FFFF00FF";
     if (displayable.detectionStatus === 0) {
       color = "#FF0000FF";
@@ -303,19 +298,12 @@ const Scanner = () => {
   useEffect(() => {
     main();
   });
-  console.log(
-    "client size",
-    cameraFeedback.current.clientWidth,
-    cameraFeedback.current.clientHeight
-  );
-  console.log(
-    "clear rect",
-    cameraFeedback.current.width,
-    cameraFeedback.current.height
-  );
+ 
   const pushTo = () => {
     navigateTo("documentos");
   };
+
+
   return (
     <WrapperScanner>
       <div ref={screenInitial} id="screen-initial">
