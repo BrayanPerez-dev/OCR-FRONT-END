@@ -14,7 +14,6 @@ const Documents = () => {
       setDocuments(res)
     },(error)=>{
       console.log(error)
-      if(error) return
     })
   }, [])
   console.log(documents)

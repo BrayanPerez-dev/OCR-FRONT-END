@@ -162,8 +162,8 @@ const Scanner = () => {
           if (value.isConfirmed) {
             sendDocuments(result, photo).then(
               (res) => {
-                console.log("res scanner",res);
-                if(res.data.result) Swal.fire("Guardado!", "", "success");
+                console.log("res scanner",res.result);
+                if(res.result) Swal.fire("Guardado!", "", "success");
               }).catch(error => {
                 console.log("error scanner",error)
                 if(error.message) Swal.fire({ icon: 'error', title: '', text: 'Hubo un error,intente de nuevo!'})
@@ -302,8 +302,7 @@ const Scanner = () => {
   const pushTo = () => {
     navigateTo("documentos");
   };
-
-
+  
   return (
     <WrapperScanner>
       <div ref={screenInitial} id="screen-initial">

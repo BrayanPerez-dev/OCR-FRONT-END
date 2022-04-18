@@ -5,9 +5,7 @@ export const getDocuments = () => {
   //return apiClient.get("document", { headers: authHeader() });
   return apiClient.get("document").then((response)=> {
             return response.data
-  }).catch(error => {
-    console.log(error.response)
-});
+  })
 };
 
 export const sendDocuments = async (
@@ -17,25 +15,22 @@ export const sendDocuments = async (
   console.log(result)
   console.log(photo)
   const data = {
-    firstname: result.firstName || "no escaneado",
-    lastname: result.lastName || "no escaneado",
-    datebirth: result.dateOfBirth.originalString || "00/00/0000",
-    dateissue: result.dateOfIssue.originalString  || "00/00/0000",
-    dateexpiry: result.dateOfExpiry.originalString || "00/00/0000",
-    numdocument: result.documentNumber || "no escaneado",
-    address: result.address || "no escaneado",
-    gender: result.sex || "no escaneado",
-    marital_status: result.maritalStatus || "no escaneado",
-    proffesion: result.profession || "no escaneado",
-    photo: photo || "no escaneado",
-    placebirth: result.placeOfBirth || "no escaneado"
+    firstname: result.firstName,
+    lastname: result.lastName,
+    datebirth: result.dateOfBirth.originalString,
+    dateissue: result.dateOfIssue.originalString,
+    dateexpiry: result.dateOfExpiry.originalString,
+    numdocument: result.documentNumber,
+    address: result.address,
+    gender: result.sex,
+    marital_status: result.maritalStatus,
+    proffesion: result.profession,
+    photo: photo,
+    placebirth: result.placeOfBirth
   }
   return apiClient.post("document",data).then((res) => {
     console.log("res apiClient",res)
     return res.data;
-  }).catch(error => {
-    console.log("res apiClient",error)
-    return error.response
-});
+  })
 
 };

@@ -9,13 +9,13 @@ import { FaUser } from "react-icons/fa";
 import { AiFillLock } from "react-icons/ai";
 import { useNavigate,useLocation } from "react-router-dom";
 import authService from "../services/auth.service";
-import { useEffect } from "react";
+import { useState,useEffect } from "react";
 
 const SingIn = () => {
   const navigate = useNavigate();  
   const location = useLocation();
   const data = authService.gerCurrentUser();
-  
+  const [error,setError] = useState('')
   
   useEffect(()=>{
   
@@ -27,12 +27,14 @@ const SingIn = () => {
   
   const onFinish = (values) => {
     const { email, password } = values;
+    if(values) setError('')
     authService.login(email, password).then(
       (res) => {
         navigate("/dashboard")
         console.log(res)
       }).catch(error => {
         console.log(error)
+        setError(error.message)
     });
   };
 
@@ -82,9 +84,8 @@ const SingIn = () => {
               />
             </Form.Item>
 
-            <Form.Item name="remember" valuePropName="checked">
-              <Checkbox>Remember me</Checkbox>
-            </Form.Item>
+            {error && <h5>Correo/Contraseña incorrectos</h5>}
+
             <Form.Item>
               <Button type="primary" htmlType="submit">
               Iniciar sesión
