@@ -297,10 +297,10 @@ const Scanner = () => {
   };
   useEffect(() => {
     main();
-  });
+  },[]);
  
   const pushTo = () => {
-    navigateTo("documentos");
+    navigateTo("/dashboard/documentos");
   };
   
   return (
