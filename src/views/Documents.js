@@ -3,19 +3,29 @@ import React from 'react'
 import { useEffect,useState } from 'react'
 import { getDocuments } from '../services/document.service'
 import styled from "styled-components"
-import { Image } from 'antd' 
+import { Image,Spin } from 'antd' 
+import { LoadingOutlined } from '@ant-design/icons';
+
 const Documents = () => {
    
   const [documents,setDocuments] = useState([])
-  
+  const [loading,setLoading] = useState(true)
+  const antIcon = <><h1>Cargando</h1><LoadingOutlined style={{ fontSize: 120 }} spin /></>;
+
   useEffect(() => {
     getDocuments().then(res => {
       console.log(res)
-      setDocuments(res)
-    },(error)=>{
+      const results = res.map(row => ({
+        key:row.id_document,
+        ...row
+      }))
+      console.log(results)
+      setDocuments(results)
+    }).catch((error)=>{
       console.log(error)
-    })
+    }).finally(() => setLoading(false))
   }, [])
+ 
   console.log(documents)
   const columns = [
     {
@@ -82,7 +92,7 @@ const Documents = () => {
   ]
   return (
     <Wrapper>
-    <Table rowKey={record => record.id} columns={columns} dataSource={documents}/>
+    <Table loading={{indicator:  <Spin indicator={antIcon} />, spinning: loading}} columns={columns} dataSource={documents}/>
     </Wrapper>
   )
 }

@@ -4,6 +4,7 @@ import { authHeader } from "./auth.header";
 export const getDocuments = () => {
   //return apiClient.get("document", { headers: authHeader() });
   return apiClient.get("document").then((response)=> {
+             console.log(response)
             return response.data
   })
 };

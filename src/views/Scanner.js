@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 const Scanner = () => {
   const navigateTo = useNavigate();
   const initialMessageEl = useRef("");
-  const progressEl = useRef(true);
  
   const screenInitial = useRef("");
   const screenStart = useRef("");
@@ -47,10 +46,9 @@ const Scanner = () => {
 
     const loadSettings = new BlinkIDSDK.WasmSDKLoadSettings(licenseKey);
     loadSettings.allowHelloMessage = true;
-    // loadSettings.loadProgressCallback = (progress) =>(progressEl.current.value = progress);
+    loadSettings.loadProgressCallback = (progress) =>(progress);
     loadSettings.engineLocation = window.location.origin;
-    progressEl.current = false
-    console.log(progressEl)
+
     BlinkIDSDK.loadWasmModule(loadSettings).then(
       (sdk) => {
         screenInitial?.current.classList.add("hidden");
@@ -167,14 +165,21 @@ const Scanner = () => {
             sendDocuments(result, photo).then(
               (res) => {
                 console.log("res scanner",res.result);
-                if(res.result) Swal.fire("Guardado!", "", "success");
+                if(res.result){
+                  Swal.fire("Guardado!", "", "success");
+                  window.location.reload() 
+                }
               }).catch(error => {
                 console.log("error scanner",error)
-                if(error.message) Swal.fire({ icon: 'error', title: '', text: 'Hubo un error,intente de nuevo!'})
+                if(error.message){
+                  Swal.fire({ icon: 'error', title: '', text: 'Hubo un error,intente de nuevo!'})
+                  window.location.reload() 
+                } 
 
             });
           } else if (value.isDenied) {
             Swal.fire("La informacion no fue guardada", "", "info");
+            window.location.reload() 
           }
         });
 
@@ -314,12 +319,6 @@ const Scanner = () => {
         <h1 ref={initialMessageEl} id="msg">
           Cargando...
         </h1>
-       {/*  <progress
-          ref={progressEl}
-          id="load-progress"
-          value="0"
-          max="100"
-        ></progress> */}
         <Spin indicator={antIcon} />
       </div>
       <div ref={screenStart} id="screen-start" className="hidden">
