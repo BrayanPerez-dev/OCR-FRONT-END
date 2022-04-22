@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button } from "antd";
 import BackgroundSlider from "react-background-slider";
 import logo from "../assets/logo.png";
 import fondo1 from "../assets/FONDO-1-min.png";

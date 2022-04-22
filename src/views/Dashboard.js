@@ -1,53 +1,37 @@
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import authService from "../services/auth.service";
-import { Link, useNavigate, Outlet } from "react-router-dom";
+import {useLocation, Outlet } from "react-router-dom";
+import MainMenu from "../components/MainMenu";
+import HeaderMenu from "../components/HeaderMenu";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
   const data = authService.gerCurrentUser();
   const { user, token } = data;
   const [curretUser, setCurrentUser] = useState(user);
-
+  const location = useLocation();
+  
+  
   const logOut = () => {
     authService.logout();
     navigate("/");
   };
+  const displayMenu = () => {
+  console.log(location)
+  const { pathname } = location
+  if(pathname === '/dashboard' || pathname === '/dashboard/') return <MainMenu user={curretUser}  out={logOut}/>
+  return <HeaderMenu user={curretUser} out={logOut}/>
+  }
 
   return (
     <Wrapper>
-      <header>
-        <Link to="/dashboard">Inicio</Link>
-        <Link to="scanner">Scanner</Link>
-        <Link to="documentos">Documentos</Link>
-        <Link to="/" onClick={() => logOut()}>
-          Salir
-        </Link>
-      </header>
-      <h4>Usuario: {curretUser.user_name}   Correo: {curretUser.email}</h4>
+      {displayMenu()}
       <Outlet />
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  header {
-    display: flex;
-    justify-content: space-between;
-    width: 30vw;
-    background: currentColor;
-    flex-wrap: wrap;
-  }
-  a {
-    color: darkgray;
-  }
-
-  a:hover {
-    color: darkgray;
-  }
-  .ant-btn {
-    background: darkgray;
-    color: #fff;
-  }
+ 
 `;
 export default Dashboard;

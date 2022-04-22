@@ -3,14 +3,16 @@ import * as BlinkIDSDK from "@microblink/blinkid-in-browser-sdk";
 import Swal from "sweetalert2";
 import { sendDocuments } from "../services/document.service";
 import styled from "styled-components";
-import { Button,Spin } from "antd";
-import { LoadingOutlined } from '@ant-design/icons';
+import { Button, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 import { useNavigate } from "react-router-dom";
+import WaveEffectTwo from "../components/WaveEffectTwo";
+import WaveEffectOne from "../components/WaveEffectOne";
 const Scanner = () => {
   const navigateTo = useNavigate();
   const initialMessageEl = useRef("");
- 
+
   const screenInitial = useRef("");
   const screenStart = useRef("");
   const startScan = useRef("");
@@ -18,17 +20,18 @@ const Scanner = () => {
   const cameraFeed = useRef("");
   const cameraFeedback = useRef("");
   const scanFeedback = useRef("");
+  const waves = useRef("");
+  const container = useRef("");
+
   const [drawContext, setDrawContext] = useState();
 
   const antIcon = <LoadingOutlined style={{ fontSize: 120 }} spin />;
 
-  useEffect(()=>{
+  useEffect(() => {
     const drawContext = cameraFeedback.current.getContext("2d");
     setDrawContext(drawContext);
-  })
+  });
   const main = () => {
-   
-
     if (!BlinkIDSDK.isBrowserSupported()) {
       initialMessageEl.current.innerText = "Este navegador no es soportado!";
       return;
@@ -46,7 +49,7 @@ const Scanner = () => {
 
     const loadSettings = new BlinkIDSDK.WasmSDKLoadSettings(licenseKey);
     loadSettings.allowHelloMessage = true;
-    loadSettings.loadProgressCallback = (progress) =>(progress);
+    loadSettings.loadProgressCallback = (progress) => progress;
     loadSettings.engineLocation = window.location.origin;
 
     BlinkIDSDK.loadWasmModule(loadSettings).then(
@@ -66,8 +69,11 @@ const Scanner = () => {
   };
   const startScaning = async (sdk) => {
     screenStart?.current.classList.add("hidden");
+    waves?.current.classList.add("hidden");
+    container?.current.classList.add("hidden");
+
     screenScanning?.current.classList.remove("hidden");
-   
+
     const combinedGenericIDRecognizer =
       await BlinkIDSDK.createBlinkIdCombinedRecognizer(sdk);
     const settings = await combinedGenericIDRecognizer.currentSettings();
@@ -76,7 +82,7 @@ const Scanner = () => {
     settings.returnFaceImage = true;
     settings.returnFullDocumentImage = true;
     await combinedGenericIDRecognizer.updateSettings(settings);
-    
+
     const callbacks = {
       onQuadDetection: (quad) => drawQuad(quad),
       onDetectionFailed: () => updateScanFeedback("Detencion fallida", true),
@@ -125,9 +131,14 @@ const Scanner = () => {
           return;
         }
         console.log("BlinkIDCombined results", result);
+        console.log(
+          result.fullDocumentFrontImage,
+          result.fullDocumentBackImage
+        );
 
         const { faceImage } = result;
         const { encodedImage } = faceImage;
+
         const encodedImageToBase64 = (buffer) => {
           let binary = "";
           const bytes = new Uint8Array(buffer);
@@ -162,24 +173,28 @@ const Scanner = () => {
                            `,
         }).then((value) => {
           if (value.isConfirmed) {
-            sendDocuments(result, photo).then(
-              (res) => {
-                console.log("res scanner",res.result);
-                if(res.result){
+            sendDocuments(result, photo)
+              .then((res) => {
+                console.log("res scanner", res.result);
+                if (res.result) {
                   Swal.fire("Guardado!", "", "success");
-                  window.location.reload() 
+                  window.location.reload();
                 }
-              }).catch(error => {
-                console.log("error scanner",error)
-                if(error.message){
-                  Swal.fire({ icon: 'error', title: '', text: 'Hubo un error,intente de nuevo!'})
-                  window.location.reload() 
-                } 
-
-            });
+              })
+              .catch((error) => {
+                console.log("error scanner", error);
+                if (error.message) {
+                  Swal.fire({
+                    icon: "error",
+                    title: "",
+                    text: "Hubo un error,intente de nuevo!",
+                  });
+                  window.location.reload();
+                }
+              });
           } else if (value.isDenied) {
             Swal.fire("La informacion no fue guardada", "", "info");
-            window.location.reload() 
+            window.location.reload();
           }
         });
 
@@ -255,7 +270,7 @@ const Scanner = () => {
       cameraFeedback.current.height
     );
   };
-  
+
   const setupColor = (displayable) => {
     let color = "#FFFF00FF";
     if (displayable.detectionStatus === 0) {
@@ -307,14 +322,9 @@ const Scanner = () => {
   useEffect(() => {
     main();
   });
- 
-  const pushTo = () => {
-    navigateTo("/dashboard/documentos");
-  };
-  
+
   return (
     <WrapperScanner>
-      
       <div ref={screenInitial} id="screen-initial">
         <h1 ref={initialMessageEl} id="msg">
           Cargando...
@@ -322,13 +332,15 @@ const Scanner = () => {
         <Spin indicator={antIcon} />
       </div>
       <div ref={screenStart} id="screen-start" className="hidden">
-        <Button shape="round" ref={startScan} id="start-scan">
-          Iniciar Escaneo
-        </Button>
-        <Button shape="round" id="view-documents" onClick={pushTo}>
-          Ver documentos
-        </Button>
+        <div ref={waves} className="waves">
+          <WaveEffectOne   marginTop={'-8px'}firstColor={"#e65159"} secondColor={"#e65159"} />
+          <WaveEffectTwo  color={"#f9989d"} />
+          <Button ref={startScan} id="start-scan">
+            INICIAR ESCANEO
+          </Button>
+        </div>
       </div>
+      <div ref={container} className="container"></div>
       <div ref={screenScanning} id="screen-scanning" className="hidden">
         <video ref={cameraFeed} id="camera-feed" playsInline></video>
         <canvas ref={cameraFeedback} id="camera-feedback"></canvas>
@@ -375,21 +387,28 @@ const WrapperScanner = styled.div`
   }
 
   #screen-start {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-content: center;
-    align-items: stretch;
     position: absolute;
-    width: 40%;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    width: 100vw;
   }
-  #screen-initial{
+  .waves {
+    margin-top: -50px;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50vh;
+    background: linear-gradient(to top, #7f050d, #e65159);
+  }
+  #screen-initial {
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 40%;
     transform: translate(-50%, -50%);
   }
   /* Rules for better readability */
@@ -440,7 +459,13 @@ const WrapperScanner = styled.div`
   }
 
   #start-scan {
-    background-color: #000;
+    position: absolute;
+    width: 40%;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: 8%;
     font-size: 18px;
     color: white;
     cursor: pointer;
@@ -449,24 +474,17 @@ const WrapperScanner = styled.div`
     text-decoration: none;
     width: 180px;
     height: 40px;
+    //box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    border: 1px solid #fff;
+  }
+
+  #start-scan span {
+    color: #707070;
+    font-weight: 600;
   }
 
   #start-scan:hover {
-    background-color: #3a3a3a;
-    border: 1px solid #fff;
-  }
-  #view-documents {
-    background-color: #45a242;
-    font-size: 18px;
-    color: white;
-    cursor: pointer;
-    user-select: none;
-    text-align: center;
-    text-decoration: none;
-    width: 180px;
-    height: 40px;
-  }
-  #view-documents:hover {
+    //  background-color: #3a3a3a;
     border: 1px solid #fff;
   }
 `;

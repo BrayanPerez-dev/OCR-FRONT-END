@@ -32,31 +32,37 @@ const Documents = () => {
       title: 'Nombres',
       dataIndex: 'first_name',
       key: 'first_name',
+      width: 150,
     },
     {
       title: 'Apellidos',
       dataIndex: 'last_name',
       key: 'last_name',
+      width: 150,
     }, 
     {
       title: 'Direccion',
       dataIndex: 'addres',
       key: 'addres',
+      width: 150,
     }, 
     {
       title: 'Fecha de nacimiento',
       dataIndex: 'date_birth',
       key: 'date_birth',
+      width: 75,
     }, 
     {
       title: 'DUI',
       dataIndex: 'num_document',
       key: 'num_document',
+      width: 75,
     }, 
     {
       title: 'Lugar de nacimiento',
       dataIndex: 'place_birth',
       key: 'place_birth',
+      width: 150,
     },
      {
       title: 'Profesion',
@@ -88,16 +94,22 @@ const Documents = () => {
       dataIndex: 'photo',
       key: 'photo',
       render: (_,record) =>( <Image src={`data:image/png;base64,${record.photo}`}/>),
+      width: 150,
     },
   ]
   return (
     <Wrapper>
-    <Table loading={{indicator:  <Spin indicator={antIcon} />, spinning: loading}} columns={columns} dataSource={documents}/>
+    <Table loading={{indicator:  <Spin indicator={antIcon} />, spinning: loading}} columns={columns} dataSource={documents}  scroll={{ x: 1300 }}/>
     </Wrapper>
   )
 }
 
 const Wrapper = styled.div `
 
+.ant-table-wrapper{
+  margin-top: 10px;
+  padding-left: 6%;
+  padding-right: 6%;
+}
 `
 export default Documents

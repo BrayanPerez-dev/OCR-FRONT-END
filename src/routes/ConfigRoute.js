@@ -12,7 +12,7 @@ const ConfigRoute = () => {
       <Routes>
         <Route path="/" element={<Login />}/>
         <Route element={<PrivateRoute />}>
-          <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="/dashboard/*" element={<Dashboard />}>
             <Route path="scanner" element={<Scanner />}/> 
             <Route path="documentos" element={<Documents />} /> 
           </Route>
