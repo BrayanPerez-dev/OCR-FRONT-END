@@ -77,8 +77,8 @@ const MainMenu = ({ user, out }) => {
           </div>
         </Carousel>
         <div className="exit">
-          <Button shape="circle" size="large" icon={<IoExitOutline />} />
-          <Link to="/" onClick={() => out()}><h3>SALIR</h3></Link>
+          <Button onClick={() => out()} shape="circle" size="large" icon={<IoExitOutline />}/>
+          <h3>SALIR</h3>
         </div>
       </div> 
     </Wrapper>
@@ -214,7 +214,21 @@ const Wrapper = styled.div`
   }
   
   @media (max-height: 870px) {
-   overflow: inherit;
+  // overflow: inherit;
+  }
+
+  
+  @media (max-width: 760px) {
+    .waves{
+      margin-top: -6%;
+    }
+    .container-menu{
+    margin-top: -28%;
+    }
+  }
+  
+  @media (max-width: 300px) {
+  overflow: inherit;
   }
 `;
 

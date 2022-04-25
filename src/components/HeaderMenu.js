@@ -55,7 +55,6 @@ const Wrapper = styled.div`
     justify-content: space-around;
     flex-wrap: wrap;
     padding: 20px;
-    
   }
 
   .user {
@@ -79,8 +78,7 @@ const Wrapper = styled.div`
   .user-data p {
     color: #707070;
     font-size: 14px;
-    font-weight:600;
-
+    font-weight: 600;
   }
   .ant-divider-vertical {
     height: 4em;
@@ -101,28 +99,32 @@ const Wrapper = styled.div`
   .link {
     color: #000;
     color: #707070;
-    font-weight:600;
-    
+    font-weight: 600;
   }
   /* Specific styles for active links */
   .link-active {
     font-weight: bold;
     color: #707070;
-   //text-decoration: underline;
-   // text-decoration-color: #2d96d3;
+    //text-decoration: underline;
+    // text-decoration-color: #2d96d3;
     line-height: 2;
-    border-bottom: 1px solid  #2d96d3;
+    border-bottom: 1px solid #2d96d3;
     padding: 0px;
-}
+  }
 
-@media (max-width: 900px) {
-
-  .link-active {
-    border-bottom: 1px solid  #2d96d3;
-    padding: 5.5px;
-}
-   }
-  
-
+  @media (max-width: 900px) {
+    .link-active {
+      border-bottom: 1px solid #2d96d3;
+      padding: 5.5px;
+    }
+  }
+  @media (max-width: 340px) {
+    nav{
+      padding: 5px;
+    }
+    .ant-btn{
+      margin-top: 5px;
+    }
+  }
 `;
 export default HeaderMenu;

@@ -1,8 +1,7 @@
 import Wave from "react-wavify";
 import styled from "styled-components";
 
-const WaveEffectOne = ({ marginTop,height=20,points = 3, speed = 0.15, amplitude = 20,firstColor, secondColor }) => {
-  console.log(marginTop)
+const WaveEffectOne = ({ height=25,points = 3, speed = 0.20, amplitude = 20,firstColor, secondColor }) => {
   return (
     <Wrapper>
     <Wave fill="url(#gradient)" options={{ points: points, speed: speed, amplitude: amplitude,height:height }} >
@@ -19,8 +18,7 @@ const WaveEffectOne = ({ marginTop,height=20,points = 3, speed = 0.15, amplitude
 };
 const Wrapper = styled.div`
 z-index: -1 ;
-//position: absolute;
-margin-top: -130px;
+position: absolute;
 width: 100%;
 `
 

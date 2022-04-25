@@ -132,7 +132,7 @@ const Scanner = () => {
         }
         console.log("BlinkIDCombined results", result);
         console.log(
-          result.fullDocumentFrontImage,
+          result.fullDocumentFrontImage.encodedImage,
           result.fullDocumentBackImage
         );
 
@@ -149,7 +149,7 @@ const Scanner = () => {
           return window.btoa(binary);
         };
         const photo = encodedImageToBase64(encodedImage.buffer);
-
+        
         Swal.fire({
           title: "DUI",
           showDenyButton: true,
@@ -408,7 +408,7 @@ const WrapperScanner = styled.div`
   #screen-initial {
     position: absolute;
     left: 50%;
-    top: 40%;
+    top: 30%;
     transform: translate(-50%, -50%);
   }
   /* Rules for better readability */
@@ -465,7 +465,7 @@ const WrapperScanner = styled.div`
     top: 30%;
     transform: translate(-50%, -50%);
     background-color: #fff;
-    border-radius: 8%;
+    border-radius: 6px;
     font-size: 18px;
     color: white;
     cursor: pointer;
@@ -474,7 +474,7 @@ const WrapperScanner = styled.div`
     text-decoration: none;
     width: 180px;
     height: 40px;
-    //box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     border: 1px solid #fff;
   }
 
@@ -487,5 +487,7 @@ const WrapperScanner = styled.div`
     //  background-color: #3a3a3a;
     border: 1px solid #fff;
   }
+
+
 `;
 export default Scanner;

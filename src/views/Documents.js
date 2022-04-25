@@ -10,7 +10,7 @@ const Documents = () => {
    
   const [documents,setDocuments] = useState([])
   const [loading,setLoading] = useState(true)
-  const antIcon = <><h1>Cargando</h1><LoadingOutlined style={{ fontSize: 120 }} spin /></>;
+  const antIcon = <><h3>Cargando</h3><LoadingOutlined style={{ fontSize: 100 }} spin /></>;
 
   useEffect(() => {
     getDocuments().then(res => {
