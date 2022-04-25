@@ -220,14 +220,14 @@ const Wrapper = styled.div`
   
   @media (max-width: 760px) {
     .waves{
-      margin-top: -6%;
+      margin-top: -4%;
     }
     .container-menu{
-    margin-top: -28%;
+    margin-top: -8%;
     }
   }
   
-  @media (max-width: 300px) {
+  @media (max-width: 400px) {
   overflow: inherit;
   }
 `;
