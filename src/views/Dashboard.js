@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import authService from "../services/auth.service";
-import {useLocation, Outlet } from "react-router-dom";
+import {useLocation,useNavigate, Outlet } from "react-router-dom";
 import MainMenu from "../components/MainMenu";
 import HeaderMenu from "../components/HeaderMenu";
 
@@ -10,7 +10,8 @@ const Dashboard = () => {
   const { user, token } = data;
   const [curretUser, setCurrentUser] = useState(user);
   const location = useLocation();
-  
+  const navigate = useNavigate();  
+
   
   const logOut = () => {
     authService.logout();
