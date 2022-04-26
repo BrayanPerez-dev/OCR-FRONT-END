@@ -326,19 +326,21 @@ const Scanner = () => {
   return (
     <WrapperScanner>
       <div ref={screenInitial} id="screen-initial">
-        <h1 ref={initialMessageEl} id="msg">
+        <h3 ref={initialMessageEl} id="msg">
           Cargando...
-        </h1>
+        </h3>
         <Spin indicator={antIcon} />
       </div>
       <div ref={screenStart} id="screen-start" className="hidden">
         <div ref={waves} className="waves">
-          <WaveEffectOne  firstColor={"#e65159"} secondColor={"#e65159"} />
-          <WaveEffectTwo  color={"#f9989d"} />
+          <WaveEffectOne height={10} firstColor={"#e65159"} secondColor={"#e65159"} />
+          <WaveEffectTwo height={10} color={"#f9989d"} />
+
           <Button ref={startScan} id="start-scan">
             INICIAR ESCANEO
           </Button>
         </div>
+        
       </div>
       <div ref={container} className="container"></div>
       <div ref={screenScanning} id="screen-scanning" className="hidden">
@@ -407,7 +409,7 @@ const WrapperScanner = styled.div`
   #screen-initial {
     position: absolute;
     left: 50%;
-    top: 30%;
+    top: 29%;
     transform: translate(-50%, -50%);
   }
   /* Rules for better readability */
