@@ -25,7 +25,7 @@ const Scanner = () => {
 
   const [drawContext, setDrawContext] = useState();
 
-  const antIcon = <LoadingOutlined style={{ fontSize: 120 }} spin />;
+  const antIcon = <LoadingOutlined style={{ fontSize: 100 }} spin />;
 
   useEffect(() => {
     const drawContext = cameraFeedback.current.getContext("2d");
@@ -333,7 +333,7 @@ const Scanner = () => {
       </div>
       <div ref={screenStart} id="screen-start" className="hidden">
         <div ref={waves} className="waves">
-          <WaveEffectOne   marginTop={'-8px'}firstColor={"#e65159"} secondColor={"#e65159"} />
+          <WaveEffectOne  firstColor={"#e65159"} secondColor={"#e65159"} />
           <WaveEffectTwo  color={"#f9989d"} />
           <Button ref={startScan} id="start-scan">
             INICIAR ESCANEO
@@ -389,14 +389,13 @@ const WrapperScanner = styled.div`
   #screen-start {
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 45%;
     transform: translate(-50%, -50%);
-    width: 100vw;
   }
   .waves {
-    margin-top: -50px;
     display: flex;
     flex-direction: column-reverse;
+    width: 100vw;
   }
   .container {
     position: fixed;
@@ -460,9 +459,8 @@ const WrapperScanner = styled.div`
 
   #start-scan {
     position: absolute;
-    width: 40%;
     left: 50%;
-    top: 30%;
+    top:  50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
     border-radius: 6px;
