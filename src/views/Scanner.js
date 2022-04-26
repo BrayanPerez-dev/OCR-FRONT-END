@@ -56,6 +56,9 @@ const Scanner = () => {
       (sdk) => {
         screenInitial?.current.classList.add("hidden");
         screenStart?.current.classList.remove("hidden");
+        container?.current.classList.remove("hidden");
+        container?.current.classList.add("container");
+
         startScan?.current.addEventListener("click", (ev) => {
           ev.preventDefault();
           startScaning(sdk);
@@ -71,7 +74,6 @@ const Scanner = () => {
     screenStart?.current.classList.add("hidden");
     waves?.current.classList.add("hidden");
     container?.current.classList.add("hidden");
-
     screenScanning?.current.classList.remove("hidden");
 
     const combinedGenericIDRecognizer =
@@ -340,9 +342,8 @@ const Scanner = () => {
             INICIAR ESCANEO
           </Button>
         </div>
-        
       </div>
-      <div ref={container} className="container"></div>
+      <div ref={container} className="hidden"></div>
       <div ref={screenScanning} id="screen-scanning" className="hidden">
         <video ref={cameraFeed} id="camera-feed" playsInline></video>
         <canvas ref={cameraFeedback} id="camera-feedback"></canvas>
@@ -391,7 +392,7 @@ const WrapperScanner = styled.div`
   #screen-start {
     position: absolute;
     left: 50%;
-    top: 45%;
+    top: 50%;
     transform: translate(-50%, -50%);
   }
   .waves {
@@ -400,16 +401,17 @@ const WrapperScanner = styled.div`
     width: 100vw;
   }
   .container {
-    position: fixed;
+    z-index: -1;
+     position: fixed;
     bottom: 0;
     width: 100%;
     height: 50vh;
-    background: linear-gradient(to top, #7f050d, #e65159);
+    background: linear-gradient(to top, #7f050d, #e65159 70%); 
   }
   #screen-initial {
     position: absolute;
     left: 50%;
-    top: 29%;
+    top: 50%;
     transform: translate(-50%, -50%);
   }
   /* Rules for better readability */
