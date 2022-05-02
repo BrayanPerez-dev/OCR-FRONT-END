@@ -474,7 +474,7 @@ const WrapperScanner = styled.div`
     user-select: none;
     text-align: center;
     text-decoration: none;
-    width: 180px;
+    width: 200px;
     height: 40px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     border: 1px solid #fff;
