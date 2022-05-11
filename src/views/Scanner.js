@@ -41,7 +41,7 @@ const Scanner = () => {
 			window.location.hostname === 'intellityc-scanner-client.herokuapp.com'
 		) {
 			licenseKey =
-				'sRwAAAYnaW50ZWxsaXR5Yy1zY2FubmVyLWNsaWVudC5oZXJva3VhcHAuY29tno8VB0kQaLk87+LdMY/G5T4Jw7mPzYkO4u9bYdHJtW0Y+mzSouvoLOMyV9dfjpRW61wDB9b8mzCMvDlzCCyowg/ROeM5keT+bFcH637EunSjVJzGHaWcDZTsQAHZ0++uzl33md2OLC9qjNfu1AeUT6npxgkppN6YS0BxkhhNWT+Aac51yPV98IHHlTGiJQYmiCESQGPfoYIgqXe+hDDPIeXqGuOj5Yxx/Ck=';
+				'sRwAAAYnaW50ZWxsaXR5Yy1zY2FubmVyLWNsaWVudC5oZXJva3VhcHAuY29tno8VB0kQaLk87+LdN7/hQgCXNgjRBvrPIz9Yl14rk1VrJqW7yUJs0EwJxodko5gz7x9vmgoShixQse0hr6XJRdYY90huqA+rFHy4rZW8eHyDzmZSDbNdp+TbdDUssglTz6Yp2NY48Xg/9WZiq8LsKp85jYCeU/jzpxOQVBds/VBAzd4WlJsroSMf4wJ8Kw+ZJN85p0YQsHoxwt1V/4eQEDuJqrW4KwMo';
 		}
 
 		const loadSettings = new BlinkIDSDK.WasmSDKLoadSettings(licenseKey);
