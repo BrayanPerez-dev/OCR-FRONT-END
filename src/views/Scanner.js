@@ -150,7 +150,7 @@ const Scanner = () => {
 				const photo = encodedImageToBase64(encodedImage.buffer);
 
 				Swal.fire({
-					title: 'DUI',
+					title: 'Datos Capturados',
 					showDenyButton: true,
 					showCancelButton: true,
 					showConfirmButton: true,
