@@ -25,10 +25,16 @@ const HeaderMenu = ({ user, out }) => {
 					INICIO
 				</NavLink>
 				<NavLink
-					to='scanner'
+					to='sdkscanner'
 					className={({ isActive }) => (isActive ? 'link-active' : 'link')}
 				>
-					SCANNER
+					SDK SCANNER
+				</NavLink>
+				<NavLink
+					to='apiscanner'
+					className={({ isActive }) => (isActive ? 'link-active' : 'link')}
+				>
+					API SCANNER
 				</NavLink>
 				<NavLink
 					to='documentos'

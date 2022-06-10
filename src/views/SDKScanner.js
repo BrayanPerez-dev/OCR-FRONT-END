@@ -5,9 +5,9 @@ import { sendDocuments } from '../services/document.service';
 import styled from 'styled-components';
 import { Button, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import WaveEffectTwo from '../components/WaveEffectTwo';
-import WaveEffectOne from '../components/WaveEffectOne';
-const Scanner = () => {
+import WaveEffectTwo from '../components/Waves/WaveEffectTwo';
+import WaveEffectOne from '../components/Waves/WaveEffectOne';
+const SDKScanner = () => {
 	const initialMessageEl = useRef('');
 
 	const screenInitial = useRef('');
@@ -491,4 +491,4 @@ const WrapperScanner = styled.div`
 		border: 1px solid #fff;
 	}
 `;
-export default Scanner;
+export default SDKScanner;

@@ -1,12 +1,13 @@
 import apiClient from './http-common';
-// import { authHeader } from './auth.header';
+import { authHeader } from './auth.header';
 
-export const getDocuments = () => {
-	// return apiClient.get("document", { headers: authHeader() });
-	return apiClient.get('document').then(response => {
-		console.log(response);
-		return response.data;
-	});
+export const getDocuments = id => {
+	return apiClient
+		.get(`scandata/all/${id}`, { headers: authHeader() })
+		.then(response => {
+			console.log(response);
+			return response.data;
+		});
 };
 
 export const sendDocuments = async (result, photo) => {
@@ -26,7 +27,7 @@ export const sendDocuments = async (result, photo) => {
 		photo,
 		placebirth: result.placeOfBirth,
 	};
-	return apiClient.post('document', data).then(res => {
+	return apiClient.post('scandata', data).then(res => {
 		console.log('res apiClient', res);
 		return res.data;
 	});
