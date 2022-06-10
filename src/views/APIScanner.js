@@ -8,7 +8,7 @@ const ApiScanner = () => {
 	const [imageBackSide, setImageBackSide] = useState('');
 
 	// eslint-disable-next-line no-undef
-	Microblink.SDK.SetRecognizers(['BLINKIDCOMBINED']);
+	Microblink.SDK.SetRecognizers(['MRTD']);
 	// eslint-disable-next-line no-undef
 	Microblink.SDK.SetAuthorization(
 		'Bearer ' +
@@ -18,7 +18,7 @@ const ApiScanner = () => {
 					'c5423535-3a23-48b2-918e-e0aebb81d16d'
 			)
 	);
-
+	/* 
 	const inputBody = {
 		returnFullDocumentImage: false,
 		returnFaceImage: false,
@@ -60,7 +60,44 @@ const ApiScanner = () => {
 			.then(function (body) {
 				console.log(body);
 			});
-	}, [imageBackSide]);
+	}, [imageBackSide]); */
+
+	const inputBody = {
+		returnFullDocumentImage: false,
+		returnFaceImage: false,
+		returnSignatureImage: false,
+		allowBlurFilter: false,
+		allowUnparsedMrzResults: false,
+		allowUnverifiedMrzResults: true,
+		validateResultCharacters: true,
+		anonymizationMode: 'FULL_RESULT',
+		anonymizeImage: true,
+		ageLimit: 0,
+		imageSource: imageFrontSide,
+	};
+	const headers = {
+		'Content-Type': 'application/json',
+		Accept: 'application/json',
+		Authorization:
+			'Bearer YWU4MTFlNjAxMzc2NDJiYjg5YjRmOGU1YjRjY2IxYzI6YzU0MjM1MzUtM2EyMy00OGIyLTkxOGUtZTBhZWJiODFkMTZk',
+	};
+
+	useEffect(() => {
+		if (imageFrontSide === '') {
+			return;
+		}
+		fetch('https://api.microblink.com/v1/recognizers/mrtd', {
+			method: 'POST',
+			body: JSON.stringify(inputBody),
+			headers,
+		})
+			.then(function (res) {
+				return res.json();
+			})
+			.then(function (body) {
+				console.log(body);
+			});
+	}, [imageFrontSide]);
 
 	return (
 		<Wrapper>

@@ -45,6 +45,7 @@ const WebCam = ({ imgFrontSide, imgBackSide }) => {
 				videoConstraints={videoConstraints}
 				ref={webCamRef}
 				className='webcam'
+				fancingmode='environment'
 			>
 				{({ getScreenshot }) => (
 					<>
