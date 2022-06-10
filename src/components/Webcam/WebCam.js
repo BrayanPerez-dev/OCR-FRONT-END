@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 import Webcam from 'react-webcam';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import propTypes from 'prop-types';
 
@@ -8,7 +8,6 @@ const WebCam = ({ imgFrontSide, imgBackSide }) => {
 	const [imageFrontSide, setImageFrontSide] = useState('');
 	const [imageBackSide, setImageBackSide] = useState('');
 	const [flag, setFlag] = useState(false);
-	const webCamRef = useRef(null);
 
 	const videoConstraints = {
 		width: 600,
@@ -17,14 +16,14 @@ const WebCam = ({ imgFrontSide, imgBackSide }) => {
 	};
 
 	const capture = getScreenshot => {
-		console.log(webCamRef.current);
+		const base64 = getScreenshot.slice(22).toString();
 		if (imageFrontSide === '') {
 			setFlag(false);
-			imgFrontSide(getScreenshot);
+			imgFrontSide(base64);
 			return setImageFrontSide(getScreenshot);
 		}
 		if (imageBackSide === '') {
-			imgBackSide(getScreenshot);
+			imgBackSide(base64);
 			return setImageBackSide(getScreenshot);
 		}
 		setFlag(true);
@@ -40,14 +39,12 @@ const WebCam = ({ imgFrontSide, imgBackSide }) => {
 			<br />
 			{flag && <h3>Limpia Las Imagenes,Para Volver A Capturar </h3>}
 			<Webcam
+				videoConstraints={videoConstraints}
 				audio={false}
 				height={400}
 				width={600}
 				screenshotFormat='image/png'
-				videoConstraints={videoConstraints}
-				ref={webCamRef}
 				className='webcam'
-				fancingmode='environment'
 			>
 				{({ getScreenshot }) => (
 					<>

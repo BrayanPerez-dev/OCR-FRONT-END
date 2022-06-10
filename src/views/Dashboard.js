@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import authService from '../services/auth.service';
+import authService from '../services/Intellityc/auth.service';
 import { useLocation, useNavigate, Outlet } from 'react-router-dom';
 import MainMenu from '../components/Menus/MainMenu';
 import HeaderMenu from '../components/Menus/HeaderMenu';

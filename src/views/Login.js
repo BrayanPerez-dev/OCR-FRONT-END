@@ -8,7 +8,7 @@ import fondo3 from '../assets/FONDO-3-min.png';
 import { FaUser } from 'react-icons/fa';
 import { AiFillLock } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
-import authService from '../services/auth.service';
+import authService from '../services/Intellityc/auth.service';
 import { useState, useEffect } from 'react';
 
 const SingIn = () => {

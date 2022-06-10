@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import * as BlinkIDSDK from '@microblink/blinkid-in-browser-sdk';
 import Swal from 'sweetalert2';
-import { sendDocuments } from '../services/document.service';
+import { sendDocuments } from '../services/Intellityc/document.service';
 import styled from 'styled-components';
 import { Button, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
