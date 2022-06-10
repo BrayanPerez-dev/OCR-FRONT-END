@@ -15,15 +15,13 @@ const Documents = () => {
 	);
 
 	useEffect(() => {
-		getDocuments()
+		getDocuments(1)
 			.then(res => {
-				console.log(res);
-				const results = res.map(row => ({
+				/* 	const results = res.map(row => ({
 					key: row.id_document,
 					...row,
-				}));
-				console.log(results);
-				setDocuments(results);
+				})); */
+				setDocuments([]);
 			})
 			.catch(error => {
 				console.log(error);

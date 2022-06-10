@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Card, Avatar, Carousel, Button } from 'antd';
-import logo from '../assets/logo.png';
+import logo from '../../assets/logo.png';
 import { AiOutlineScan } from 'react-icons/ai';
 import { HiDocumentSearch } from 'react-icons/hi';
 import { ImUserTie } from 'react-icons/im';
 import { IoExitOutline } from 'react-icons/io5';
-import WaveEffectOne from './WaveEffectOne';
-import WaveEffectTwo from './WaveEffectTwo';
+import WaveEffectOne from '../Waves/WaveEffectOne';
+import WaveEffectTwo from '../Waves/WaveEffectTwo';
 import propTypes from 'prop-types';
 
 const MainMenu = ({ user, out }) => {
@@ -43,8 +43,8 @@ const MainMenu = ({ user, out }) => {
 					<div className='menu'>
 						<Card>
 							<AiOutlineScan size={50} />
-							<Link to='scanner'>
-								<h4>SCANNER</h4>
+							<Link to='sdkscanner'>
+								<h4>ESCANEAR DESDE EL SDK</h4>
 							</Link>
 						</Card>
 						<Card>
@@ -59,13 +59,15 @@ const MainMenu = ({ user, out }) => {
 						</Card>
 						<Card>
 							<AiOutlineScan size={50} />
-							<h4>ESCANEAR MRZ</h4>
+							<Link to='apiscanner'>
+								<h4>API SCANNER</h4>
+							</Link>
 						</Card>
 					</div>
 					<div className='menu'>
 						<Card>
 							<AiOutlineScan size={50} />
-							<Link to='scanner'>
+							<Link to='sdkscanner'>
 								<h4>SCANNER</h4>
 							</Link>
 						</Card>
@@ -81,7 +83,9 @@ const MainMenu = ({ user, out }) => {
 						</Card>
 						<Card>
 							<AiOutlineScan size={50} />
-							<h4>ESCANEAR MRZ</h4>
+							<Link to='apiscanner'>
+								<h4>API SCANNER</h4>
+							</Link>
 						</Card>
 					</div>
 				</Carousel>
