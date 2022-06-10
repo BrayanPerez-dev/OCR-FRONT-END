@@ -13,9 +13,11 @@ const WebCam = ({ imgFrontSide, imgBackSide }) => {
 	const videoConstraints = {
 		width: 600,
 		height: 400,
-		fancingMode: { exact: 'environment' },
+		fancingMode: { exact: 'user' },
 	};
+
 	const capture = getScreenshot => {
+		console.log(webCamRef.current);
 		if (imageFrontSide === '') {
 			setFlag(false);
 			imgFrontSide(getScreenshot);
