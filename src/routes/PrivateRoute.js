@@ -1,5 +1,5 @@
 import { Navigate, useLocation, Outlet } from 'react-router-dom';
-import AuthService from '../services/auth.service';
+import AuthService from '../services/Intellityc/auth.service';
 
 const PrivateRoute = () => {
 	const location = useLocation();

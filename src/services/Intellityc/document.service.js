@@ -11,8 +11,6 @@ export const getDocuments = id => {
 };
 
 export const sendDocuments = async (result, photo) => {
-	console.log(result);
-	console.log(photo);
 	const data = {
 		firstname: result.firstName,
 		lastname: result.lastName,

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getDocuments } from '../services/document.service';
+import { getDocuments } from '../services/Intellityc/document.service';
 import styled from 'styled-components';
 import { Image, Spin, Table } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
