@@ -21,7 +21,7 @@ const WebCam = ({ imgFrontSide, imgBackSide }) => {
 	};
 	const handleClick = useCallback(() => {
 		setFacingMode(prevState =>
-			prevState === FACING_MODE_ENVIRONMENT
+			prevState === FACING_MODE_USER
 				? FACING_MODE_ENVIRONMENT
 				: FACING_MODE_USER
 		);
