@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import WebCam from '../components/Webcam/WebCam';
 import { useState, useEffect } from 'react';
 import { sendImagesToApiCloudCombined } from '../services/Blinkid/blinkid.service';
+import BrowserCam from '../components/Webcam/BrowserCam';
 
 const ApiScanner = () => {
 	const [imageFrontSide, setImageFrontSide] = useState('');
@@ -46,7 +47,8 @@ const ApiScanner = () => {
 
 	return (
 		<Wrapper>
-			<WebCam imgFrontSide={setImageFrontSide} imgBackSide={setImageBackSide} />
+			{/* <WebCam imgFrontSide={setImageFrontSide} imgBackSide={setImageBackSide} /> */}
+			<BrowserCam />
 		</Wrapper>
 	);
 };
