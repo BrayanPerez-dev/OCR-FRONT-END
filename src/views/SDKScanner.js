@@ -405,7 +405,7 @@ const WrapperScanner = styled.div`
 		z-index: -1;
 		position: fixed;
 		bottom: 0;
-		width: 100%;
+		min-width: 100%;
 		height: 50vh;
 		background: linear-gradient(to top, #7f050d, #e65159 70%);
 	}

@@ -3,6 +3,7 @@ import Webcam from 'react-webcam';
 import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import propTypes from 'prop-types';
+import { Rnd } from 'react-rnd';
 
 const WebCam = ({ imgFrontSide, imgBackSide }) => {
 	const FACING_MODE_USER = 'user';
@@ -20,7 +21,7 @@ const WebCam = ({ imgFrontSide, imgBackSide }) => {
 	};
 	const handleClick = useCallback(() => {
 		setFacingMode(prevState =>
-			prevState === FACING_MODE_USER
+			prevState === FACING_MODE_ENVIRONMENT
 				? FACING_MODE_ENVIRONMENT
 				: FACING_MODE_USER
 		);
@@ -48,42 +49,45 @@ const WebCam = ({ imgFrontSide, imgBackSide }) => {
 		<Wrapper>
 			<br />
 			{flag && <h3>Limpia Las Imagenes,Para Volver A Capturar </h3>}
-			<Webcam
-				videoConstraints={{ ...videoConstraints, facingMode }}
-				audio={false}
-				height={400}
-				width={600}
-				screenshotFormat='image/png'
-				className='webcam'
-			>
-				{({ getScreenshot }) => (
-					<>
-						<br />
-						<Button
-							onClick={() => {
-								capture(getScreenshot());
-							}}
-						>
-							Capturar Documento
-						</Button>
-						<br />
-						<Button
-							onClick={() => {
-								clearImages();
-							}}
-						>
-							Limpiar Documento
-						</Button>
-						<br />
-					</>
-				)}
-			</Webcam>
-			<button onClick={handleClick}>Switch camera</button>
+			<Rnd style={{ ReDr }} default={{ x: 90, y: 90, width: 360, height: 240 }}>
+				<Webcam
+					videoConstraints={{ ...videoConstraints, facingMode }}
+					audio={false}
+					height={400}
+					width={360}
+					screenshotFormat='image/png'
+					className='webcam'
+				>
+					{({ getScreenshot }) => (
+						<div className='buttons'>
+							<br />
+							<Button onClick={handleClick}>Cambiar Camara</Button>
+							<br />
+							<Button
+								onClick={() => {
+									capture(getScreenshot());
+								}}
+							>
+								Capturar Documento
+							</Button>
+							<br />
+							<Button
+								onClick={() => {
+									clearImages();
+								}}
+							>
+								Limpiar Documento
+							</Button>
+							<br />
+						</div>
+					)}
+				</Webcam>
 
-			{imageFrontSide && <img src={imageFrontSide} />}
-			<br />
-			{imageBackSide && <img src={imageBackSide} />}
-			<br />
+				{imageFrontSide && <img src={imageFrontSide} />}
+				<br />
+				{imageBackSide && <img src={imageBackSide} />}
+				<br />
+			</Rnd>
 		</Wrapper>
 	);
 };
@@ -94,17 +98,34 @@ if (process.env.NODE_ENV !== 'production') {
 		imgBackSide: propTypes.func,
 	};
 }
-const Wrapper = styled.div`
+
+const ReDr = styled.div`
 	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 'solid 1px #ddd';
+	background: #f0f0f0;
+`;
+
+const Wrapper = styled.div`
+	display: flex !important;
 	flex-direction: column;
 	flex-wrap: nowrap;
-	justify-content: center;
+	justify-content: center !;
 	align-items: center;
 	.webcam {
 		margin: 0px 0px 0px 0px;
 	}
 	img {
 		margin: 0px 0px 0px 0px;
+	}
+	.buttons {
+		display: flex;
+		align-content: center;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+		flex-direction: column;
 	}
 `;
 export default WebCam;
