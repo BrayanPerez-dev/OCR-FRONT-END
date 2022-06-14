@@ -23,6 +23,7 @@ const BrowserCam = () => {
 	console.log(isNotSupported);
 	console.log(isAccessingCamera);
 	console.log(isPermissionDenied);
+
 	return (
 		<Rnd style={{ ReDr }} default={{ x: 0, y: 0, width: 360, height: 240 }}>
 			<Camera
@@ -36,7 +37,6 @@ const BrowserCam = () => {
 					handleCapture={capture}
 					openImage={() => setDisplayDetails(true)}
 				>
-					{' '}
 					<ImgDetailPopup
 						image={image}
 						visible={displayDetails}

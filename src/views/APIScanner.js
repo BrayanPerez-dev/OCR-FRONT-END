@@ -47,7 +47,7 @@ const ApiScanner = () => {
 
 	return (
 		<Wrapper>
-			{/* <WebCam imgFrontSide={setImageFrontSide} imgBackSide={setImageBackSide} /> */}
+			<WebCam imgFrontSide={setImageFrontSide} imgBackSide={setImageBackSide} />
 			<BrowserCam />
 		</Wrapper>
 	);
