@@ -25,7 +25,7 @@ const BrowserCam = () => {
 	console.log(isPermissionDenied);
 
 	return (
-		<Rnd style={{ ReDr }} default={{ x: 0, y: 0, width: 360, height: 240 }}>
+		<Rnd style={{ ReDr }} default={{ x: 90, y: 90, width: 360, height: 240 }}>
 			<Camera
 				videoRef={videoRef}
 				isAccessingCamera={isAccessingCamera}
