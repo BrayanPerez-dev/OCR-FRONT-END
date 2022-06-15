@@ -3,7 +3,9 @@ import { authHeader } from './auth.header';
 
 export const getDocuments = id => {
 	return apiClient
-		.get(`scandata/all/${id}`, { headers: authHeader() })
+		.get(`scandata/all/${id}`, {
+			headers: authHeader(),
+		})
 		.then(response => {
 			console.log(response);
 			return response.data;

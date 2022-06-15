@@ -14,8 +14,8 @@ const WebCam = ({ imgFrontSide, imgBackSide }) => {
 	const [facingMode, setFacingMode] = useState(FACING_MODE_ENVIRONMENT);
 
 	const videoConstraints = {
-		width: 400,
-		height: 360,
+		width: 360,
+		height: 400,
 		fancingMode: FACING_MODE_USER,
 	};
 	const handleClick = useCallback(() => {
@@ -52,8 +52,8 @@ const WebCam = ({ imgFrontSide, imgBackSide }) => {
 			<Webcam
 				videoConstraints={{ ...videoConstraints, facingMode }}
 				audio={false}
-				height={400}
 				width={360}
+				height={400}
 				screenshotFormat='image/png'
 				className='webcam'
 			>
@@ -62,6 +62,8 @@ const WebCam = ({ imgFrontSide, imgBackSide }) => {
 						<br />
 						<Button onClick={handleClick}>Cambiar Camara</Button>
 						<br />
+						<br />
+
 						<Button
 							onClick={() => {
 								capture(getScreenshot());
@@ -70,6 +72,8 @@ const WebCam = ({ imgFrontSide, imgBackSide }) => {
 							Capturar Documento
 						</Button>
 						<br />
+						<br />
+
 						<Button
 							onClick={() => {
 								clearImages();

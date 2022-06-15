@@ -24,12 +24,11 @@ const Documents = () => {
 				setDocuments([]);
 			})
 			.catch(error => {
-				console.log(error);
+				console.log(error.message);
 			})
 			.finally(() => setLoading(false));
 	}, []);
 
-	console.log(documents);
 	const columns = [
 		{
 			title: 'Nombres',
