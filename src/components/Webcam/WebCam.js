@@ -11,18 +11,18 @@ const WebCam = ({ imgFrontSide, imgBackSide }) => {
 	const [imageFrontSide, setImageFrontSide] = useState('');
 	const [imageBackSide, setImageBackSide] = useState('');
 	const [flag, setFlag] = useState(false);
-	const [facingMode, setFacingMode] = useState(FACING_MODE_USER);
+	const [facingMode, setFacingMode] = useState(FACING_MODE_ENVIRONMENT);
 
 	const videoConstraints = {
-		width: 600,
-		height: 400,
+		width: 400,
+		height: 360,
 		fancingMode: FACING_MODE_USER,
 	};
 	const handleClick = useCallback(() => {
 		setFacingMode(prevState =>
-			prevState === FACING_MODE_USER
-				? FACING_MODE_ENVIRONMENT
-				: FACING_MODE_USER
+			prevState === FACING_MODE_ENVIRONMENT
+				? FACING_MODE_USER
+				: FACING_MODE_ENVIRONMENT
 		);
 	}, []);
 	const capture = getScreenshot => {
@@ -42,6 +42,7 @@ const WebCam = ({ imgFrontSide, imgBackSide }) => {
 	const clearImages = () => {
 		setImageFrontSide('');
 		setImageBackSide('');
+		setFlag(false);
 	};
 
 	return (
