@@ -2,9 +2,6 @@ import styled from 'styled-components';
 import WebCam from '../components/Webcam/WebCam';
 import { useState, useEffect } from 'react';
 import { sendImagesToApiCloudCombined } from '../services/Blinkid/blinkid.service';
-import BrowserCam from '../components/Webcam/BrowserCam';
-import { Outlet, Link } from 'react-router-dom';
-import { Divider } from 'antd';
 
 const ApiScanner = () => {
 	const [imageFrontSide, setImageFrontSide] = useState('');
@@ -49,26 +46,10 @@ const ApiScanner = () => {
 
 	return (
 		<Wrapper>
-			<Links>
-				<Link to='browsercam'>
-					<h4>Browser Cam</h4>
-				</Link>
-				<Link to='webcam'>
-					<h4>Web Cam</h4>
-				</Link>
-			</Links>
-			<Outlet />
+			<WebCam imgFrontSide={setImageFrontSide} imgBackSide={setImageBackSide} />
 		</Wrapper>
 	);
 };
 const Wrapper = styled.div``;
-
-const Links = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	align-content: center;
-`;
 
 export default ApiScanner;
