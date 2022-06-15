@@ -3,7 +3,6 @@ import Webcam from 'react-webcam';
 import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import propTypes from 'prop-types';
-import { Rnd } from 'react-rnd';
 
 const WebCam = ({ imgFrontSide, imgBackSide }) => {
 	const FACING_MODE_USER = 'user';
@@ -49,45 +48,43 @@ const WebCam = ({ imgFrontSide, imgBackSide }) => {
 		<Wrapper>
 			<br />
 			{flag && <h3>Limpia Las Imagenes,Para Volver A Capturar </h3>}
-			<Rnd style={{ ReDr }} default={{ x: 90, y: 90, width: 360, height: 240 }}>
-				<Webcam
-					videoConstraints={{ ...videoConstraints, facingMode }}
-					audio={false}
-					height={400}
-					width={360}
-					screenshotFormat='image/png'
-					className='webcam'
-				>
-					{({ getScreenshot }) => (
-						<div className='buttons'>
-							<br />
-							<Button onClick={handleClick}>Cambiar Camara</Button>
-							<br />
-							<Button
-								onClick={() => {
-									capture(getScreenshot());
-								}}
-							>
-								Capturar Documento
-							</Button>
-							<br />
-							<Button
-								onClick={() => {
-									clearImages();
-								}}
-							>
-								Limpiar Documento
-							</Button>
-							<br />
-						</div>
-					)}
-				</Webcam>
+			<Webcam
+				videoConstraints={{ ...videoConstraints, facingMode }}
+				audio={false}
+				height={400}
+				width={360}
+				screenshotFormat='image/png'
+				className='webcam'
+			>
+				{({ getScreenshot }) => (
+					<div className='buttons'>
+						<br />
+						<Button onClick={handleClick}>Cambiar Camara</Button>
+						<br />
+						<Button
+							onClick={() => {
+								capture(getScreenshot());
+							}}
+						>
+							Capturar Documento
+						</Button>
+						<br />
+						<Button
+							onClick={() => {
+								clearImages();
+							}}
+						>
+							Limpiar Documento
+						</Button>
+						<br />
+					</div>
+				)}
+			</Webcam>
 
-				{imageFrontSide && <img src={imageFrontSide} />}
-				<br />
-				{imageBackSide && <img src={imageBackSide} />}
-				<br />
-			</Rnd>
+			{imageFrontSide && <img src={imageFrontSide} />}
+			<br />
+			{imageBackSide && <img src={imageBackSide} />}
+			<br />
 		</Wrapper>
 	);
 };
@@ -98,14 +95,6 @@ if (process.env.NODE_ENV !== 'production') {
 		imgBackSide: propTypes.func,
 	};
 }
-
-const ReDr = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border: 'solid 1px #ddd';
-	background: #f0f0f0;
-`;
 
 const Wrapper = styled.div`
 	display: flex !important;
