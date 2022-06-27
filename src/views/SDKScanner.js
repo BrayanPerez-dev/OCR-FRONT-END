@@ -27,7 +27,7 @@ const SDKScanner = () => {
 	useEffect(() => {
 		const drawContext = cameraFeedback.current.getContext('2d');
 		setDrawContext(drawContext);
-	});
+	}, []);
 	const main = () => {
 		if (!BlinkIDSDK.isBrowserSupported()) {
 			initialMessageEl.current.innerText = 'Este navegador no es soportado!';
@@ -271,6 +271,7 @@ const SDKScanner = () => {
 	};
 
 	const setupColor = displayable => {
+		console.log(displayable);
 		let color = '#FFFF00FF';
 		if (displayable.detectionStatus === 0) {
 			color = '#FF0000FF';
@@ -320,7 +321,7 @@ const SDKScanner = () => {
 	};
 	useEffect(() => {
 		main();
-	});
+	}, []);
 
 	return (
 		<WrapperScanner>
